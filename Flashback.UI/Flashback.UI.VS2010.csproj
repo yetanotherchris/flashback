@@ -63,7 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Flashback.Core\Flashback.Core.csproj">
+    <ProjectReference Include="..\Flashback.Core\Flashback.Core.VS2010.csproj">
       <Project>{CB5391B7-34DB-4CF5-BD39-C4EFB818B508}</Project>
       <Name>Flashback.Core</Name>
     </ProjectReference>
@@ -76,6 +76,7 @@
     <Content Include="Assets\Images\flashback-small.png" />
     <Content Include="Assets\Images\icon.png" />
     <Content Include="Assets\Images\original.jpg" />
+    <Content Include="Default.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PSD\Default.psd" />
