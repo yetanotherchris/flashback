@@ -1,43 +1,32 @@
 using System;
-using Vici.CoolStorage;
 using System.IO;
-
 namespace Flashback.Core
 {
 	public class Settings
 	{
-		public static void ConfigureDatabase()
+		public static string DatabaseFile
 		{
-			string dbName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "mydb.db3");
-
-			// The following line will tell CoolStorage where the database is,
-			// create it if it does not exist, and call a delegate which
-			// creates the necessary tables (only if the database file was
-			// created new)
-
-			CSConfig.SetDB(dbName, SqliteOption.CreateIfNotExists,() =>
+			get
 			{
-				CSDatabase.ExecuteNonQuery("CREATE TABLE \"categories\" ("+
-                                  "pkid\" INTEGER PRIMARY KEY," +
-								  "\"id\" GUID,"+
-                                  "\"name\" TEXT NOT NULL)");
-
-
-				CSDatabase.ExecuteNonQuery("CREATE TABLE questions ("+
-										"\"pkid\" INTEGER PRIMARY KEY," +
-										"\"id\" GUID," +
-										"\"categoryid\" GUID," +
-										"\"title\" TEXT," +
-										"\"answer\" TEXT," +
-										"\"order\" REAL," +
-										"\"lastasked\" INTEGER," +
-										"\"nextaskon\" INTEGER," +
-										"\"interval\" INTEGER," +
-										"\"askcount\" INTEGER," +
-										"\"responsequality\" INTEGER," +
-										"\"easinessfactor\" double)");
-
-			});
+				return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "flashback.db");
+			}
 		}
+
+		public static string DatabaseConnection
+		{
+			get
+			{
+				return string.Format("Data Source={0};Version=3;", DatabaseFile);
+			}
+		}
+
+		public static string LogFile
+		{
+			get
+			{
+				return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "flashback.log");
+			}
+		}
+
 	}
 }

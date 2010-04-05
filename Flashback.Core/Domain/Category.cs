@@ -2,31 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Vici.CoolStorage;
+using Mono.Data.Sqlite;
 
 namespace Flashback.Core
 {
-	[MapTo("categories")]
-	public class Category : CSObject<Category,Guid>
+	/// <summary>
+	/// The category for a question.
+	/// </summary>
+	public partial class Category : BaseDataObject<Category>
 	{
-		public Guid Id
-		{
-			get { return (Guid)GetField("Id"); }
-			set { SetField("Id", value); }
-		}
-
-		public string Name
-		{
-			get { return (string)GetField("Name"); }
-			set { SetField("Name", value); }
-		}
-
-		[OneToMany]
-		[Lazy]
-		public CSList<Question> Questions
-		{
-			get { return (CSList<Question>)GetField("Questions"); }
-			set { SetField("Questions", value); }
-		}
+		/// <summary>
+		/// The name of the category
+		/// </summary>
+		public string Name { get; set; }
 	}
 }

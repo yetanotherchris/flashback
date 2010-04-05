@@ -2,94 +2,61 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Vici.CoolStorage;
 
 namespace Flashback.Core
 {
-	[MapTo("questions")]
-	public class Question : CSObject<Question,Guid>
+	public class Question
 	{
 		#region Properties
 		/// <summary>
 		/// Unique id of the question.
 		/// </summary>
-		public Guid Id 
-		{ 
-			get { return (Guid) GetField("Id"); } 
-			set { SetField("Id", value); } 
-		}
+		public int Id { get; set;  }
+		
+		/// <summary>
+		/// The category for the question
+		/// </summary>
+		public Category Category { get; set; }
 
 		/// <summary>
 		/// The question text.
 		/// </summary>
-		public string Title
-		{
-			get { return (string)GetField("Title"); }
-			set { SetField("Title", value); }
-		}
+		public string Title { get; set; }
 
 		/// <summary>
 		/// The question's answer.
 		/// </summary>
-		public string Answer
-		{
-			get { return (string)GetField("Answer"); }
-			set { SetField("Answer", value); }
-		}
+		public string Answer { get; set; }
 
 		/// <summary>
 		/// The order this question appears in the category.
 		/// </summary>
-		public double Order
-		{
-			get { return (double)GetField("Order"); }
-			set { SetField("Order", value); }
-		}
-
-		/// <summary>
-		/// The category for the question
-		/// </summary>
-		public Category Category
-		{
-			get { return (Category)GetField("Category"); }
-			set { SetField("Category", value); }
-		}
+		public double Order { get; set; }
 
 		/// <summary>
 		/// The Date the question was last asked/studied.
 		/// </summary>
-		public DateTime LastAsked
-		{
-			get { return (DateTime)GetField("LastAsked"); }
-			set { SetField("LastAsked", value); }
-		}
+		public DateTime LastAsked { get; set; }
 
 		/// <summary>
 		/// The Date the question is next due to be asked on.
 		/// </summary>
-		public DateTime NextAskOn
-		{
-			get { return (DateTime)GetField("NextAskOn"); }
-			set { SetField("NextAskOn", value); }
-		}
+		public DateTime NextAskOn { get; set; }
+
+		/// <summary>
+		/// The previous interval, which is used to calculate the interval. Storing this means we don't
+		/// have to recursively calculate backwards.
+		/// </summary>
+		public int PreviousInterval { get; set; }
 
 		/// <summary>
 		/// The number of days until the question is next asked.
 		/// </summary>
-		public int Interval
-		{
-			get { return (int)GetField("Interval"); }
-			set { SetField("Interval", value); }
-		}
-
+		public int Interval { get; set; }
 		/// <summary>
 		/// Number of times the question has been asked
 		/// </summary>
-		public int AskCount
-		{
-			get { return (int)GetField("AskCount"); }
-			set { SetField("AskCount", value); }
-		}
+		public int AskCount { get; set; }
 
 		/// <summary>
 		/// The ease that the question was answered. The following values should be used:
@@ -102,34 +69,12 @@ namespace Flashback.Core
 		/// <item>0 - complete blackout.</item>
 		/// </list>
 		/// </summary>
-		public int ResponseQuality
-		{
-			get { return (int)GetField("ResponseQuality"); }
-			set { SetField("ResponseQuality", value); }
-		}
+		public int ResponseQuality { get; set; }
 
 		/// <summary>
 		/// Calculated from the quality of the response. The default is 2.5
 		/// </summary>
-		public double EasinessFactor
-		{
-			get { return (double)GetField("EasinessFactor"); }
-			set { SetField("EasinessFactor", value); }
-		}
-		#endregion
-
-		#region Ctor
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Question"/> class.
-		/// </summary>
-		public Question()
-		{
-			LastAsked = DateTime.Today;
-			NextAskOn = DateTime.Today;
-			AskCount = 0;
-			Interval = 0;
-			Order = 1;
-		}
+		public double EasinessFactor { get; set; }
 		#endregion
 	}
 }
