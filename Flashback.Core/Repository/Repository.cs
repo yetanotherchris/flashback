@@ -1,7 +1,18 @@
 using System;
 using System.IO;
-using Mono.Data.Sqlite;
 using System.Collections.Generic;
+
+#if MONOTOUCH
+using Mono.Data.Sqlite;
+#endif
+
+#if WINDOWS
+using SqliteDataReader = System.Data.SQLite.SQLiteDataReader;
+using SqliteCommand = System.Data.SQLite.SQLiteCommand;
+using SqliteConnection = System.Data.SQLite.SQLiteConnection;
+using SqliteParameter = System.Data.SQLite.SQLiteParameter;
+using SqliteException = System.Data.SQLite.SQLiteException;
+#endif
 
 namespace Flashback.Core
 {
@@ -22,6 +33,23 @@ namespace Flashback.Core
 		{
 		}
 		#endregion
+
+		/// <summary>
+		/// Deletes the SQlite database from disk.
+		/// </summary>
+		public void DeleteDatabase()
+		{
+			try
+			{
+				if (File.Exists(Settings.DatabaseFile))
+					File.Delete(Settings.DatabaseFile);
+			}
+			catch (IOException ex)
+			{
+				Logger.Fatal("Unable to delete the database file {0}: \n{1}", Settings.DatabaseFile, ex);
+				throw;
+			}
+		}
 
 		/// <summary>
 		/// Creates the SQLite database if it doesn't already exist.

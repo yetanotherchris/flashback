@@ -54,17 +54,21 @@ namespace Flashback.Tests.VS2010
 		#endregion
 		
 		[TestMethod]
-		public void TestQuestion()
+		public void TestCategory()
 		{
+			Repository.Current.DeleteDatabase();
+			Repository.Current.CreateDatabase();
 			Category category = new Category();
 			category.Name = "bob";
 			category.Save();
 
-			//Settings.ConfigureDatabase();
-			//Question question = Question.New();
-			//question.Title = "Capital of Ireland";
-			//question.Answer = "Dublin";
-			//question.Save();
+			Assert.AreEqual(1, category.Id);
+
+			category = Category.Read(1);
+			Assert.AreEqual(1, category.Id);
+			Assert.AreEqual("bob", category.Name);
+
+			var s = Category.List(false, "@name", "bob","@id",2);
 		}
 
 		/*

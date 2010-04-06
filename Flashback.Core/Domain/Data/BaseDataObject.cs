@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Mono.Data.Sqlite;
 using System.Data;
+
+#if MONOTOUCH
+using Mono.Data.Sqlite;
+#endif
+
+#if WINDOWS
+using SqliteDataReader = System.Data.SQLite.SQLiteDataReader;
+using SqliteCommand = System.Data.SQLite.SQLiteCommand;
+using SqliteConnection = System.Data.SQLite.SQLiteConnection;
+using SqliteParameter = System.Data.SQLite.SQLiteParameter;
+using SqliteException = System.Data.SQLite.SQLiteException;
+#endif
 
 namespace Flashback.Core
 {
-	public abstract class BaseDataObject<T> where T : BaseDataObject<T>
+	public abstract class BaseDataObject<T> where T : BaseDataObject<T>, new()
 	{
 		/// <summary>
 		/// Retrieves the id for the object (read-only).
@@ -64,7 +75,7 @@ namespace Flashback.Core
 		/// <returns></returns>
 		public static T Read(int id)
 		{
-			T defaultInstance = default(T);
+			T defaultInstance = new T();
 
 			try
 			{
@@ -97,6 +108,8 @@ namespace Flashback.Core
 			return defaultInstance;
 		}
 
+
+
 		/// <summary>
 		/// Lists all objects in the database.
 		/// </summary>
@@ -104,7 +117,7 @@ namespace Flashback.Core
 		public static IList<T> List()
 		{
 			IList<T> list = new List<T>();
-			T defaultInstance = default(T);
+			T defaultInstance = new T();
 
 			try
 			{
@@ -132,6 +145,90 @@ namespace Flashback.Core
 			}
 
 			return list;
+		}
+
+		public static IList<T> List(bool useAnd,params object[] filters)
+		{
+			if (filters == null || filters.Length == 0)
+				throw new ArgumentException("The filters parameter is null or zero length for List()");
+			if (filters.Length % 2 != 0)
+				throw new ArgumentException("Mismatch on the number of filters for List() - use Name/Value.");
+
+			IList<T> list = new List<T>();
+			T defaultInstance = new T();
+
+			try
+			{
+				using (SqliteConnection connection = new SqliteConnection(Settings.DatabaseConnection))
+				{
+					connection.Open();
+					using (SqliteCommand command = new SqliteCommand(connection))
+					{
+						// Save the key/values for the SqliteParameters
+						Dictionary<string, object> columns = new Dictionary<string, object>();
+						for (int i = 0; i < filters.Length; i += 2)
+						{
+							string name = filters[i].ToString();
+							object value = filters[i + 1];
+
+							// Support @Property syntax though it's not really needed,
+							// it makes the filter easier to read.
+							if (name.StartsWith("@"))
+								name = name.Remove(0, 1);
+
+							columns.Add(name, value);
+						}
+
+						// Make up the list of predicates
+						List<string> statements = new List<string>();
+						foreach (string key in columns.Keys)
+						{
+							object value = columns[key];
+							statements.Add(string.Format("{0}=@{0}", key));
+
+							SqliteParameter parameter = new SqliteParameter("@" + key, ToDbType(value));
+							parameter.Value = value;
+							command.Parameters.Add(parameter);
+						}
+
+						// Join up the statements
+						string seperator = " OR ";
+						if (useAnd)
+							seperator = " AND ";
+						string predicate = string.Join(seperator,statements.ToArray());
+
+						string sql = string.Format("SELECT * FROM {0} WHERE {1}", defaultInstance.TableName,predicate);
+						command.CommandText = sql;
+						
+						using (SqliteDataReader reader = command.ExecuteReader())
+						{
+							while (reader.Read())
+							{
+								T instance = defaultInstance.GetRow(reader);
+								list.Add(instance);
+							}
+						}
+					}
+				}
+			}
+			catch (SqliteException e)
+			{
+				Logger.Warn("SqliteException occured while getting a List<{0}>: \n{1}", typeof(T).Name, e);
+			}
+
+			return list;
+		}
+
+		private static DbType ToDbType(object o)
+		{
+			if (o is string)
+				return DbType.String;
+			else if (o is int || o is bool)
+				return DbType.Int32;
+			else if (o is double || o is float || o is decimal)
+				return DbType.Double;
+
+			return DbType.String;
 		}
 	}
 }

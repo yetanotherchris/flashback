@@ -2,8 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Mono.Data.Sqlite;
 using System.Data;
+
+#if MONOTOUCH
+using Mono.Data.Sqlite;
+#endif
+
+#if WINDOWS
+using SqliteDataReader = System.Data.SQLite.SQLiteDataReader;
+using SqliteCommand = System.Data.SQLite.SQLiteCommand;
+using SqliteConnection = System.Data.SQLite.SQLiteConnection;
+using SqliteParameter = System.Data.SQLite.SQLiteParameter;
+using SqliteException = System.Data.SQLite.SQLiteException;
+#endif
 
 namespace Flashback.Core
 {
@@ -29,7 +40,7 @@ namespace Flashback.Core
 		protected override int Save(SqliteCommand command, bool updating)
 		{
 			SqliteParameter parameter;
-			string sql = @"INSERT INTO categories VALUES (@name);SELECT last_insert_rowid();";
+			string sql = @"INSERT INTO categories (name) VALUES (@name);SELECT last_insert_rowid();";
 
 			if (updating)
 			{
@@ -44,12 +55,12 @@ namespace Flashback.Core
 			command.Parameters.Add(parameter);
 
 			command.CommandText = sql;
-			int newId = (int) command.ExecuteScalar();
+			Int64 newId = (Int64)command.ExecuteScalar();
 
 			if (updating)
 				return Id;
 			else
-				return newId;
+				return Convert.ToInt32(newId);
 		}
 	}
 }
