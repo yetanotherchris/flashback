@@ -11,7 +11,7 @@ namespace Flashback.Tests.VS2010
 	/// Summary description for UnitTest1
 	/// </summary>
 	[TestClass]
-	public class CoreTests
+	public class QuestionTests
 	{
 		private TestContext testContextInstance;
 
@@ -52,25 +52,6 @@ namespace Flashback.Tests.VS2010
 		// public void MyTestCleanup() { }
 		//
 		#endregion
-		
-		[TestMethod]
-		public void AddCategoryTest()
-		{
-			Repository.Current.DeleteDatabase();
-			Repository.Current.CreateDatabase();
-
-			Category category = new Category();
-			category.Name = "bob";
-			category.Save();
-
-			Assert.AreEqual(1, category.Id);
-
-			category = Category.Read(1);
-			Assert.AreEqual(1, category.Id);
-			Assert.AreEqual("bob", category.Name);
-
-			var s = Category.List(false, "@name", "bob","@id",2);
-		}
 
 		[TestMethod]
 		public void AddQuestionTest()
@@ -87,7 +68,7 @@ namespace Flashback.Tests.VS2010
 			question.Answer = "Yes, of course within seconds";
 			question.AskCount = 60;
 			question.Category = Category.Read(1);
-			question.EasinessFactor = 70;
+			question.EasinessFactor = 70.50;
 			question.Interval = 80;
 			question.LastAsked = DateTime.Today.AddDays(-2);
 			question.NextAskOn = DateTime.Today.AddDays(2);
@@ -100,11 +81,12 @@ namespace Flashback.Tests.VS2010
 		}
 
 		[TestMethod]
-		public void ReadQuestionTest()
+		public void UpdateQuestionTest()
 		{
 			Repository.Current.DeleteDatabase();
 			Repository.Current.CreateDatabase();
 
+			// Create
 			Category category = new Category();
 			category.Name = "bob";
 			category.Save();
@@ -124,45 +106,70 @@ namespace Flashback.Tests.VS2010
 			question.Save();
 
 			question = Question.Read(1);
+
+			// Update
+			question.Title = "Is this updated?";
+			question.Answer = "Yes, of course so";
+			question.AskCount = 1;
+			question.Category = Category.Read(1);
+			question.EasinessFactor = 10.50;
+			question.Interval = 20;
+			question.LastAsked = DateTime.Today.AddDays(-4);
+			question.NextAskOn = DateTime.Today.AddDays(4);
+			question.Order = 30;
+			question.PreviousInterval = 40;
+			question.ResponseQuality = 50;
+			question.Save();
+
+			// Read back
+			question = Question.Read(1);
+			Assert.AreEqual("Is this updated?", question.Title);
+			Assert.AreEqual("Yes, of course so", question.Answer);
+			Assert.AreEqual(1, question.AskCount);
+			Assert.AreEqual(1, question.Category.Id);
+			Assert.AreEqual(10.50, question.EasinessFactor);
+			Assert.AreEqual(DateTime.Today.AddDays(-4), question.LastAsked);
+			Assert.AreEqual(DateTime.Today.AddDays(4), question.NextAskOn);
+			Assert.AreEqual(30, question.Order);
+			Assert.AreEqual(40, question.PreviousInterval);
+			Assert.AreEqual(50, question.ResponseQuality);
+		}
+
+		[TestMethod]
+		public void ReadQuestionTest()
+		{
+			Repository.Current.DeleteDatabase();
+			Repository.Current.CreateDatabase();
+
+			Category category = new Category();
+			category.Name = "bob";
+			category.Save();
+
+			Question question = new Question();
+			question.Title = "Is Fiona going to the baby?";
+			question.Answer = "Yes, of course within seconds";
+			question.AskCount = 60;
+			question.Category = Category.Read(1);
+			question.EasinessFactor = 70.50;
+			question.Interval = 80;
+			question.LastAsked = DateTime.Today.AddDays(-2);
+			question.NextAskOn = DateTime.Today.AddDays(2);
+			question.Order = 90;
+			question.PreviousInterval = 100;
+			question.ResponseQuality = 110;
+			question.Save();
+
+			question = Question.Read(1);
 			Assert.AreEqual("Is Fiona going to the baby?", question.Title);
 			Assert.AreEqual("Yes, of course within seconds", question.Answer);
 			Assert.AreEqual(60, question.AskCount);
 			Assert.AreEqual(1, question.Category.Id);
-			Assert.AreEqual(70, question.EasinessFactor);
+			Assert.AreEqual(70.50, question.EasinessFactor);
 			Assert.AreEqual(DateTime.Today.AddDays(-2), question.LastAsked);
 			Assert.AreEqual(DateTime.Today.AddDays(2), question.NextAskOn);
 			Assert.AreEqual(90, question.Order);
 			Assert.AreEqual(100, question.PreviousInterval);
 			Assert.AreEqual(110, question.ResponseQuality);
 		}
-
-		/*
-		void QuestionsFor()
-		{
-			CSList<Category> categories = Category.List();
-			foreach (Category category in categories)
-			{
-				Console.WriteLine(category.Name);
-			}
-		}
-
-		void AddQuestions()
-		{
-
-			for (int i = 0; i < 15; i++)
-			{
-				Category category = Category.New();
-				category.Name = string.Format("Category {0}", i);
-
-				for (int n = 0; n < 20; n++)
-				{
-					Question question = Question.New();
-					question.Title = string.Format("Question {0} for {1}", n, i);
-					question.Answer = "Some answer that is about a sentence or two in length but not much longer really: a b c d e";
-					question.Category = category;
-					question.Save();
-				}
-			}
-		}*/
 	}
 }

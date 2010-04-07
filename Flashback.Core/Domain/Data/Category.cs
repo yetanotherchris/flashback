@@ -44,8 +44,9 @@ namespace Flashback.Core
 
 			if (updating)
 			{
-				sql = @"UPDATE categories SET Name=@name WHERE id=@id";
-				parameter = new SqliteParameter("@id", DbType.Int32);
+				sql = @"UPDATE categories SET name=@name WHERE id=@id";
+
+				parameter = new SqliteParameter("@id", DbType.Int64);
 				parameter.Value = Id;
 				command.Parameters.Add(parameter);
 			}
@@ -55,12 +56,17 @@ namespace Flashback.Core
 			command.Parameters.Add(parameter);
 
 			command.CommandText = sql;
-			Int64 newId = (Int64)command.ExecuteScalar();
 
 			if (updating)
+			{
+				command.ExecuteNonQuery();
 				return Id;
+			}
 			else
+			{
+				Int64 newId = (Int64)command.ExecuteScalar();
 				return Convert.ToInt32(newId);
+			}
 		}
 	}
 }

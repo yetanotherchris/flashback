@@ -59,8 +59,9 @@ namespace Flashback.Core
 			if (updating)
 			{
 				sql = @"UPDATE questions SET answer=@answer,askcount=@askcount,categoryid=@categoryid,easinessfactor=@easinessfactor,interval=@interval,";
-				sql += "lastasked=@lastasked,nextaskon=@nextaskon,order=@order,previousinterval=@previousinterval,responsequality=@responsequality,title=@title ";
+				sql += "lastasked=@lastasked,nextaskon=@nextaskon,[order]=@order,previousinterval=@previousinterval,responsequality=@responsequality,title=@title ";
 				sql += "WHERE id=@id";
+
 				parameter = new SqliteParameter("@id", DbType.Int32);
 				parameter.Value = Id;
 				command.Parameters.Add(parameter);
@@ -111,12 +112,17 @@ namespace Flashback.Core
 			command.Parameters.Add(parameter);
 
 			command.CommandText = sql;
-			Int64 newId = (Int64)command.ExecuteScalar();
 
 			if (updating)
+			{
+				command.ExecuteNonQuery();
 				return Id;
+			}
 			else
+			{
+				Int64 newId = (Int64)command.ExecuteScalar();
 				return Convert.ToInt32(newId);
+			}
 		}
 	}
 }
