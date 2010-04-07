@@ -66,7 +66,7 @@ namespace Flashback.Core
 											"\"categoryid\" INTEGER," +
 											"\"title\" TEXT," +
 											"\"answer\" TEXT," +
-											"\"order\" REAL," +
+											"\"order\" INTEGER," +
 											"\"lastasked\" INTEGER," +
 											"\"nextaskon\" INTEGER," +
 											"\"previousinterval\" INTEGER," +

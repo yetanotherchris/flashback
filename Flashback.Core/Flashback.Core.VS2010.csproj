@@ -53,6 +53,7 @@
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\Data\BaseDataObject.cs" />
     <Compile Include="Domain\Data\Category.cs" />
+    <Compile Include="Domain\Data\Question.cs" />
     <Compile Include="Domain\QuestionManager.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

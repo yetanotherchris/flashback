@@ -54,10 +54,11 @@ namespace Flashback.Tests.VS2010
 		#endregion
 		
 		[TestMethod]
-		public void TestCategory()
+		public void AddCategoryTest()
 		{
 			Repository.Current.DeleteDatabase();
 			Repository.Current.CreateDatabase();
+
 			Category category = new Category();
 			category.Name = "bob";
 			category.Save();
@@ -69,6 +70,70 @@ namespace Flashback.Tests.VS2010
 			Assert.AreEqual("bob", category.Name);
 
 			var s = Category.List(false, "@name", "bob","@id",2);
+		}
+
+		[TestMethod]
+		public void AddQuestionTest()
+		{
+			Repository.Current.DeleteDatabase();
+			Repository.Current.CreateDatabase();
+
+			Category category = new Category();
+			category.Name = "bob";
+			category.Save();
+
+			Question question = new Question();
+			question.Title = "Is Fiona going to the baby?";
+			question.Answer = "Yes, of course within seconds";
+			question.AskCount = 60;
+			question.Category = Category.Read(1);
+			question.EasinessFactor = 70;
+			question.Interval = 80;
+			question.LastAsked = DateTime.Today.AddDays(-2);
+			question.NextAskOn = DateTime.Today.AddDays(2);
+			question.Order = 90;
+			question.PreviousInterval = 100;
+			question.ResponseQuality = 110;
+			question.Save();
+
+			Assert.AreEqual(1, question.Id);
+		}
+
+		[TestMethod]
+		public void ReadQuestionTest()
+		{
+			Repository.Current.DeleteDatabase();
+			Repository.Current.CreateDatabase();
+
+			Category category = new Category();
+			category.Name = "bob";
+			category.Save();
+
+			Question question = new Question();
+			question.Title = "Is Fiona going to the baby?";
+			question.Answer = "Yes, of course within seconds";
+			question.AskCount = 60;
+			question.Category = Category.Read(1);
+			question.EasinessFactor = 70;
+			question.Interval = 80;
+			question.LastAsked = DateTime.Today.AddDays(-2);
+			question.NextAskOn = DateTime.Today.AddDays(2);
+			question.Order = 90;
+			question.PreviousInterval = 100;
+			question.ResponseQuality = 110;
+			question.Save();
+
+			question = Question.Read(1);
+			Assert.AreEqual("Is Fiona going to the baby?", question.Title);
+			Assert.AreEqual("Yes, of course within seconds", question.Answer);
+			Assert.AreEqual(60, question.AskCount);
+			Assert.AreEqual(1, question.Category.Id);
+			Assert.AreEqual(70, question.EasinessFactor);
+			Assert.AreEqual(DateTime.Today.AddDays(-2), question.LastAsked);
+			Assert.AreEqual(DateTime.Today.AddDays(2), question.NextAskOn);
+			Assert.AreEqual(90, question.Order);
+			Assert.AreEqual(100, question.PreviousInterval);
+			Assert.AreEqual(110, question.ResponseQuality);
 		}
 
 		/*

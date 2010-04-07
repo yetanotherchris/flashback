@@ -23,7 +23,7 @@ namespace Flashback.Core
 		/// <summary>
 		/// Retrieves the id for the object (read-only).
 		/// </summary>
-		public virtual int Id { get; protected set; }
+		public virtual int Id { get; internal set; }
 
 		/// <summary>
 		/// The table name for the domain object (read-only).
@@ -86,7 +86,7 @@ namespace Flashback.Core
 					{
 						command.CommandText = string.Format("SELECT * FROM {0} WHERE id=@id", defaultInstance.TableName);
 
-						SqliteParameter parameter = new SqliteParameter("@id", DbType.Int32);
+						SqliteParameter parameter = new SqliteParameter("@id", DbType.Int64);
 						parameter.Value = id;
 						command.Parameters.Add(parameter);
 

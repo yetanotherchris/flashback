@@ -5,14 +5,9 @@ using System.Text;
 
 namespace Flashback.Core
 {
-	public class Question
+	public partial class Question : BaseDataObject<Question>
 	{
-		#region Properties
-		/// <summary>
-		/// Unique id of the question.
-		/// </summary>
-		public int Id { get; set;  }
-		
+		#region Properties	
 		/// <summary>
 		/// The category for the question
 		/// </summary>
