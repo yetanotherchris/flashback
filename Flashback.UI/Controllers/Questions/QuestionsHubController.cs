@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MonoTouch.UIKit;
+using Flashback.Core;
 
 namespace Flashback.UI.Controllers
 {
@@ -13,7 +15,13 @@ namespace Flashback.UI.Controllers
 	// * Big button for "ASK NOW"
 	// * Smaller button for "Question Tips"
 
-	public class QuestionsHubController
+	public class QuestionsHubController : UIViewController
 	{
+		private Category _category;
+
+		public QuestionsHubController(Category category)
+		{
+			_category = category;
+		}
 	}
 }

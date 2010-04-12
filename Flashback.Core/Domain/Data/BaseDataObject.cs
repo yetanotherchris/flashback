@@ -69,6 +69,40 @@ namespace Flashback.Core
 		}
 
 		/// <summary>
+		/// Removes a single instance of the object based on the id.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public static T Delete(int id)
+		{
+			T defaultInstance = new T();
+
+			try
+			{
+				using (SqliteConnection connection = new SqliteConnection(Settings.DatabaseConnection))
+				{
+					connection.Open();
+					using (SqliteCommand command = new SqliteCommand(connection))
+					{
+						command.CommandText = string.Format("DELETE FROM {0} WHERE id=@id", defaultInstance.TableName);
+
+						SqliteParameter parameter = new SqliteParameter("@id", DbType.Int64);
+						parameter.Value = id;
+						command.Parameters.Add(parameter);
+
+						command.ExecuteNonQuery();
+					}
+				}
+			}
+			catch (SqliteException e)
+			{
+				Logger.Warn("SqliteException occured with Delete({0}) for {1}: \n{2}", id, typeof(T).Name, e);
+			}
+
+			return defaultInstance;
+		}
+
+		/// <summary>
 		/// Retrieves a single instance of the object based on the id.
 		/// </summary>
 		/// <param name="id"></param>
@@ -108,8 +142,6 @@ namespace Flashback.Core
 			return defaultInstance;
 		}
 
-
-
 		/// <summary>
 		/// Lists all objects in the database.
 		/// </summary>
@@ -147,6 +179,11 @@ namespace Flashback.Core
 			return list;
 		}
 
+		/// <summary>
+		/// Lists all instances of the object, using the filters provided, and using 'OR' or 'AND' in the where clause.
+		/// </summary>
+		/// <remarks>The filters can be passed like so: List(true,"@id",1,"@name",name) - the @ is optional but
+		/// allows the callers to clearly see which is the parameter.</remarks>
 		public static IList<T> List(bool useAnd,params object[] filters)
 		{
 			if (filters == null || filters.Length == 0)
@@ -219,6 +256,11 @@ namespace Flashback.Core
 			return list;
 		}
 
+		/// <summary>
+		/// Converts string,int32,bool and double into their SQLite representation. Defaults to string.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
 		private static DbType ToDbType(object o)
 		{
 			if (o is string)

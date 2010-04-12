@@ -5,6 +5,7 @@ using System.Text;
 using MonoTouch.UIKit;
 using Flashback.Core;
 using MonoTouch.Foundation;
+using Flashback.UI.Controllers;
 
 namespace Flashback.UI
 {
@@ -12,11 +13,16 @@ namespace Flashback.UI
 	public partial class AppDelegate : UIApplicationDelegate
 	{
 		private UIWindow _window;
+		private RootController _rootController;
 
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
+			_rootController = new RootController();
+
 			_window = new UIWindow(UIScreen.MainScreen.Bounds);
+			_window.Add(_rootController.View);
 			_window.MakeKeyAndVisible();
+
 			return true;
 		}
 
