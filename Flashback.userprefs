@@ -1,0 +1,33 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" ctype="Workspace" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Flashback.UI/Controllers/Categories/CategoriesTableController.cs" ctype="Workbench">
+    <Files>
+      <File FileName="Flashback.UI/Controllers/RootController.cs" Line="1" Column="1" />
+      <File FileName="Flashback.UI/Application.cs" Line="1" Column="1" />
+      <File FileName="Flashback.UI/AppDelegate.cs" Line="12" Column="7" />
+      <File FileName="Flashback.UI/Controllers/Categories/CategoriesTableController.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Flashback.Core" expanded="True">
+            <Node name="Domain" expanded="True">
+              <Node name="Data" expanded="True" />
+            </Node>
+            <Node name="Repository" expanded="True" />
+          </Node>
+          <Node name="Flashback.UI" expanded="True">
+            <Node name="Controllers" expanded="True">
+              <Node name="Categories" expanded="True">
+                <Node name="CategoriesTableController.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+</Properties>
