@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +17,9 @@ namespace Flashback.UI
 
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
+			Repository.Current.DeleteDatabase();
+			Repository.Current.CreateDatabase();
+			
 			_rootController = new RootController();
 
 			_window = new UIWindow(UIScreen.MainScreen.Bounds);

@@ -86,6 +86,9 @@ namespace Flashback.Core
 						{
 							command.CommandText = categoriesSql;
 							command.ExecuteNonQuery();
+							
+							command.CommandText = "insert into categories (name) values ('german')";
+							command.ExecuteNonQuery();
 
 							command.CommandText = questionsSql;
 							command.ExecuteNonQuery();

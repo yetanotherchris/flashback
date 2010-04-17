@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -89,11 +89,6 @@ namespace Flashback.UI.Controllers
 			label.Frame = new System.Drawing.RectangleF(0,0,100,20);
 
 			tableView.CellAt(indexPath).ContentView.AddSubview(label);
-		}
-
-		public override void DidEndEditing(UITableView tableView, NSIndexPath indexPath)
-		{
-			base.DidEndEditing(tableView, indexPath);
 		}
 	}
 
