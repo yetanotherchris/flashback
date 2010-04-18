@@ -94,12 +94,14 @@
     <None Include="Assets\Images\original.jpg" />
     <None Include="Assets\Images\icon.png" />
     <None Include="Assets\Images\flashback-small.png" />
-    <None Include="Assets\HTML\calendar.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Flashback.Core\Flashback.Core.csproj">
       <Project>{7244A478-3BC2-4932-A234-66F248FFDC63}</Project>
       <Name>Flashback.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\HTML\calendar.html" />
   </ItemGroup>
 </Project>
