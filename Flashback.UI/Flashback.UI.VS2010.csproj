@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\HTML\calendar.html" />
+    <Content Include="Assets\HTML\categoryhub.html" />
     <Content Include="Assets\Images\flashback-small.png" />
     <Content Include="Assets\Images\icon.png" />
     <Content Include="Assets\Images\original.jpg" />

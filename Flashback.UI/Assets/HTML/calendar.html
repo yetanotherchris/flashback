@@ -154,6 +154,30 @@ function item(day,month,year)
 
 </script>
 <style type="text/css">
+#container
+{
+	width:auto;
+}
+#questioncount
+{
+	margin:10px;
+	border: 2px solid black;
+	font-family:Arial;
+	font-size:36px;
+	padding:5px;
+	float:left;
+	background-color: #DDDDDD;
+	-webkit-border-radius:5px;
+}
+#duetoday
+{
+	font-family:Arial;
+	font-size:14pt;
+	float:left;
+	height:36px;
+	
+}
+	
 #question-count {
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:8pt;
@@ -199,8 +223,14 @@ function item(day,month,year)
 	background-color:#99FF33;
 }
 </style>
+<meta name="viewport" content="width=320,user-scalable=false" />
 </head>
 <body>
+<div id="container">
+	<div id="questioncount">20</div>
+	<div id="duetoday">Questions due today</div>
+</div>
+<br style="clear:both"/>
 
 <div id="question-count">Click on a highlighted date</div>
 
