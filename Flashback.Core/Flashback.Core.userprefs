@@ -1,0 +1,25 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" ctype="Workspace" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestMT/Main.cs" ctype="Workbench">
+    <Files>
+      <File FileName="TestMT/Main.cs" Line="41" Column="37" />
+      <File FileName="Question.cs" Line="25" Column="52" />
+      <File FileName="Category.cs" Line="24" Column="13" />
+      <File FileName="Repository.cs" Line="26" Column="28" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Flashback.Core" expanded="True" />
+          <Node name="TestMT" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="Main.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+</Properties>
