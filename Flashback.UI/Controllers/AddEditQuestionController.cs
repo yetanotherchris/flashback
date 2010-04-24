@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +11,7 @@ namespace Flashback.UI.Controllers
 	public class AddEditQuestionController : UIViewController
 	{
 		private Question _question;
+		private Category _category;
 
 		private UIBarButtonItem _saveButton;
 		private UIBarButtonItem _cancelButton;
@@ -22,19 +23,23 @@ namespace Flashback.UI.Controllers
 		private UITextField _textFieldAnswer;
 		
 
-		public AddEditQuestionController(Question question)
+		public AddEditQuestionController(Question question,Category category)
 		{
 			// Null means new category
 			_question = question;
+			_category = category;
 		}
 
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
+			
+			// Remove this view from the stack
 
 			if (_question == null)
 			{
 				_question = new Question();
+				_question.Category = _category;
 				Title = "Add Question";
 			}
 			else
@@ -45,27 +50,41 @@ namespace Flashback.UI.Controllers
 			View.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
 
 			// Question label
-			_labelAnswer = new UILabel();
-			_labelAnswer.Text = "Question";
-			_labelAnswer.Frame = new RectangleF(5, 30, 280, 23);
-			View.AddSubview(_labelAnswer);
+			_labelQuestion = new UILabel();
+			_labelQuestion.Text = "Question";
+			_labelQuestion.Frame = new RectangleF(5, 30, 280, 23);
+			_labelQuestion.BackgroundColor = UIColor.Clear;
+			View.AddSubview(_labelQuestion);
 
 			// Question textbox
 			_textFieldQuestion = new UITextField();
 			_textFieldQuestion.Text = _question.Title;
 			_textFieldQuestion.Frame = new RectangleF(5, 60, 280, 23);
+			_textFieldQuestion.BorderStyle = UITextBorderStyle.RoundedRect;
+			_textFieldQuestion.ShouldReturn = delegate
+		    {
+		    		_textFieldQuestion.ResignFirstResponder();
+		    		return true;
+		    };
 			View.AddSubview(_textFieldQuestion);
 
 			// Answer label
 			_labelAnswer = new UILabel();
 			_labelAnswer.Text = "Answer";
 			_labelAnswer.Frame = new RectangleF(5, 90, 280, 23);
+			_labelAnswer.BackgroundColor = UIColor.Clear;
 			View.AddSubview(_labelAnswer);
 
 			// Answer textbox
 			_textFieldAnswer = new UITextField();
 			_textFieldAnswer.Text = _question.Answer;
 			_textFieldAnswer.Frame = new RectangleF(5, 120, 280, 50);
+			_textFieldAnswer.BorderStyle = UITextBorderStyle.RoundedRect;
+			_textFieldAnswer.ShouldReturn = delegate
+		    {
+		    		_textFieldAnswer.ResignFirstResponder();
+		    		return true;
+		    };
 			View.AddSubview(_textFieldAnswer);
 
 			// Cancel
@@ -73,8 +92,7 @@ namespace Flashback.UI.Controllers
 			_cancelButton.Title = "Cancel";
 			_cancelButton.Clicked += delegate(object sender, EventArgs e)
 			{
-				_questionsController = new QuestionsController(_question.Category);
-				NavigationController.PushViewController(_questionsController, false);
+				NavigationController.PopViewControllerAnimated(true);
 			};
 
 			// Save button
@@ -97,8 +115,9 @@ namespace Flashback.UI.Controllers
 				_question.Answer = _textFieldAnswer.Text;
 				_question.Save();
 
-				_questionsController = new QuestionsController(_question.Category);
-				NavigationController.PushViewController(_questionsController, false);
+				// Make sure the data is refreshed on the question table controller
+				((QuestionsController)NavigationController.ViewControllers[NavigationController.ViewControllers.Length-2]).ReloadData();
+				NavigationController.PopViewControllerAnimated(false);
 			};
 
 			// Hide the navigation bar, back button and toolbar.

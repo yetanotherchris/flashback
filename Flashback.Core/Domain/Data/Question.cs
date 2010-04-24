@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,8 +35,8 @@ namespace Flashback.Core
 			question.Answer = (string)reader["answer"];
 			question.AskCount = Convert.ToInt32(reader["askcount"]);
 			
-			question.Category = new Category();
-			question.Category.Id = Convert.ToInt32(reader["categoryid"]);
+			int id = Convert.ToInt32(reader["categoryid"]);
+			question.Category = Category.Read(id);
 
 			question.EasinessFactor = Convert.ToDouble(reader["easinessfactor"]);
 			question.Interval = Convert.ToInt32(reader["interval"]);

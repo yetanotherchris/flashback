@@ -29,11 +29,15 @@ namespace Flashback.UI.Controllers
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			
+			Title = _category.Name;
 
 			// Add the toolbar
 			ToolbarItems = GetToolBar();
+			NavigationController.ToolbarHidden = false;
 
-			// The webview			
+			// The webview		
+			/*
 			UIWebView webView = new UIWebView();
 			webView.Frame = new System.Drawing.RectangleF(0,0,380,420);
 			
@@ -44,7 +48,13 @@ namespace Flashback.UI.Controllers
 				template = reader.ReadToEnd();
 			}
 			webView.LoadHtmlString(template,new NSUrl("/"));
-			View.AddSubview(webView);
+			View.AddSubview(webView);*/
+		}
+		
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear(animated);
+			NavigationController.ToolbarHidden = false;
 		}
 
 		public UIBarButtonItem[] GetToolBar()
@@ -65,6 +75,7 @@ namespace Flashback.UI.Controllers
 			_editQuestionsButton.Clicked += delegate
 			{
 				QuestionsController controller = new QuestionsController(_category);
+				NavigationController.PushViewController(controller,true);
 			};
 
 			// Calendar

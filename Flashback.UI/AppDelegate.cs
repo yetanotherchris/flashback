@@ -17,7 +17,7 @@ namespace Flashback.UI
 
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
-			Repository.Current.DeleteDatabase();
+			//Repository.Current.DeleteDatabase();
 			Repository.Current.CreateDatabase();
 			
 			_rootController = new RootController();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,6 +66,39 @@ namespace Flashback.Core
 			{
 				Int64 newId = (Int64)command.ExecuteScalar();
 				return Convert.ToInt32(newId);
+			}
+		}
+		
+		/// <summary>
+		/// Removes the Category and all questions for it
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public static new void Delete(int id)
+		{
+			try
+			{
+				using (SqliteConnection connection = new SqliteConnection(Settings.DatabaseConnection))
+				{
+					connection.Open();
+					using (SqliteCommand command = new SqliteCommand(connection))
+					{
+						command.CommandText = "DELETE FROM categories WHERE id=@id";
+						
+						SqliteParameter parameter = new SqliteParameter("@id", DbType.Int64);
+						parameter.Value = id;
+						command.Parameters.Add(parameter);
+						
+						command.ExecuteNonQuery();
+						
+						command.CommandText = "DELETE FROM questions WHERE categoryid=@id";
+						command.ExecuteNonQuery();
+					}
+				}
+			}
+			catch (SqliteException e)
+			{
+				Logger.Warn("SqliteException occured with Delete({0}) for Category: \n{2}", id, e);
 			}
 		}
 	}

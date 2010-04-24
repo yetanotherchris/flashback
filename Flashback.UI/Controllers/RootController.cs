@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +17,9 @@ namespace Flashback.UI.Controllers
 			_categoriesController = new CategoriesController();
 			PushViewController(_categoriesController, false);
 
+			Toolbar.BarStyle = UIBarStyle.Black;
+			NavigationBar.BarStyle = UIBarStyle.Black;
+			
 			// TODO: persist to last shown controller
 		}
 	}

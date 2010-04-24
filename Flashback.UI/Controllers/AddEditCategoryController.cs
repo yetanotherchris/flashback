@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MonoTouch.UIKit;
 using Flashback.Core;
-using MonoTouch.Dialog;
 using System.Drawing;
+using System.Linq;
 
 namespace Flashback.UI.Controllers
 {
@@ -46,12 +46,19 @@ namespace Flashback.UI.Controllers
 			_labelName = new UILabel();
 			_labelName.Text = "Name";
 			_labelName.Frame = new RectangleF(5, 30, 280, 23);
+			_labelName.BackgroundColor = UIColor.Clear;
 			View.AddSubview(_labelName);
 
 			// Textbox
 			_textFieldName = new UITextField();
 			_textFieldName.Text = _category.Name;
 			_textFieldName.Frame = new RectangleF(5, 60, 280, 23);
+			_textFieldName.BorderStyle = UITextBorderStyle.RoundedRect;
+			_textFieldName.ShouldReturn = delegate
+		    {
+		    		_textFieldName.ResignFirstResponder();
+		    		return true;
+		    };
 			View.AddSubview(_textFieldName);
 
 			// Cancel
@@ -59,8 +66,7 @@ namespace Flashback.UI.Controllers
 			_cancelButton.Title = "Cancel";
 			_cancelButton.Clicked += delegate(object sender, EventArgs e)
 			{
-				_hubController = new CategoryHubController(_category);
-				NavigationController.PushViewController(_hubController, false);
+				NavigationController.PopViewControllerAnimated(true);
 			};
 
 			// Save button
@@ -81,9 +87,10 @@ namespace Flashback.UI.Controllers
 
 				_category.Name = _textFieldName.Text;
 				_category.Save();
-
-				_hubController = new CategoryHubController(_category);
-				NavigationController.PushViewController(_hubController, false);
+				
+				// Reload the table controller's data as it doesn't reload it.
+				((CategoriesController)NavigationController.ViewControllers[NavigationController.ViewControllers.Length-2]).ReloadData();
+				NavigationController.PopViewControllerAnimated(false);
 			};
 
 			// Hide the navigation bar, back button and toolbar.

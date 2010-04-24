@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -73,7 +73,7 @@ namespace Flashback.Core
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public static T Delete(int id)
+		public static void Delete(int id)
 		{
 			T defaultInstance = new T();
 
@@ -98,8 +98,6 @@ namespace Flashback.Core
 			{
 				Logger.Warn("SqliteException occured with Delete({0}) for {1}: \n{2}", id, typeof(T).Name, e);
 			}
-
-			return defaultInstance;
 		}
 
 		/// <summary>

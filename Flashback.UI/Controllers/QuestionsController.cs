@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,37 +13,41 @@ namespace Flashback.UI.Controllers
 	/// </summary>
 	public class QuestionsController : UITableViewController
 	{
-		private UIButton _addButton;
+		private UIBarButtonItem _addButton;
 		private UIBarButtonItem _editButton;
 		private UIBarButtonItem _doneButton;
 
 		private QuestionsData _data;
+		private Category _category;
 		private AddEditQuestionController _addEditQuestionController;
-		private QuestionsTableSource _categoriesTableSource;
+		private QuestionsTableSource _questionsTableSource;
 
 		public QuestionsController(Category category) : base(UITableViewStyle.Grouped)
 		{
 			_data = new QuestionsData(category);
+			_category = category;
 		}
 
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
+			
+			Title = _category.Name;
 
 			//	* Digg style table: 
 			//    * Lower text displays number of questions
 			//    * Inline text displays number due
 
 			// + Add button
-			_addButton = UIButton.FromType(UIButtonType.ContactAdd);
-			_addButton.SetTitle("Add",UIControlState.Normal);
-			_addButton.Frame = new System.Drawing.RectangleF(285,80,23,23);
-			_addButton.TouchDown += delegate(object sender, EventArgs e)
+			_addButton = new UIBarButtonItem();
+			_addButton.Title = "+";
+			_addButton.Clicked += delegate(object sender, EventArgs e)
 			{
-				_addEditQuestionController = new AddEditQuestionController(null);
+				_addEditQuestionController = new AddEditQuestionController(null,_data.Category);
 				NavigationController.PushViewController(_addEditQuestionController, true);
 			};
-			View.AddSubview(_addButton);
+			NavigationController.ToolbarHidden = false;
+			ToolbarItems = new UIBarButtonItem[]{_addButton};
 
 			// Edit and done button
 			_editButton = new UIBarButtonItem(UIBarButtonSystemItem.Edit);
@@ -63,11 +67,25 @@ namespace Flashback.UI.Controllers
 			NavigationItem.SetRightBarButtonItem(_editButton, false);
 
 			// Setup the delegate and datasource
-			_categoriesTableSource = new QuestionsTableSource(_data, null);
-			TableView.Source = _categoriesTableSource;
+			ReloadData();
+			TableView.AllowsSelectionDuringEditing = true;
+		}
+		
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear(animated);
+			NavigationController.ToolbarHidden = false;
+		}
+		
+		public void ReloadData()
+		{
+			_data = new QuestionsData(_category);
+			_questionsTableSource = new QuestionsTableSource(_data, this);
+			TableView.Source = _questionsTableSource;
+			TableView.ReloadData();
 		}
 
-		#region CategoriesTableSource
+		#region QuestionsTableSource
 		private class QuestionsTableSource : UITableViewSource
 		{
 			private QuestionsData _data;
@@ -106,6 +124,7 @@ namespace Flashback.UI.Controllers
 				{
 					Question question = _data.Questions[indexPath.Row];
 					Question.Delete(question.Id);
+					_data.DeleteRow(question);
 
 					tableView.DeleteRows(new[] { indexPath }, UITableViewRowAnimation.Fade);
 				}
@@ -113,7 +132,8 @@ namespace Flashback.UI.Controllers
 
 			public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
 			{
-				_addEditQuestionsController = new AddEditQuestionController(_data.Questions[indexPath.Row]);
+				Question question = _data.Questions[indexPath.Row];
+				_addEditQuestionsController = new AddEditQuestionController(question,question.Category);
 				_questionsController.NavigationController.PushViewController(_addEditQuestionsController, true);
 			}
 		}
@@ -125,10 +145,17 @@ namespace Flashback.UI.Controllers
 		public class QuestionsData
 		{
 			public List<Question> Questions { get; private set; }
+			public Category Category { get;private set;}
 
 			public QuestionsData(Category category)
 			{
+				Category = category;
 				Questions = Question.List(true,"@categoryid",category.Id).OrderBy(q => q.Order).ToList();
+			}
+			
+			public void DeleteRow(Question question)
+			{
+				Questions.Remove(question);	
 			}
 		}
 	}
