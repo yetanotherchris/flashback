@@ -6,18 +6,15 @@ using MonoTouch.UIKit;
 
 namespace Flashback.UI.Controllers
 {
-	// * UINavigationController with no toolbar
-	// * First controller is categories
-	// * Title bar is the app name.
 	public class RootController : UINavigationController
 	{
-		private CategoriesTableController _categoriesController;
+		private CategoriesController _categoriesController;
 
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
 
-			_categoriesController = new CategoriesTableController();
+			_categoriesController = new CategoriesController();
 			PushViewController(_categoriesController, false);
 
 			// TODO: persist to last shown controller

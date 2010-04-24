@@ -63,21 +63,25 @@
     <MtouchDebug>False</MtouchDebug>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
+	<Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
     <Reference Include="monotouch" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Application.cs" />
-    <Compile Include="Controllers\Categories\EditCategoryController.cs" />
-    <Compile Include="Controllers\Categories\CategoriesTableController.cs" />
+    <Compile Include="Controllers\AddEditCategoryController.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\AddEditQuestionController.cs" />
+    <Compile Include="Controllers\AnswerQuestionsController.cs" />
+    <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\CategoryHubController.cs" />
     <Compile Include="Controllers\RootController.cs" />
-    <Compile Include="Controllers\Questions\QuestionsTableController.cs" />
-    <Compile Include="Controllers\Questions\QuestionsHubController.cs" />
-    <Compile Include="Controllers\Questions\EditQuestionController.cs" />
-    <Compile Include="Controllers\Questions\AnswerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -90,10 +94,20 @@
     <Content Include="Default.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\HTML\calendar.html" />
+    <Content Include="Assets\HTML\categoryhub.html" />
+    <Content Include="Assets\Images\flashback-small.png" />
+    <Content Include="Assets\Images\icon.png" />
+    <Content Include="Assets\Images\original.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Images\Toolbar\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Assets\PSD\Default.psd" />
-    <None Include="Assets\Images\original.jpg" />
-    <None Include="Assets\Images\icon.png" />
-    <None Include="Assets\Images\flashback-small.png" />
+    <None Include="Assets\PSD\Logo512.psd" />
+    <None Include="Assets\PSD\Logo57.psd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Flashback.Core\Flashback.Core.csproj">

@@ -62,6 +62,7 @@ namespace Flashback.Core
 		/// <item>2 - incorrect response; where the correct one seemed easy to recall</item>
 		/// <item>1 - incorrect response; the correct one remembered</item>
 		/// <item>0 - complete blackout.</item>
+		/// http://www.supermemo.com/english/ol/sm2.htm
 		/// </list>
 		/// </summary>
 		public int ResponseQuality { get; set; }

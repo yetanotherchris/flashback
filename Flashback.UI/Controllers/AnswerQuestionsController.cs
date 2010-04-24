@@ -8,7 +8,7 @@ namespace Flashback.UI.Controllers
 	// * ReallySimple style with back/forward
 	// * Final View displays how you did: number correct, next ask date
 
-	public class AnswerController
+	public class AnswerQuestionsController
 	{
 	}
 }
