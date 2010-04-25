@@ -62,15 +62,17 @@ namespace Flashback.UI.Controllers
 			// Edit category
 			_editCategoryButton = new UIBarButtonItem();
 			_editCategoryButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_edit.png");
+			_editCategoryButton.Title = "Edit category";
 			_editCategoryButton.Clicked += delegate
 			{
-
+				AddEditCategoryController controller = new AddEditCategoryController(_category);
+				NavigationController.PushViewController(controller, false);
 			};
 
-			// Edit questions
+			// Manage questions
 			_editQuestionsButton = new UIBarButtonItem();
 			_editQuestionsButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_questions.png");
-			_editQuestionsButton.Title = "Edit questions";
+			_editQuestionsButton.Title = "Manage questions";
 			_editQuestionsButton.Clicked += delegate
 			{
 				QuestionsController controller = new QuestionsController(_category);
@@ -80,6 +82,7 @@ namespace Flashback.UI.Controllers
 			// Calendar
 			_calendarButton = new UIBarButtonItem();
 			_calendarButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_calendar.png");
+			_calendarButton.Title = "Calendar";
 			_calendarButton.Clicked += delegate
 			{
 				CalendarController controller = new CalendarController();

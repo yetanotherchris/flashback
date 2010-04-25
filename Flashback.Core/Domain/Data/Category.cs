@@ -18,7 +18,7 @@ using SqliteException = System.Data.SQLite.SQLiteException;
 
 namespace Flashback.Core
 {
-	public partial class Category : BaseDataObject<Category>
+	public partial class Category2 : BaseDataObject<Category2>
 	{
 		protected override string TableName
 		{
@@ -28,9 +28,9 @@ namespace Flashback.Core
 			}
 		}
 
-		protected override Category GetRow(SqliteDataReader reader)
+		protected override Category2 GetRow(SqliteDataReader reader)
 		{
-			Category category = new Category();
+			Category2 category = new Category2();
 			category.Id = reader.GetInt32(0);
 			category.Name = reader.GetString(1);
 
@@ -100,6 +100,61 @@ namespace Flashback.Core
 			{
 				Logger.Warn("SqliteException occured with Delete({0}) for Category: \n{2}", id, e);
 			}
+		}
+	}
+	
+	public partial class Category
+	{
+		public static Category Read(int id)
+		{
+			return new Category();	
+		}
+		
+		public void Save() {}
+		
+		public static IList<Category> List()
+		{
+			IList<Category> list = new List<Category>();
+			Category defaultInstance = new Category();
+
+			try
+			{
+				using (SqliteConnection connection = new SqliteConnection(Settings.DatabaseConnection))
+				{
+					connection.Open();
+					using (SqliteCommand command = new SqliteCommand(connection))
+					{
+						command.CommandText = "SELECT * FROM categories";
+
+						using (SqliteDataReader reader = command.ExecuteReader())
+						{
+							while (reader.Read())
+							{
+								Category category = new Category();
+								category.Id = reader.GetInt32(0);
+								category.Name = reader.GetString(1);
+								list.Add(category);
+							}
+						}
+					}
+				}
+			}
+			catch (SqliteException e)
+			{
+				Logger.Warn("SqliteException occured while getting a List<{0}>: \n{1}", "Category", e);
+			}
+
+			return list;
+		}
+		
+		/// <summary>
+		/// Removes the Category and all questions for it
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public static void Delete(int id)
+		{
+
 		}
 	}
 }

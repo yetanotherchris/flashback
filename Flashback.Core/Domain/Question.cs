@@ -1,26 +1,50 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SQLite;
 
 namespace Flashback.Core
 {
-	public partial class Question : BaseDataObject<Question>
+	public partial class Question
 	{
+		private Category _category;
+		
 		#region Properties	
+		[PrimaryKey,AutoIncrement]
+		public int Id { get; set; }
+		
 		/// <summary>
 		/// The category for the question
 		/// </summary>
-		public Category Category { get; set; }
+		[Ignore]
+		public Category Category
+		{
+			get
+			{
+				if (_category == null)
+					_category = Category.Read(CategoryId);
+				
+				return _category;
+			}
+			set
+			{
+				CategoryId = value.Id;	
+			}
+		}
+		
+		public int CategoryId { get; set;}
 
 		/// <summary>
 		/// The question text.
 		/// </summary>
+		[MaxLength(100)]
 		public string Title { get; set; }
 
 		/// <summary>
 		/// The question's answer.
 		/// </summary>
+		[MaxLength(1000)]
 		public string Answer { get; set; }
 
 		/// <summary>
@@ -72,5 +96,42 @@ namespace Flashback.Core
 		/// </summary>
 		public double EasinessFactor { get; set; }
 		#endregion
+		
+		public int Save()
+		{
+			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
+			
+			if (Id < 1)			
+				return connection.Insert(this);
+			else
+				return connection.Update(this);
+		}
+		
+		public static Question Read(int id)
+		{
+			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
+			return connection.Table<Question>().FirstOrDefault(q => q.Id == id);
+		}
+		
+		public static IList<Question> List()
+		{
+			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
+			return connection.Table<Question>().ToList();
+		}
+		
+		public static IList<Question> ForCategory(Category category)
+		{
+			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
+			connection.Trace = true;
+			
+			int id = category.Id; // This is a quirk with SQLite not getting the property value
+			return connection.Table<Question>().Where(q => q.CategoryId == id).ToList();
+		}
+		
+		public static void Delete(int id)
+		{
+			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
+			connection.Delete<Question>(new Question { Id=id });
+		}
 	}
 }
