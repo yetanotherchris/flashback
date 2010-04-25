@@ -15,12 +15,14 @@ namespace Flashback.UI.Controllers
 	public class CategoriesController : UITableViewController
 	{
 		private UIBarButtonItem _addButton;
+		private UIBarButtonItem _informationButton;
 		private UIBarButtonItem _editButton;
 		private UIBarButtonItem _doneButton;
 		private bool _isEditing;
 
 		private CategoriesData _data;
 		private AddEditCategoryController _addEditCategoryController;
+		private InformationController _informationController;
 		private CategoriesTableSource _categoriesTableSource;
 
 		public CategoriesController() : base(UITableViewStyle.Grouped) { }
@@ -31,7 +33,6 @@ namespace Flashback.UI.Controllers
 			
 			Title = "Categories";
 			ToolbarItems = GetToolBar();
-			NavigationController.ToolbarHidden = false;
 
 			//	* Digg style table: 
 			//    * Lower text displays number of questions
@@ -54,15 +55,14 @@ namespace Flashback.UI.Controllers
 
 			NavigationItem.SetRightBarButtonItem(_editButton, false);
 
-			// Setup the delegate and datasource
+			// Setup the datasource
 			ReloadData();
-			TableView.AllowsSelectionDuringEditing = true;
 		}
 		
 		public override void ViewDidAppear (bool animated)
 		{
 			base.ViewDidAppear(animated);
-			NavigationController.ToolbarHidden = true;
+			NavigationController.ToolbarHidden = false;
 		}
 		
 		public void ReloadData()
@@ -78,13 +78,24 @@ namespace Flashback.UI.Controllers
 			// Add button
 			_addButton = new UIBarButtonItem();
 			_addButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_add.png");
+			_addButton.Title = "Add category";
 			_addButton.Clicked += delegate
 			{
 				_addEditCategoryController = new AddEditCategoryController(null);
-				NavigationController.PushViewController(_addEditCategoryController, true);
+				NavigationController.PushViewController(_addEditCategoryController, false);
+			};
+			
+			// Information button
+			_informationButton = new UIBarButtonItem();
+			_informationButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
+			_informationButton.Title = "Info";
+			_informationButton.Clicked += delegate
+			{
+				_informationController = new InformationController();
+				NavigationController.PushViewController(_informationController, false);
 			};
 
-			return new UIBarButtonItem[] { _addButton };
+			return new UIBarButtonItem[] { _addButton,_informationButton };
 		}
 
 		#region CategoriesTableSource
@@ -136,17 +147,8 @@ namespace Flashback.UI.Controllers
 
 			public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
 			{
-				if (tableView.Editing)
-				{
-					tableView.Editing = false;
-					_addEditCategoryController = new AddEditCategoryController(_data.Categories[indexPath.Row]);
-					_parentController.NavigationController.PushViewController(_addEditCategoryController, true);
-				}
-				else
-				{
-					_hubController = new CategoryHubController(_data.Categories[indexPath.Row]);
-					_parentController.NavigationController.PushViewController(_hubController, true);
-				}
+				_hubController = new CategoryHubController(_data.Categories[indexPath.Row]);
+				_parentController.NavigationController.PushViewController(_hubController, true);
 			}
 		}
 		#endregion
@@ -160,7 +162,7 @@ namespace Flashback.UI.Controllers
 
 			public CategoriesData()
 			{
-				Categories = Category.List().OrderBy(c => c.Name).ToList();
+				Categories = Category.List().ToList().OrderBy(c => c.Name).ToList();
 			}
 			
 			public void DeleteRow(Category category)

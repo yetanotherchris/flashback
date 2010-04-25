@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 
 #if MONOTOUCH
-using Mono.Data.Sqlite;
+//using Mono.Data.Sqlite;
 #endif
 
 #if WINDOWS

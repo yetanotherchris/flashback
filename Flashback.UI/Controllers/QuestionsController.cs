@@ -53,9 +53,8 @@ namespace Flashback.UI.Controllers
 
 			NavigationItem.SetRightBarButtonItem(_editButton, false);
 
-			// Setup the delegate and datasource
+			// Setup the datasource
 			ReloadData();
-			TableView.AllowsSelectionDuringEditing = true;
 		}
 		
 		public override void ViewDidAppear (bool animated)
@@ -77,6 +76,7 @@ namespace Flashback.UI.Controllers
 			// Add button
 			_addButton = new UIBarButtonItem();
 			_addButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_add.png");
+			_addButton.Title = "Add question";
 			_addButton.Clicked += delegate
 			{
 				_addEditQuestionController = new AddEditQuestionController(null, _data.Category);
@@ -145,7 +145,7 @@ namespace Flashback.UI.Controllers
 			{
 				Question question = _data.Questions[indexPath.Row];
 				_addEditQuestionsController = new AddEditQuestionController(question,question.Category);
-				_questionsController.NavigationController.PushViewController(_addEditQuestionsController, true);
+				_questionsController.NavigationController.PushViewController(_addEditQuestionsController, false);
 			}
 		}
 		#endregion
@@ -161,7 +161,7 @@ namespace Flashback.UI.Controllers
 			public QuestionsData(Category category)
 			{
 				Category = category;
-				Questions = Question.List(true,"@categoryid",category.Id).OrderBy(q => q.Order).ToList();
+				Questions = Question.ForCategory(category).ToList();
 			}
 			
 			public void DeleteRow(Question question)

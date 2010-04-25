@@ -21,7 +21,8 @@ namespace Flashback.UI.Controllers
 		private UILabel _labelAnswer;
 		private UITextField _textFieldQuestion;
 		private UITextField _textFieldAnswer;
-		
+		private UILabel _labelTipsHeader;
+		private UILabel _labelTipsBody;
 
 		public AddEditQuestionController(Question question,Category category)
 		{
@@ -52,14 +53,15 @@ namespace Flashback.UI.Controllers
 			// Question label
 			_labelQuestion = new UILabel();
 			_labelQuestion.Text = "Question";
-			_labelQuestion.Frame = new RectangleF(5, 30, 280, 23);
+			_labelQuestion.Font = UIFont.BoldSystemFontOfSize(16f);
+			_labelQuestion.Frame = new RectangleF(10, 10, 300, 25);
 			_labelQuestion.BackgroundColor = UIColor.Clear;
 			View.AddSubview(_labelQuestion);
 
 			// Question textbox
 			_textFieldQuestion = new UITextField();
 			_textFieldQuestion.Text = _question.Title;
-			_textFieldQuestion.Frame = new RectangleF(5, 60, 280, 23);
+			_textFieldQuestion.Frame = new RectangleF(10, 35, 300, 30);
 			_textFieldQuestion.BorderStyle = UITextBorderStyle.RoundedRect;
 			_textFieldQuestion.ShouldReturn = delegate
 		    {
@@ -71,14 +73,15 @@ namespace Flashback.UI.Controllers
 			// Answer label
 			_labelAnswer = new UILabel();
 			_labelAnswer.Text = "Answer";
-			_labelAnswer.Frame = new RectangleF(5, 90, 280, 23);
+			_labelAnswer.Font = UIFont.BoldSystemFontOfSize(16f);
+			_labelAnswer.Frame = new RectangleF(10, 75, 300, 25);
 			_labelAnswer.BackgroundColor = UIColor.Clear;
 			View.AddSubview(_labelAnswer);
 
 			// Answer textbox
 			_textFieldAnswer = new UITextField();
 			_textFieldAnswer.Text = _question.Answer;
-			_textFieldAnswer.Frame = new RectangleF(5, 120, 280, 50);
+			_textFieldAnswer.Frame = new RectangleF(10, 100, 300, 120);
 			_textFieldAnswer.BorderStyle = UITextBorderStyle.RoundedRect;
 			_textFieldAnswer.ShouldReturn = delegate
 		    {
@@ -86,13 +89,35 @@ namespace Flashback.UI.Controllers
 		    		return true;
 		    };
 			View.AddSubview(_textFieldAnswer);
+			
+			// Tips section
+			_labelTipsHeader = new UILabel();
+			_labelTipsHeader.Text = "Tips";
+			_labelTipsHeader.Font = UIFont.BoldSystemFontOfSize(16f);
+			_labelTipsHeader.TextColor = UIColor.Gray;
+			_labelTipsHeader.Frame = new RectangleF(15, 225, 300, 25);
+			_labelTipsHeader.BackgroundColor = UIColor.Clear;
+			View.AddSubview(_labelTipsHeader);
+			
+			_labelTipsBody = new UILabel();
+			_labelTipsBody.Text = "Make the question title short, make the answer short with " +
+				"only a few points blah blah blah blah blah lorem ipsum " +
+				"more text lines here about some stuff about memory " +
+				"maybe one more line who knows you never can tell " +
+				"but it would be useful to bulk it up.";
+			_labelTipsBody.Font = UIFont.SystemFontOfSize(16f);
+			_labelTipsBody.TextColor = UIColor.Gray;
+			_labelTipsBody.Frame = new RectangleF(15, 245, 295, 150);
+			_labelTipsBody.BackgroundColor = UIColor.Clear;
+			_labelTipsBody.Lines = 10;
+			View.AddSubview(_labelTipsBody);
 
 			// Cancel
 			_cancelButton = new UIBarButtonItem();
 			_cancelButton.Title = "Cancel";
 			_cancelButton.Clicked += delegate(object sender, EventArgs e)
 			{
-				NavigationController.PopViewControllerAnimated(true);
+				NavigationController.PopViewControllerAnimated(false);
 			};
 
 			// Save button
@@ -100,6 +125,9 @@ namespace Flashback.UI.Controllers
 			_saveButton.Title = "Save";
 			_saveButton.Clicked += delegate(object sender, EventArgs e)
 			{
+				_textFieldAnswer.ResignFirstResponder();
+				_textFieldQuestion.ResignFirstResponder();
+				
 				if (string.IsNullOrEmpty(_textFieldQuestion.Text) || string.IsNullOrEmpty(_textFieldAnswer.Text))
 				{
 					UIAlertView alertView = new UIAlertView();

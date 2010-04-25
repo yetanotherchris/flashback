@@ -44,15 +44,16 @@ namespace Flashback.UI.Controllers
 
 			// Name label
 			_labelName = new UILabel();
-			_labelName.Text = "Name";
-			_labelName.Frame = new RectangleF(5, 30, 280, 23);
+			_labelName.Font = UIFont.BoldSystemFontOfSize(16f);
+			_labelName.Text = "Category name";
+			_labelName.Frame = new RectangleF(10, 10, 300, 25);
 			_labelName.BackgroundColor = UIColor.Clear;
 			View.AddSubview(_labelName);
 
 			// Textbox
 			_textFieldName = new UITextField();
 			_textFieldName.Text = _category.Name;
-			_textFieldName.Frame = new RectangleF(5, 60, 280, 23);
+			_textFieldName.Frame = new RectangleF(10, 35, 300, 30);
 			_textFieldName.BorderStyle = UITextBorderStyle.RoundedRect;
 			_textFieldName.ShouldReturn = delegate
 		    {
@@ -66,7 +67,7 @@ namespace Flashback.UI.Controllers
 			_cancelButton.Title = "Cancel";
 			_cancelButton.Clicked += delegate(object sender, EventArgs e)
 			{
-				NavigationController.PopViewControllerAnimated(true);
+				NavigationController.PopViewControllerAnimated(false);
 			};
 
 			// Save button
@@ -74,6 +75,8 @@ namespace Flashback.UI.Controllers
 			_saveButton.Title = "Save";
 			_saveButton.Clicked += delegate(object sender, EventArgs e)
 			{
+				_textFieldName.ResignFirstResponder();
+				
 				if (string.IsNullOrEmpty(_textFieldName.Text))
 				{
 					UIAlertView alertView = new UIAlertView();

@@ -1,9 +1,10 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using SQLite;
 
 #if MONOTOUCH
-using Mono.Data.Sqlite;
+//using Mono.Data.Sqlite;
 #endif
 
 #if WINDOWS
@@ -56,6 +57,12 @@ namespace Flashback.Core
 		/// </summary>
 		public void CreateDatabase()
 		{
+			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
+			connection.CreateTable<Category>();
+			connection.CreateTable<Question>();
+			
+			return;
+			/*
 			try
 			{
 				if (!File.Exists(Settings.DatabaseFile))
@@ -87,6 +94,7 @@ namespace Flashback.Core
 							command.CommandText = categoriesSql;
 							command.ExecuteNonQuery();
 							
+							// Default category
 							command.CommandText = "insert into categories (name) values ('german')";
 							command.ExecuteNonQuery();
 
@@ -105,12 +113,7 @@ namespace Flashback.Core
 			{
 				Logger.Fatal("Unable to create the database: \n{0}", ex);
 				throw;
-			}
-		}
-
-		public IList<Category> Categories()
-		{
-			return null;
+			}*/
 		}
 	}
 }
