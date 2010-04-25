@@ -57,37 +57,36 @@ namespace Flashback.UI.Controllers
 			NavigationController.ToolbarHidden = false;
 		}
 
-		public UIBarButtonItem[] GetToolBar()
+		private UIBarButtonItem[] GetToolBar()
 		{
-			// Edit categories
+			// Edit category
 			_editCategoryButton = new UIBarButtonItem();
-			//_editCategoryButton.Image = UIImage.FromFile("Assets/Images/Toolbar/editcategories.png");
-			_editCategoryButton.Title = "Edit categories";
+			_editCategoryButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_edit.png");
 			_editCategoryButton.Clicked += delegate
 			{
-				
+
 			};
 
 			// Edit questions
 			_editQuestionsButton = new UIBarButtonItem();
-			//_editQuestionsButton.Image = UIImage.FromFile("Assets/Images/Toolbar/editquestions.png");
+			_editQuestionsButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_questions.png");
 			_editQuestionsButton.Title = "Edit questions";
 			_editQuestionsButton.Clicked += delegate
 			{
 				QuestionsController controller = new QuestionsController(_category);
-				NavigationController.PushViewController(controller,true);
+				NavigationController.PushViewController(controller, true);
 			};
 
 			// Calendar
 			_calendarButton = new UIBarButtonItem();
-			//_calenderButton.Image = UIImage.FromFile("Assets/Images/Toolbar/calendar.png");
-			_calendarButton.Title = "Edit questions";
+			_calendarButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_calendar.png");
 			_calendarButton.Clicked += delegate
 			{
-				
+				CalendarController controller = new CalendarController();
+				NavigationController.PushViewController(controller, true);
 			};
 
-			return new UIBarButtonItem[] { _editCategoryButton,_editQuestionsButton, _calendarButton};
+			return new UIBarButtonItem[] { _editCategoryButton, _editQuestionsButton, _calendarButton };
 		}
 	}
 }

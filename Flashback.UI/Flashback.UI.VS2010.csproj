@@ -67,16 +67,26 @@
       <Name>Flashback.Core.VS2010</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Images\Toolbar\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\HTML\calendar.html" />
     <Content Include="Assets\HTML\categoryhub.html" />
-    <Content Include="Assets\Images\flashback-small.png" />
     <Content Include="Assets\Images\icon.png" />
-    <Content Include="Assets\Images\original.jpg" />
+    <Content Include="Assets\Images\Toolbar\toolbar_add.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\Toolbar\toolbar_calendar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\Toolbar\toolbar_edit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\Toolbar\toolbar_information.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\Toolbar\toolbar_questions.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Default.png" />
   </ItemGroup>
   <ItemGroup>
