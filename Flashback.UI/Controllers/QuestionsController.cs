@@ -33,21 +33,8 @@ namespace Flashback.UI.Controllers
 			base.ViewDidLoad();
 			
 			Title = _category.Name;
-
-			//	* Digg style table: 
-			//    * Lower text displays number of questions
-			//    * Inline text displays number due
-
-			// + Add button
-			_addButton = new UIBarButtonItem();
-			_addButton.Title = "+";
-			_addButton.Clicked += delegate(object sender, EventArgs e)
-			{
-				_addEditQuestionController = new AddEditQuestionController(null,_data.Category);
-				NavigationController.PushViewController(_addEditQuestionController, true);
-			};
+			ToolbarItems = GetToolBar();
 			NavigationController.ToolbarHidden = false;
-			ToolbarItems = new UIBarButtonItem[]{_addButton};
 
 			// Edit and done button
 			_editButton = new UIBarButtonItem(UIBarButtonSystemItem.Edit);
@@ -83,6 +70,20 @@ namespace Flashback.UI.Controllers
 			_questionsTableSource = new QuestionsTableSource(_data, this);
 			TableView.Source = _questionsTableSource;
 			TableView.ReloadData();
+		}
+
+		private UIBarButtonItem[] GetToolBar()
+		{
+			// Add button
+			_addButton = new UIBarButtonItem();
+			_addButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_add.png");
+			_addButton.Clicked += delegate
+			{
+				_addEditQuestionController = new AddEditQuestionController(null, _data.Category);
+				NavigationController.PushViewController(_addEditQuestionController, true);
+			};
+
+			return new UIBarButtonItem[] { _addButton };
 		}
 
 		#region QuestionsTableSource
@@ -128,6 +129,16 @@ namespace Flashback.UI.Controllers
 
 					tableView.DeleteRows(new[] { indexPath }, UITableViewRowAnimation.Fade);
 				}
+			}
+
+			public override void MoveRow(UITableView tableView, NSIndexPath sourceIndexPath, NSIndexPath destinationIndexPath)
+			{
+				// Re-order using question.Order
+			}
+
+			public override bool CanMoveRow(UITableView tableView, NSIndexPath indexPath)
+			{
+				return true;
 			}
 
 			public override void RowSelected(UITableView tableView, NSIndexPath indexPath)

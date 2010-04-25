@@ -30,18 +30,12 @@ namespace Flashback.UI.Controllers
 			base.ViewDidLoad();
 			
 			Title = "Categories";
+			ToolbarItems = GetToolBar();
+			NavigationController.ToolbarHidden = false;
 
 			//	* Digg style table: 
 			//    * Lower text displays number of questions
 			//    * Inline text displays number due
-
-			// + Add button
-			_addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add);
-			_addButton.Clicked += delegate(object sender, EventArgs e)
-			{
-				_addEditCategoryController = new AddEditCategoryController(null);
-				NavigationController.PushViewController(_addEditCategoryController, true);
-			};
 
 			// Edit and done button
 			_editButton = new UIBarButtonItem(UIBarButtonSystemItem.Edit);
@@ -58,7 +52,6 @@ namespace Flashback.UI.Controllers
 				NavigationItem.SetRightBarButtonItem(_editButton, false);
 			};
 
-			NavigationItem.SetLeftBarButtonItem(_addButton, false);
 			NavigationItem.SetRightBarButtonItem(_editButton, false);
 
 			// Setup the delegate and datasource
@@ -78,6 +71,20 @@ namespace Flashback.UI.Controllers
 			_categoriesTableSource = new CategoriesTableSource(_data, this);
 			TableView.Source = _categoriesTableSource;
 			TableView.ReloadData();
+		}
+
+		private UIBarButtonItem[] GetToolBar()
+		{
+			// Add button
+			_addButton = new UIBarButtonItem();
+			_addButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_add.png");
+			_addButton.Clicked += delegate
+			{
+				_addEditCategoryController = new AddEditCategoryController(null);
+				NavigationController.PushViewController(_addEditCategoryController, true);
+			};
+
+			return new UIBarButtonItem[] { _addButton };
 		}
 
 		#region CategoriesTableSource
