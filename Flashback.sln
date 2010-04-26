@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.UI", "Flashback.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Core", "Flashback.Core\Flashback.Core.csproj", "{7244A478-3BC2-4932-A234-66F248FFDC63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Core.iPhone", "Flashback.Core.iPhone\Flashback.Core.iPhone.csproj", "{A54D0E91-7616-4FC0-81A1-34A9D17947E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -21,6 +23,14 @@ Global
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Release|iPhone.Build.0 = Release|iPhone
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhone.Build.0 = Debug|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhone.ActiveCfg = Release|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhone.Build.0 = Release|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Debug|iPhone.Build.0 = Debug|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
@@ -29,6 +39,14 @@ Global
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Release|iPhone.Build.0 = Release|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhone.Build.0 = Debug|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhone.ActiveCfg = Release|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhone.Build.0 = Release|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Flashback.UI\Flashback.UI.csproj

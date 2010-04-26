@@ -110,11 +110,12 @@ namespace Flashback.UI.Controllers
 
 				if (cell == null)
 				{
-					cell = new UITableViewCell(UITableViewCellStyle.Default, "cellid");
+					cell = new UITableViewCell(UITableViewCellStyle.Subtitle, "cellid");
 					cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
 				}
 
 				cell.TextLabel.Text = _data.Questions[indexPath.Row].Title;
+				cell.DetailTextLabel.Text = _data.Questions[indexPath.Row].Answer;
 
 				return cell;
 			}

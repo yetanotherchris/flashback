@@ -6,6 +6,7 @@ using MonoTouch.UIKit;
 using Flashback.Core;
 using MonoTouch.Foundation;
 using Flashback.UI.Controllers;
+using Flashback.Core.iPhone;
 
 namespace Flashback.UI
 {
@@ -14,10 +15,13 @@ namespace Flashback.UI
 	{
 		private UIWindow _window;
 		private RootController _rootController;
+		private SqliteRepository _sqliteRepository;
 
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			//Repository.Current.DeleteDatabase();
+			_sqliteRepository = new SqliteRepository();
+			Repository.SetInstance(_sqliteRepository);
 			Repository.Default.CreateDatabase();
 			//Question.Save(new Question() {Id=1});
 			

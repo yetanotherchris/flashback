@@ -27,7 +27,7 @@ using System.Reflection;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace SQLite
+namespace Flashback.Core.iPhone.SQLite
 {
 	public class SQLiteException : System.Exception
 	{
