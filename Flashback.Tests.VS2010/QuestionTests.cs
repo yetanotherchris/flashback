@@ -56,12 +56,12 @@ namespace Flashback.Tests.VS2010
 		[TestMethod]
 		public void AddQuestionTest()
 		{
-			Repository.Current.DeleteDatabase();
-			Repository.Current.CreateDatabase();
+			Repository.Default.DeleteDatabase();
+			Repository.Default.CreateDatabase();
 
 			Category category = new Category();
 			category.Name = "bob";
-			category.Save();
+			Category.Save(category);
 
 			Question question = new Question();
 			question.Title = "Is Fiona going to the baby?";
@@ -75,7 +75,7 @@ namespace Flashback.Tests.VS2010
 			question.Order = 90;
 			question.PreviousInterval = 100;
 			question.ResponseQuality = 110;
-			question.Save();
+			Question.Save(question);
 
 			Assert.AreEqual(1, question.Id);
 		}
@@ -83,13 +83,13 @@ namespace Flashback.Tests.VS2010
 		[TestMethod]
 		public void UpdateQuestionTest()
 		{
-			Repository.Current.DeleteDatabase();
-			Repository.Current.CreateDatabase();
+			Repository.Default.DeleteDatabase();
+			Repository.Default.CreateDatabase();
 
 			// Create
 			Category category = new Category();
 			category.Name = "bob";
-			category.Save();
+			Category.Save(category);
 
 			Question question = new Question();
 			question.Title = "Is Fiona going to the baby?";
@@ -103,7 +103,7 @@ namespace Flashback.Tests.VS2010
 			question.Order = 90;
 			question.PreviousInterval = 100;
 			question.ResponseQuality = 110;
-			question.Save();
+			Question.Save(question);
 
 			question = Question.Read(1);
 
@@ -119,7 +119,7 @@ namespace Flashback.Tests.VS2010
 			question.Order = 30;
 			question.PreviousInterval = 40;
 			question.ResponseQuality = 50;
-			question.Save();
+			Question.Save(question);
 
 			// Read back
 			question = Question.Read(1);
@@ -138,12 +138,12 @@ namespace Flashback.Tests.VS2010
 		[TestMethod]
 		public void ReadQuestionTest()
 		{
-			Repository.Current.DeleteDatabase();
-			Repository.Current.CreateDatabase();
+			Repository.Default.DeleteDatabase();
+			Repository.Default.CreateDatabase();
 
 			Category category = new Category();
 			category.Name = "bob";
-			category.Save();
+			Category.Save(category);
 
 			Question question = new Question();
 			question.Title = "Is Fiona going to the baby?";
@@ -157,7 +157,7 @@ namespace Flashback.Tests.VS2010
 			question.Order = 90;
 			question.PreviousInterval = 100;
 			question.ResponseQuality = 110;
-			question.Save();
+			Question.Save(question);
 
 			question = Question.Read(1);
 			Assert.AreEqual("Is Fiona going to the baby?", question.Title);

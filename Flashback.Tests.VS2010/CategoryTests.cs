@@ -56,12 +56,12 @@ namespace Flashback.Tests.VS2010
 		[TestMethod]
 		public void AddCategoryTest()
 		{
-			Repository.Current.DeleteDatabase();
-			Repository.Current.CreateDatabase();
+			Repository.Default.DeleteDatabase();
+			Repository.Default.CreateDatabase();
 
 			Category category = new Category();
 			category.Name = "bob";
-			category.Save();
+			Category.Save(category);
 
 			Assert.AreEqual(1, category.Id);
 		}
@@ -69,18 +69,18 @@ namespace Flashback.Tests.VS2010
 		[TestMethod]
 		public void UpdateCategoryTest()
 		{
-			Repository.Current.DeleteDatabase();
-			Repository.Current.CreateDatabase();
+			Repository.Default.DeleteDatabase();
+			Repository.Default.CreateDatabase();
 
 			// Create
 			Category category = new Category();
 			category.Name = "bob";
-			category.Save();
+			Category.Save(category);
 
 			// Update
 			category = Category.Read(1);
 			category.Name = "bob two";
-			category.Save();
+			Category.Save(category);
 
 			// Read back
 			category = Category.Read(1);
@@ -91,13 +91,13 @@ namespace Flashback.Tests.VS2010
 		[TestMethod]
 		public void ReadCategoryTest()
 		{
-			Repository.Current.DeleteDatabase();
-			Repository.Current.CreateDatabase();
+			Repository.Default.DeleteDatabase();
+			Repository.Default.CreateDatabase();
 
 			// Create
 			Category category = new Category();
 			category.Name = "bob";
-			category.Save();
+			Category.Save(category);
 
 			// Read back
 			category = Category.Read(1);
