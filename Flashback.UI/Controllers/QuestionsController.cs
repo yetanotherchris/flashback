@@ -144,7 +144,7 @@ namespace Flashback.UI.Controllers
 			public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
 			{
 				Question question = _data.Questions[indexPath.Row];
-				_addEditQuestionsController = new AddEditQuestionController(question,question.Category);
+				_addEditQuestionsController = new AddEditQuestionController(question,question.GetCategory());
 				_questionsController.NavigationController.PushViewController(_addEditQuestionsController, false);
 			}
 		}

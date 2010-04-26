@@ -29,8 +29,6 @@ namespace Flashback.UI.Controllers
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
-			Title = _category.Name;
 
 			// Add the toolbar
 			ToolbarItems = GetToolBar();
@@ -49,6 +47,12 @@ namespace Flashback.UI.Controllers
 			}
 			webView.LoadHtmlString(template,new NSUrl("/"));
 			View.AddSubview(webView);*/
+		}
+		
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			Title = _category.Name;
 		}
 		
 		public override void ViewDidAppear (bool animated)

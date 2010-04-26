@@ -54,7 +54,11 @@ namespace Flashback.UI.Controllers
 			};
 
 			NavigationItem.SetRightBarButtonItem(_editButton, false);
-
+		}
+		
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
 			// Setup the datasource
 			ReloadData();
 		}

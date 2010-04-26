@@ -89,10 +89,9 @@ namespace Flashback.UI.Controllers
 				}
 
 				_category.Name = _textFieldName.Text;
-				_category.Save();
+				Category.Save(_category);
 				
 				// Reload the table controller's data as it doesn't reload it.
-				((CategoriesController)NavigationController.ViewControllers[NavigationController.ViewControllers.Length-2]).ReloadData();
 				NavigationController.PopViewControllerAnimated(false);
 			};
 
