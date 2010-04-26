@@ -2,59 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SQLite;
 
 namespace Flashback.Core
 {
 	public class Question
 	{
-		private Category _category;
-		
-		#region Properties	
-		[PrimaryKey,AutoIncrement]
+		#region Properties
 		public int Id { get; set; }
-		
+
 		/// <summary>
 		/// The category for the question
 		/// </summary>
-		[Ignore]
-		internal Category Category
-		{
-			get
-			{
-				if (_category == null)
-					_category = Category.Read(CategoryId);
-				
-				return _category;
-			}
-			set
-			{
-				CategoryId = value.Id;	
-			}
-		}
-		
-		public Category GetCategory()
-		{
-			return Category.Read(CategoryId);
-		}
-		
-		public void SetCategory(Category category)
-		{
-			CategoryId = category.Id;	
-		}
-		
-		public int CategoryId { get; set;}
+		public Category Category { get; set; }
 
 		/// <summary>
 		/// The question text.
 		/// </summary>
-		[MaxLength(100)]
 		public string Title { get; set; }
 
 		/// <summary>
 		/// The question's answer.
 		/// </summary>
-		[MaxLength(1000)]
 		public string Answer { get; set; }
 
 		/// <summary>
@@ -82,7 +50,6 @@ namespace Flashback.Core
 		/// The number of days until the question is next asked.
 		/// </summary>
 		public int Interval { get; set; }
-		
 		/// <summary>
 		/// Number of times the question has been asked
 		/// </summary>
@@ -107,62 +74,30 @@ namespace Flashback.Core
 		/// </summary>
 		public double EasinessFactor { get; set; }
 		#endregion
-		
-		public Question()
-		{
-			LastAsked = DateTime.Today;
-			NextAskOn = DateTime.Today;
-		}
-		
+
 		public static int Save(Question question)
 		{
-			using (SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile))
-			{
-				connection.Trace = true;
-				
-				if (question.Id < 1)
-					return connection.Insert(question);
-				else
-				{
-					connection.Update(question);	
-					return question.Id;
-				}
-			}
+			return Repository.Default.SaveQuestion(question);
 		}
-		
+
 		public static Question Read(int id)
 		{
-			using (SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile))
-			{
-				return connection.Table<Question>().FirstOrDefault(q => q.Id == id);
-			}
+			return Repository.Default.ReadQuestion(id);
 		}
-		
+
 		public static IList<Question> List()
 		{
-			using (SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile))
-			{
-				return connection.Table<Question>().ToList();
-			}
+			return Repository.Default.ListQuestions();
 		}
-		
+
 		public static IList<Question> ForCategory(Category category)
 		{
-			using (SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile))
-			{
-				connection.Trace = true;
-				
-				int id = category.Id; // This is a quirk with SQLite not getting the property value
-				return connection.Table<Question>().Where(q => q.CategoryId == id).ToList();
-			}
+			return Repository.Default.QuestionsForCategory(category);
 		}
-		
+
 		public static void Delete(int id)
 		{
-			using (SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile))
-			{
-				connection.Delete<Question>(new Question { Id=id });
-			}
+			Repository.Default.DeleteQuestion(id);
 		}
 	}
 }

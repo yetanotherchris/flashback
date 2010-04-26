@@ -41,7 +41,7 @@ namespace Flashback.UI.Controllers
 			if (_question == null)
 			{
 				_question = new Question();
-				_question.SetCategory(_category);
+				_question.Category = _category;
 				Title = "Add Question";
 			}
 			else
