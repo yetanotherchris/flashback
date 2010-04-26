@@ -1,0 +1,243 @@
+<html>
+<head>
+<title>Untitled 1</title>
+<script type="text/javascript">
+var _monthNames;
+var _eventDates;
+var _now;
+var _todayDate;
+var _todayMonth;
+
+function initialize()
+{
+	_monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+	_now = new Date();
+	_todayDate = _now.getDate();
+	_todayMonth = _now.getMonth();
+	
+	initializeEvents();
+}
+
+function initializeEvents()
+{
+	_eventDates = new Array();
+	_eventDates['18:5:2010'] = "18";
+	_eventDates['25:6:2010'] = "3";
+}
+
+function getFirstDay(month,year){
+    var firstDate = new Date(year,month,1);
+    return firstDate.getDay() + 1;
+}
+
+function daysInMonth(m, y) { // m is 0 indexed: 0-11
+    switch (m) {
+        case 1 :
+            return ((y % 4 == 0 && y % 100) || (y % 400 == 0)) ? 29 : 28;
+        case 8 : 
+        case 3 : 
+        case 5 : 
+        case 10 :
+            return 30;
+        default :
+            return 31;
+    }
+}
+
+function writeCalendar()
+{
+	var year = _now.getFullYear();
+	var currentMonth = _now.getMonth();
+	
+	for (var i=0;i < 12;i++)
+	{
+		if (currentMonth > 11)
+		{
+			year++;
+			currentMonth = 0;
+		}
+		
+		document.write("<div style='float:left;padding:10px;'>");
+		writeMonth(currentMonth,year);
+		document.write("</div>");
+		
+		if (i > 0 && (i+1) % 4 === 0)
+			document.write("<br style='clear:both'/><br/>");
+			
+		currentMonth++;
+	}
+	
+	document.write("</div>");
+}
+
+function getHeader(month,year)
+{
+	return "<tr><td colspan='7' class='monthName'>" +_monthNames[month]+ " " +year+ "</td></tr>";
+}
+
+function writeMonth(month,year)
+{
+	var firstDay = getFirstDay(month,year);
+	var cells = daysInMonth(month,year) + firstDay;
+	
+	var content = "<table id='calendar'>";
+	content += getHeader(month,year);
+	
+	content += "<tr>";
+	content += "<td class='day-header'>S</td>";
+	content += "<td class='day-header'>M</td>";
+	content += "<td class='day-header'>T</td>";
+	content += "<td class='day-header'>W</td>";
+	content += "<td class='day-header'>T</td>";
+	content += "<td class='day-header'>F</td>";
+	content += "<td class='day-header'>S</td>";
+	content += "</tr>";
+	
+	content += "<tr>";
+	
+	var currentCol = 0;
+	
+	for (var i = 1; i < cells; i++)
+	{
+	    if (i < firstDay)
+	    {
+	        // Fill days before the first of the month
+	        content += "<td class='empty'></td>"
+	    } 
+	    else
+	    {
+	        // 
+	        var day = (i - firstDay + 1);
+	        var className = "day";
+	        var attribs = "";
+	        
+	       	if(hasItem(day,month +1,year))
+	       	{
+	       		className += " item";
+	       		var clickScript = "document.getElementById('question-count').innerHTML = '" +item(day,month+1,year)+" questions due';";
+	       		attribs = "style='cursor:pointer' onclick=\"" +clickScript+ "\"";
+	       	}
+	       	else if (day === _todayDate && month === _todayMonth)
+	       		className += " today";
+	       		
+			content += "<td class='" + className + "'" +attribs+ ">" +day+ "</td>";
+	    }
+	    
+	    currentCol++;
+	    
+	    // start new row after each week
+	    if (i % 7 == 0 &&  i != cells)
+	    {
+	        content += "</tr><tr>";
+	        currentCol = 0;
+        }
+	}
+    
+    for (var i = 0; i < 7 - currentCol; i++)
+	{
+		content += "<td class='empty'></td>";
+	}       
+	
+	content += "</table>";
+	document.write(content);
+}
+
+function hasItem(day,month,year)
+{
+	return typeof(_eventDates[day+":"+month+":"+year]) != 'undefined';
+}
+
+function item(day,month,year)
+{
+	return _eventDates[day+":"+month+":"+year];
+}
+
+</script>
+<style type="text/css">
+#container
+{
+	width:auto;
+}
+#questioncount
+{
+	margin:10px;
+	border: 2px solid black;
+	font-family:Arial;
+	font-size:36px;
+	padding:5px;
+	float:left;
+	background-color: #DDDDDD;
+	-webkit-border-radius:5px;
+}
+#duetoday
+{
+	font-family:Arial;
+	font-size:14pt;
+	float:left;
+	height:36px;
+	
+}
+	
+#question-count {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:8pt;
+	border-bottom: 1px #CCCCCC solid;
+}
+
+#calendar {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:8pt;
+	border-collapse: collapse;
+}
+
+#calendar td {
+	padding:2px;
+}
+
+.empty {
+	border-right: 1px #CCCCCC solid;
+}
+
+.monthName {
+	text-align:center;
+}
+
+.day-header {
+	border-right: 1px #CCCCCC solid;
+	font-weight:bold;
+	text-align:center;
+}
+
+.day {
+	text-align:center;
+	border-right: 1px #CCCCCC solid;
+}
+
+.today {
+	background-color:orange;
+	font-weight:bold;
+	color:white;
+}
+
+.item {
+	background-color:#99FF33;
+}
+</style>
+<meta name="viewport" content="width=320,user-scalable=false" />
+</head>
+<body>
+<div id="container">
+	<div id="questioncount">20</div>
+	<div id="duetoday">Questions due today</div>
+</div>
+<br style="clear:both"/>
+
+<div id="question-count">Click on a highlighted date</div>
+
+<script type="text/javascript">
+initialize();
+writeCalendar();
+</script>
+
+</body>
+</html>
