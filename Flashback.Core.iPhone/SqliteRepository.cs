@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
+
 #if MONOTOUCH
-//using Mono.Data.Sqlite;
+using Mono.Data.Sqlite;
+using System.Data;
 #endif
 
 #if WINDOWS
@@ -14,6 +16,7 @@ using SqliteParameter = System.Data.SQLite.SQLiteParameter;
 using SqliteException = System.Data.SQLite.SQLiteException;
 using System.Data;
 #endif
+
 
 
 namespace Flashback.Core.iPhone
@@ -61,7 +64,7 @@ namespace Flashback.Core.iPhone
 					connection.Open();
 					using (SqliteCommand command = new SqliteCommand(connection))
 					{
-						command.CommandText = "SELECT id,title FROM categories";
+						command.CommandText = "SELECT id,name FROM categories";
 
 						using (SqliteDataReader reader = command.ExecuteReader())
 						{

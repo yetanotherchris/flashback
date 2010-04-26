@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 
 namespace Flashback.Core
@@ -18,8 +18,9 @@ namespace Flashback.Core
 			}
 		}
 
-		public static void SetInstance(IRepository instance, string dbFilename)
+		public static void SetInstance(IRepository instance)
 		{
+			_instance = instance;
 		}
 	}
 }
