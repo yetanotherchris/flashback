@@ -9,7 +9,7 @@ namespace Flashback.Core
 	/// <summary>
 	/// The category for a question.
 	/// </summary>
-	public partial class Category
+	public class Category
 	{
 		[PrimaryKey,AutoIncrement]
 		public int Id { get; set; }
@@ -25,14 +25,14 @@ namespace Flashback.Core
 
 		}
 		
-		public int Save()
+		public static int Save(Category category)
 		{
 			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
 			
-			if (Id < 1)			
-				return connection.Insert(this);
+			if (category.Id < 1)	
+				return connection.Insert(category);
 			else
-				return connection.Update(this);
+				return connection.Update(category);
 		}
 		
 		public static IList<Category> List()

@@ -6,7 +6,7 @@ using SQLite;
 
 namespace Flashback.Core
 {
-	public partial class Question
+	public class Question
 	{
 		private Category _category;
 		
@@ -18,7 +18,7 @@ namespace Flashback.Core
 		/// The category for the question
 		/// </summary>
 		[Ignore]
-		public Category Category
+		internal Category Category
 		{
 			get
 			{
@@ -31,6 +31,16 @@ namespace Flashback.Core
 			{
 				CategoryId = value.Id;	
 			}
+		}
+		
+		public Category GetCategory()
+		{
+			return Category.Read(CategoryId);
+		}
+		
+		public void SetCategory(Category category)
+		{
+			CategoryId = category.Id;	
 		}
 		
 		public int CategoryId { get; set;}
@@ -72,6 +82,7 @@ namespace Flashback.Core
 		/// The number of days until the question is next asked.
 		/// </summary>
 		public int Interval { get; set; }
+		
 		/// <summary>
 		/// Number of times the question has been asked
 		/// </summary>
@@ -97,41 +108,61 @@ namespace Flashback.Core
 		public double EasinessFactor { get; set; }
 		#endregion
 		
-		public int Save()
+		public Question()
 		{
-			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
-			
-			if (Id < 1)			
-				return connection.Insert(this);
-			else
-				return connection.Update(this);
+			LastAsked = DateTime.Today;
+			NextAskOn = DateTime.Today;
+		}
+		
+		public static int Save(Question question)
+		{
+			using (SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile))
+			{
+				connection.Trace = true;
+				
+				if (question.Id < 1)
+					return connection.Insert(question);
+				else
+				{
+					connection.Update(question);	
+					return question.Id;
+				}
+			}
 		}
 		
 		public static Question Read(int id)
 		{
-			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
-			return connection.Table<Question>().FirstOrDefault(q => q.Id == id);
+			using (SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile))
+			{
+				return connection.Table<Question>().FirstOrDefault(q => q.Id == id);
+			}
 		}
 		
 		public static IList<Question> List()
 		{
-			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
-			return connection.Table<Question>().ToList();
+			using (SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile))
+			{
+				return connection.Table<Question>().ToList();
+			}
 		}
 		
 		public static IList<Question> ForCategory(Category category)
 		{
-			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
-			connection.Trace = true;
-			
-			int id = category.Id; // This is a quirk with SQLite not getting the property value
-			return connection.Table<Question>().Where(q => q.CategoryId == id).ToList();
+			using (SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile))
+			{
+				connection.Trace = true;
+				
+				int id = category.Id; // This is a quirk with SQLite not getting the property value
+				return connection.Table<Question>().Where(q => q.CategoryId == id).ToList();
+			}
 		}
 		
 		public static void Delete(int id)
 		{
-			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
-			connection.Delete<Question>(new Question { Id=id });
+			using (SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile))
+			{
+				connection.Delete<Question>(new Question { Id=id });
+			}
 		}
 	}
 }

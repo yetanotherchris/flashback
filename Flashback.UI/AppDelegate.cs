@@ -19,6 +19,7 @@ namespace Flashback.UI
 		{
 			//Repository.Current.DeleteDatabase();
 			Repository.Current.CreateDatabase();
+			//Question.Save(new Question() {Id=1});
 			
 			_rootController = new RootController();
 

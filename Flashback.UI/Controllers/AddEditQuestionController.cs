@@ -5,6 +5,7 @@ using System.Text;
 using Flashback.Core;
 using MonoTouch.UIKit;
 using System.Drawing;
+using System.Threading;
 
 namespace Flashback.UI.Controllers
 {
@@ -40,7 +41,7 @@ namespace Flashback.UI.Controllers
 			if (_question == null)
 			{
 				_question = new Question();
-				_question.Category = _category;
+				_question.SetCategory(_category);
 				Title = "Add Question";
 			}
 			else
@@ -141,7 +142,7 @@ namespace Flashback.UI.Controllers
 
 				_question.Title = _textFieldQuestion.Text;
 				_question.Answer = _textFieldAnswer.Text;
-				_question.Save();
+				Question.Save(_question);
 
 				// Make sure the data is refreshed on the question table controller
 				((QuestionsController)NavigationController.ViewControllers[NavigationController.ViewControllers.Length-2]).ReloadData();
