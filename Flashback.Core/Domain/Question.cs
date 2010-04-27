@@ -90,6 +90,12 @@ namespace Flashback.Core
 			return Repository.Default.ListQuestions();
 		}
 
+		public static IEnumerable<Question> DueToday()
+		{
+			IList<Question> list = List();
+			return list.Where(q => q.NextAskOn <= DateTime.Today.AddDays(1));
+		}
+
 		public static IList<Question> ForCategory(Category category)
 		{
 			return Repository.Default.QuestionsForCategory(category);
