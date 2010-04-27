@@ -20,6 +20,7 @@ namespace Flashback.UI.Controllers
 
 		private UILabel _labelQuestionsToday;
 		private UIButton _buttonStart;
+		private UIButton _buttonReset;
 
 		private AddEditCategoryController _addEditCategoryController;
 		private QuestionsController _questionsController;
@@ -37,9 +38,9 @@ namespace Flashback.UI.Controllers
 			// Add the toolbar
 			ToolbarItems = GetToolBar();
 			NavigationController.ToolbarHidden = false;
-
+			
 			_labelQuestionsToday = new UILabel();
-			_labelQuestionsToday.Text = string.Format("{0} questions due today",Question.DueToday().ToList().Count);
+			_labelQuestionsToday.Text = "";
 			_labelQuestionsToday.Font = UIFont.SystemFontOfSize(16f);
 			_labelQuestionsToday.TextColor = UIColor.Gray;
 			_labelQuestionsToday.Frame = new RectangleF(15, 30, 290, 50);
@@ -48,37 +49,63 @@ namespace Flashback.UI.Controllers
 			View.AddSubview(_labelQuestionsToday);
 
 			// Start button
-			_buttonStart = UIButton.FromType(UIButtonType.RoundedRect);
+			_buttonStart = UIButton.FromType(UIButtonType.Custom);
 			_buttonStart.SetTitle("Start", UIControlState.Normal);
 			_buttonStart.BackgroundColor = UIColor.Red;
 			_buttonStart.SetTitleColor(UIColor.White,UIControlState.Normal);
-			_buttonStart.Frame = new RectangleF(15, 90, 100, 25);
+			_buttonStart.Frame = new RectangleF(15, 90, 100, 50);
 			_buttonStart.TouchDown += delegate
 			{
 				AnswerQuestionsController controller = new AnswerQuestionsController(_category);
 				NavigationController.PushViewController(controller, true);
 			};
 			View.AddSubview(_buttonStart);
-
-			// The webview		
-			/*
-			UIWebView webView = new UIWebView();
-			webView.Frame = new System.Drawing.RectangleF(0,0,380,420);
 			
-			string template = "";
-			Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Flashback.Assets.HTML.calendar.html");
-			using (StreamReader reader = new StreamReader(stream))
+			_buttonReset = UIButton.FromType(UIButtonType.Custom);
+			_buttonReset.SetTitle("Reset", UIControlState.Normal);
+			_buttonReset.BackgroundColor = UIColor.Red;
+			_buttonReset.SetTitleColor(UIColor.White,UIControlState.Normal);
+			_buttonReset.Frame = new RectangleF(15, 150, 100, 50);
+			_buttonReset.TouchDown += delegate
 			{
-				template = reader.ReadToEnd();
-			}
-			webView.LoadHtmlString(template,new NSUrl("/"));
-			View.AddSubview(webView);*/
+				foreach (Question question in Question.ForCategory(_category))
+				{
+					question.Reset();
+					Question.Save(question);
+				}
+				
+				UIAlertView alert = new UIAlertView();
+				alert.Title = "Reset";
+				alert.Message = "All questions for the category have been reset";
+				alert.AddButton("Close");
+				alert.Show();
+			};
+			View.AddSubview(_buttonReset);
 		}
 		
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);
 			Title = _category.Name;
+			
+			IList<Question> questions = Question.List();
+			int questionCount = questions.Count;
+			int dueTodayCount = Question.DueToday(questions).ToList().Count;	
+			
+			if (questionCount > 0)
+			{
+				_labelQuestionsToday.Text = string.Format("{0} questions due today",dueTodayCount);
+				
+				if (dueTodayCount == 0)
+				{
+					DateTime datetime = Question.NextDueDate(questions);
+					_labelQuestionsToday.Text += string.Format("\nNext question(s) due on {0}",datetime.ToString("dd-MM-yyyy"));
+				}
+			}
+			else
+			{
+				_labelQuestionsToday.Text = "There are no questions for this category yet.";	
+			}
 		}
 		
 		public override void ViewDidAppear (bool animated)
