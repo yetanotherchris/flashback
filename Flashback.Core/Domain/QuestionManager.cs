@@ -8,16 +8,6 @@ namespace Flashback.Core.Domain
 	public class QuestionManager
 	{
 		/// <summary>
-		/// Gets all questions for the provided Category.
-		/// </summary>
-		/// <param name="category"></param>
-		/// <returns></returns>
-		public List<Question> QuestionsForCategory(Category category)
-		{
-			return null;// Category.Read(category.Id).Questions.ToList();
-		}
-
-		/// <summary>
 		/// Answers the question with the score provided. Also saves the question.
 		/// </summary>
 		/// <param name="question"></param>
@@ -46,11 +36,11 @@ namespace Flashback.Core.Domain
 			else
 				question.NextAskOn = question.LastAsked.AddDays(question.Interval);
 
-			//question.LastAsked = DateTime.Today;
+			question.LastAsked = DateTime.Today;
 			// todo:question.Save();
 
 			string format = "[{0}][{1}]\tScore:{2}\tEF:{3}\tNext ask: {4}\tLast ask:{5}\tPrevious interval: {6}\tNew interval: {7}";
-			string debug = string.Format(format, question.Category,
+			Logger.Info(format, question.Category,
 										DateTime.Now.ToString(),
 										question.ResponseQuality,
 										question.EasinessFactor,
@@ -58,8 +48,6 @@ namespace Flashback.Core.Domain
 										question.LastAsked.ToShortDateString(),
 										question.PreviousInterval,
 										question.Interval);
-
-			Console.WriteLine(debug);
 		}
 
 		/// <summary>

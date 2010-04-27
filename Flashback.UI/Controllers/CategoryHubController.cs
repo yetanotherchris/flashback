@@ -7,6 +7,7 @@ using Flashback.Core;
 using System.IO;
 using System.Reflection;
 using MonoTouch.Foundation;
+using System.Drawing;
 
 namespace Flashback.UI.Controllers
 {
@@ -16,6 +17,9 @@ namespace Flashback.UI.Controllers
 		private UIBarButtonItem _editCategoryButton;
 		private UIBarButtonItem _editQuestionsButton;
         private UIBarButtonItem _calendarButton;
+
+		private UILabel _labelQuestionsToday;
+		private UIButton _buttonStart;
 
 		private AddEditCategoryController _addEditCategoryController;
 		private QuestionsController _questionsController;
@@ -33,6 +37,28 @@ namespace Flashback.UI.Controllers
 			// Add the toolbar
 			ToolbarItems = GetToolBar();
 			NavigationController.ToolbarHidden = false;
+
+			_labelQuestionsToday = new UILabel();
+			_labelQuestionsToday.Text = string.Format("{0} questions due today",Question.DueToday().ToList().Count);
+			_labelQuestionsToday.Font = UIFont.SystemFontOfSize(16f);
+			_labelQuestionsToday.TextColor = UIColor.Gray;
+			_labelQuestionsToday.Frame = new RectangleF(15, 30, 290, 50);
+			_labelQuestionsToday.BackgroundColor = UIColor.Clear;
+			_labelQuestionsToday.Lines = 2;
+			View.AddSubview(_labelQuestionsToday);
+
+			// Start button
+			_buttonStart = UIButton.FromType(UIButtonType.RoundedRect);
+			_buttonStart.SetTitle("Start", UIControlState.Normal);
+			_buttonStart.BackgroundColor = UIColor.Red;
+			_buttonStart.SetTitleColor(UIColor.White,UIControlState.Normal);
+			_buttonStart.Frame = new RectangleF(15, 90, 100, 25);
+			_buttonStart.TouchDown += delegate
+			{
+				AnswerQuestionsController controller = new AnswerQuestionsController(_category);
+				NavigationController.PushViewController(controller, true);
+			};
+			View.AddSubview(_buttonStart);
 
 			// The webview		
 			/*
