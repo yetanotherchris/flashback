@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,9 +35,6 @@ namespace Flashback.Core.Domain
 				question.NextAskOn = DateTime.Today.AddDays(question.Interval);
 			else
 				question.NextAskOn = question.LastAsked.AddDays(question.Interval);
-
-			question.LastAsked = DateTime.Today;
-			// todo:question.Save();
 
 			string format = "[{0}][{1}]\tScore:{2}\tEF:{3}\tNext ask: {4}\tLast ask:{5}\tPrevious interval: {6}\tNew interval: {7}";
 			Logger.Info(format, question.Category,
