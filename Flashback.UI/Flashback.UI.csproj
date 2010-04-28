@@ -119,6 +119,9 @@
     <Content Include="Assets\Images\Toolbar\toolbar_questions.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+	<Content Include="Assets\Images\standardbutton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Default.png" />
   </ItemGroup>
   <ItemGroup>

@@ -73,6 +73,9 @@
     <Content Include="Assets\HTML\calendar.html" />
     <Content Include="Assets\HTML\categoryhub.html" />
     <Content Include="Assets\Images\icon.png" />
+    <Content Include="Assets\Images\standardbutton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Images\Toolbar\toolbar_add.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -91,7 +94,6 @@
     <Content Include="Default.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\PSD\Default.psd" />
     <None Include="Assets\PSD\Logo512.psd" />
     <None Include="Assets\PSD\Logo57.psd" />
   </ItemGroup>
