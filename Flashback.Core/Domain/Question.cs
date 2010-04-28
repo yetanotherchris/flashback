@@ -74,6 +74,20 @@ namespace Flashback.Core
 		/// </summary>
 		public double EasinessFactor { get; set; }
 		#endregion
+		
+		public Question()
+		{
+			Reset();
+		}
+		
+		public void Reset()
+		{
+			LastAsked = DateTime.MinValue;
+			NextAskOn = DateTime.MinValue;
+			AskCount = 0;
+			Interval = 0;
+			Order = 0;	
+		}
 
 		public static int Save(Question question)
 		{
@@ -90,10 +104,19 @@ namespace Flashback.Core
 			return Repository.Default.ListQuestions();
 		}
 
-		public static IEnumerable<Question> DueToday()
+		public static IEnumerable<Question> DueToday(IList<Question> list)
 		{
-			IList<Question> list = List();
-			return list.Where(q => q.NextAskOn <= DateTime.Today.AddDays(1));
+			return list.Where(q => q.NextAskOn < DateTime.Today.AddDays(1));
+		}
+		
+		public static DateTime NextDueDate(IList<Question> questions)
+		{
+			Question question = questions.OrderByDescending(q => q.NextAskOn).FirstOrDefault();
+			
+			if (question == null)
+				return DateTime.Now;
+			else
+				return question.NextAskOn;
 		}
 
 		public static IList<Question> ForCategory(Category category)

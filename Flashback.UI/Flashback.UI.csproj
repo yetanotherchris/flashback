@@ -98,7 +98,6 @@
   </ProjectExtensions>
   <ItemGroup>
     <Content Include="Default.png" />
-    <Content Include="Default.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\HTML\calendar.html" />
@@ -122,7 +121,6 @@
 	<Content Include="Assets\Images\standardbutton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Default.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PSD\Default.psd" />
@@ -131,12 +129,16 @@
     <None Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Assets\HTML\calendar.html" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Flashback.Core\Flashback.Core.csproj">
       <Project>{7244A478-3BC2-4932-A234-66F248FFDC63}</Project>
       <Name>Flashback.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\HTML\calendar.html" />
+    <ProjectReference Include="..\Flashback.Core.iPhone\Flashback.Core.iPhone.csproj">
+      <Project>{A54D0E91-7616-4FC0-81A1-34A9D17947E7}</Project>
+      <Name>Flashback.Core.iPhone</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
