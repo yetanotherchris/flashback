@@ -109,9 +109,11 @@ namespace Flashback.UI.Controllers
 			private CategoriesController _parentController;
 			private CategoryHubController _hubController;
 			private AddEditCategoryController _addEditCategoryController;
+			private int _questionsDueCount;
 
 			public CategoriesTableSource(CategoriesData data, CategoriesController parentController)
 			{
+				_questionsDueCount = 0;
 				_data = data;
 				_parentController = parentController;
 			}
@@ -130,9 +132,19 @@ namespace Flashback.UI.Controllers
 					cell = new UITableViewCell(UITableViewCellStyle.Subtitle, "cellid");
 					cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
 				}
+				
+				// Calculate how many questions there are, and how many are due
+				Category category = _data.Categories[indexPath.Row];
+				IList<Question> questions = Question.ForCategory(category);
+				int questionCount = questions.Count;
+				int dueTodayCount = Question.DueToday(questions).ToList().Count;	
+				
+				// Badge count
+				_questionsDueCount += dueTodayCount;
+				UIApplication.SharedApplication.ApplicationIconBadgeNumber = _questionsDueCount;
 
-				cell.DetailTextLabel.Text = "14 questions, 1 due today";
-				cell.TextLabel.Text = _data.Categories[indexPath.Row].Name;
+				cell.DetailTextLabel.Text = string.Format("{0} questions, {1} due today",questionCount,dueTodayCount);
+				cell.TextLabel.Text = category.Name;
 
 				return cell;
 			}

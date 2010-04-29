@@ -19,6 +19,7 @@ namespace Flashback.UI.Controllers
         private UIBarButtonItem _calendarButton;
 
 		private UILabel _labelQuestionsToday;
+		private UILabel _labelNextDue;
 		private UIButton _buttonStart;
 		private UIButton _buttonReset;
 
@@ -40,20 +41,32 @@ namespace Flashback.UI.Controllers
 			NavigationController.ToolbarHidden = false;
 			
 			_labelQuestionsToday = new UILabel();
+			_labelQuestionsToday.Frame = new RectangleF(17, 0, 280, 50);
 			_labelQuestionsToday.Text = "";
-			_labelQuestionsToday.Font = UIFont.SystemFontOfSize(16f);
-			_labelQuestionsToday.TextColor = UIColor.Gray;
-			_labelQuestionsToday.Frame = new RectangleF(15, 30, 290, 50);
+			_labelQuestionsToday.Font = UIFont.SystemFontOfSize(24f);
+			_labelQuestionsToday.TextColor = UIColor.White;
 			_labelQuestionsToday.BackgroundColor = UIColor.Clear;
-			_labelQuestionsToday.Lines = 2;
+			_labelQuestionsToday.Lines = 3;
+			_labelQuestionsToday.TextAlignment = UITextAlignment.Center;
 			View.AddSubview(_labelQuestionsToday);
+			
+			_labelNextDue = new UILabel();
+			_labelNextDue.Frame = new RectangleF(17, 40, 280, 100);
+			_labelNextDue.Text = "";
+			_labelNextDue.Font = UIFont.SystemFontOfSize(16f);
+			_labelNextDue.TextColor = UIColor.Gray;
+			_labelNextDue.BackgroundColor = UIColor.Clear;
+			_labelNextDue.Lines = 3;
+			_labelNextDue.TextAlignment = UITextAlignment.Center;
+			View.AddSubview(_labelNextDue);
 
 			// Start button
-			_buttonStart = UIButton.FromType(UIButtonType.Custom);
-			_buttonStart.SetTitle("Start", UIControlState.Normal);
-			_buttonStart.BackgroundColor = UIColor.Red;
+			UIImage startImage = UIImage.FromFile("Assets/Images/startbutton.png");			
+			_buttonStart = new UIButton(new RectangleF(15, 200, 280, 48));
+			_buttonStart.SetBackgroundImage(startImage,UIControlState.Normal);
+			_buttonStart.BackgroundColor = UIColor.Clear;
+			_buttonStart.Font = UIFont.BoldSystemFontOfSize(20);
 			_buttonStart.SetTitleColor(UIColor.White,UIControlState.Normal);
-			_buttonStart.Frame = new RectangleF(15, 90, 100, 50);
 			_buttonStart.TouchDown += delegate
 			{
 				AnswerQuestionsController controller = new AnswerQuestionsController(_category);
@@ -61,11 +74,13 @@ namespace Flashback.UI.Controllers
 			};
 			View.AddSubview(_buttonStart);
 			
-			_buttonReset = UIButton.FromType(UIButtonType.Custom);
-			_buttonReset.SetTitle("Reset", UIControlState.Normal);
-			_buttonReset.BackgroundColor = UIColor.Red;
+			// Reset button
+			UIImage resetImage = UIImage.FromFile("Assets/Images/resetbutton.png");
+			_buttonReset = new UIButton(new RectangleF(15, 250, 280, 48));
+			_buttonReset.SetBackgroundImage(resetImage,UIControlState.Normal);
+			_buttonReset.BackgroundColor = UIColor.Clear;
+			_buttonReset.Font = UIFont.BoldSystemFontOfSize(20);
 			_buttonReset.SetTitleColor(UIColor.White,UIControlState.Normal);
-			_buttonReset.Frame = new RectangleF(15, 150, 100, 50);
 			_buttonReset.TouchDown += delegate
 			{
 				foreach (Question question in Question.ForCategory(_category))
@@ -88,24 +103,66 @@ namespace Flashback.UI.Controllers
 			base.ViewWillAppear (animated);
 			Title = _category.Name;
 			
-			IList<Question> questions = Question.List();
+			// Update the questions label
+			IList<Question> questions = Question.ForCategory(_category);
 			int questionCount = questions.Count;
 			int dueTodayCount = Question.DueToday(questions).ToList().Count;	
 			
+			// If there are questions figure out the label, otherwise disable the start button
 			if (questionCount > 0)
 			{
-				_labelQuestionsToday.Text = string.Format("{0} questions due today",dueTodayCount);
+				string due = (dueTodayCount > 0) ? dueTodayCount.ToString() : "No";
+				_labelQuestionsToday.Text = string.Format("{0} questions due today.",due);
 				
 				if (dueTodayCount == 0)
 				{
 					DateTime datetime = Question.NextDueDate(questions);
-					_labelQuestionsToday.Text += string.Format("\nNext question(s) due on {0}",datetime.ToString("dd-MM-yyyy"));
+					string dateSuffix = DateSuffix(datetime.Day);
+					_labelNextDue.Text = string.Format("Questions are next due on {0}{1} {2}.",datetime.ToString("dddd d"),dateSuffix,datetime.ToString("MMMM"));
 				}
 			}
 			else
 			{
+				_labelQuestionsToday.Frame = new RectangleF(20, 0, 280, 80);
+				_buttonStart.Enabled = false;
 				_labelQuestionsToday.Text = "There are no questions for this category yet.";	
 			}
+		}
+		
+		private string DateSuffix(int day)
+		{
+			string suffix = "";
+			
+			int ones = day % 10;
+			int tens = (int)Math.Floor(day / 10M) % 10;
+			
+			if (tens == 1)
+			{
+			        suffix = "th";
+			}
+			else
+			{
+			        switch (ones)
+			        {
+			                case 1:
+			                        suffix = "st";
+			                        break;
+			
+			                case 2:
+			                        suffix = "nd";
+			                        break;
+			
+			                case 3:
+			                        suffix = "rd";
+			                        break;
+			
+			                default:
+			                        suffix = "th";
+			                        break;
+			        }
+			}
+			
+			return suffix;
 		}
 		
 		public override void ViewDidAppear (bool animated)
