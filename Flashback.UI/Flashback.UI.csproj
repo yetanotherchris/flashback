@@ -98,6 +98,8 @@
   </ProjectExtensions>
   <ItemGroup>
     <Content Include="Default.png" />
+    <Content Include="Assets\Images\resetbutton.png" />
+    <Content Include="Assets\Images\startbutton.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\HTML\calendar.html" />
@@ -116,9 +118,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\Toolbar\toolbar_questions.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-	<Content Include="Assets\Images\standardbutton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
