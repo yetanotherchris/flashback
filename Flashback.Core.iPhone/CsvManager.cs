@@ -17,10 +17,11 @@ namespace Flashback.Core.iPhone
 		/// </summary>
 		/// <param name="questions"></param>
 		/// <returns></returns>
-		public static string Export(List<Question> questions)
+		public static string Export(IList<Question> questions)
 		{
 			StringBuilder builder = new StringBuilder();
-			foreach (Question question in questions)
+			
+			foreach (Question question in questions.OrderBy(q => q.Category.Name))
 			{
 				builder.AppendLine(string.Format("{0},{1},{2}",
 					question.Category.Name.Replace(",","~"),
@@ -59,7 +60,7 @@ namespace Flashback.Core.iPhone
 						if (!string.IsNullOrEmpty(categoryText) && !string.IsNullOrEmpty(questionText) && !string.IsNullOrEmpty(answer))
 						{
 							// Find the category in the list
-							Category category = categories.FirstOrDefault(c => c.Name.ToLower() == categoryText);
+							Category category = categories.FirstOrDefault(c => c.Name.ToLower() == categoryText.ToLower());
 
 							// Create a new one and save it if it's not there
 							if (category == null)
