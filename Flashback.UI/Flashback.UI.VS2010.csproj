@@ -56,6 +56,8 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\AddEditQuestionController.cs" />
     <Compile Include="Controllers\AnswerQuestionsController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\CategoryHubController.cs" />
@@ -63,6 +65,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Flashback.Core.iPhone\Flashback.Core.iPhone.VS2010.csproj">
+      <Project>{A583EFD5-7D03-4C93-9658-53F5BC4F6389}</Project>
+      <Name>Flashback.Core.iPhone.VS2010</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Flashback.Core\Flashback.Core.VS2010.csproj">
       <Project>{CB5391B7-34DB-4CF5-BD39-C4EFB818B508}</Project>
       <Name>Flashback.Core.VS2010</Name>
@@ -73,15 +79,17 @@
     <Content Include="Assets\HTML\calendar.html" />
     <Content Include="Assets\HTML\categoryhub.html" />
     <Content Include="Assets\Images\icon.png" />
-    <Content Include="Assets\Images\standardbutton.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Assets\Images\resetbutton.png" />
+    <Content Include="Assets\Images\startbutton.png" />
+    <Content Include="Assets\Images\Toolbar\heart.png" />
+    <Content Include="Assets\Images\Toolbar\star.png" />
     <Content Include="Assets\Images\Toolbar\toolbar_add.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\Toolbar\toolbar_calendar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Images\Toolbar\toolbar_download.png" />
     <Content Include="Assets\Images\Toolbar\toolbar_edit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -91,6 +99,8 @@
     <Content Include="Assets\Images\Toolbar\toolbar_questions.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Images\Toolbar\toolbar_upload.png" />
+    <Content Include="Assets\Images\Toolbar\tray.png" />
     <Content Include="Default.png" />
   </ItemGroup>
   <ItemGroup>
