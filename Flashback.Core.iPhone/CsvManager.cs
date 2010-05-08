@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +25,7 @@ namespace Flashback.Core.iPhone
 				builder.AppendLine(string.Format("{0},{1},{2}",
 					question.Category.Name.Replace(",","~"),
 					question.Title.Replace(",","~"),
-					question.Answer.Replace(",","~"));
+					question.Answer.Replace(",","~")));
 			}
 
 			return builder.ToString();

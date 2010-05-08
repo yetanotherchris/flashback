@@ -89,6 +89,8 @@
     <Compile Include="Controllers\RootController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\InformationController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

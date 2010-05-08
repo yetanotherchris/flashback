@@ -62,11 +62,16 @@
     <Reference Include="monotouch" />
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System.Data" />
+    <Reference Include="LumenworksMT, Version=3.7.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\LumenworksMT.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteNetRepository.cs" />
     <Compile Include="SqliteRepository.cs" />
+    <Compile Include="CsvManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -79,5 +84,8 @@
       <Project>{7244A478-3BC2-4932-A234-66F248FFDC63}</Project>
       <Name>Flashback.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lib\LumenworksMT.dll" />
   </ItemGroup>
 </Project>
