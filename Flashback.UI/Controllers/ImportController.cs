@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +11,7 @@ namespace Flashback.UI.Controllers
 	public class ImportController : UIViewController
 	{
 		private UILabel _labelHelp;
-		private UITextField _textFieldImport;
+		private UITextView _textFieldImport;
 		private UIBarButtonItem _importButton;
 
 		public override void ViewDidLoad()
@@ -25,7 +25,7 @@ namespace Flashback.UI.Controllers
 				"\n\n" +
 				"category name,question,answer\n\n" +
 				"The category name is not case sensitive. Use a tilde (~) if you need to use a comma.";
-			_labelHelp.Font = UIFont.SystemFontOfSize(16f);
+			_labelHelp.Font = UIFont.SystemFontOfSize(14f);
 			_labelHelp.TextColor = UIColor.Gray;
 			_labelHelp.Frame = new RectangleF(15, 245, 295, 150);
 			_labelHelp.BackgroundColor = UIColor.Clear;
@@ -33,14 +33,8 @@ namespace Flashback.UI.Controllers
 			View.AddSubview(_labelHelp);
 
 			// Import textbox
-			_textFieldImport = new UITextField();
+			_textFieldImport = new UITextView();
 			_textFieldImport.Frame = new RectangleF(10, 35, 300, 200);
-			_textFieldImport.BorderStyle = UITextBorderStyle.RoundedRect;
-			_textFieldImport.ShouldReturn = delegate
-			{
-				_textFieldImport.ResignFirstResponder();
-				return true;
-			};
 			View.AddSubview(_textFieldImport);
 
 			// Import button
@@ -51,12 +45,22 @@ namespace Flashback.UI.Controllers
 				_textFieldImport.ResignFirstResponder();
 
 				if (!string.IsNullOrEmpty(_textFieldImport.Text))
+				{
 					CsvManager.Import(_textFieldImport.Text);
+					
+					// Reload the table controller's data as it doesn't reload it.
+					NavigationController.PopViewControllerAnimated(false);
+				}
+				else 
+				{
+					// AlertView here	
+				}
 			};
 
 			// Hide the toolbar.
 			NavigationController.SetToolbarHidden(true, false);
-			NavigationItem.SetLeftBarButtonItem(_importButton, false);
+			NavigationItem.HidesBackButton = false;
+			NavigationItem.SetRightBarButtonItem(_importButton, false);
 		}
 	}
 }

@@ -157,13 +157,16 @@ namespace Flashback.Core.iPhone
 						{
 							command.ExecuteNonQuery();
 							result = category.Id;
+							
+							// If result isn't the categoryid, then ignore it
 						}
 						else
 						{
 							Int64 newId = (Int64)command.ExecuteScalar();
 							result = Convert.ToInt32(newId);
+							category.Id = result;
 						}
-
+						
 						return result;
 					}
 				}

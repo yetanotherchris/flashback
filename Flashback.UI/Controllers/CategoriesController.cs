@@ -15,14 +15,21 @@ namespace Flashback.UI.Controllers
 	public class CategoriesController : UITableViewController
 	{
 		private UIBarButtonItem _addButton;
+		private UIBarButtonItem _importButton;
+		private UIBarButtonItem _exportButton;
 		private UIBarButtonItem _informationButton;
+		
 		private UIBarButtonItem _editButton;
 		private UIBarButtonItem _doneButton;
 		private bool _isEditing;
 
 		private CategoriesData _data;
+		
 		private AddEditCategoryController _addEditCategoryController;
+		private ImportController _importController;
+		private ExportController _exportController;
 		private InformationController _informationController;
+		
 		private CategoriesTableSource _categoriesTableSource;
 
 		public CategoriesController() : base(UITableViewStyle.Grouped) { }
@@ -89,6 +96,26 @@ namespace Flashback.UI.Controllers
 				NavigationController.PushViewController(_addEditCategoryController, false);
 			};
 			
+			// Import button
+			_importButton = new UIBarButtonItem();
+			_importButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_import.png");
+			_importButton.Title = "Import";
+			_importButton.Clicked += delegate
+			{
+				_importController = new ImportController();
+				NavigationController.PushViewController(_importController, false);
+			};
+			
+			// Export button
+			_exportButton = new UIBarButtonItem();
+			_exportButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_export.png");
+			_exportButton.Title = "Export";
+			_exportButton.Clicked += delegate
+			{
+				_exportController = new ExportController();
+				NavigationController.PushViewController(_exportController, false);
+			};
+			
 			// Information button
 			_informationButton = new UIBarButtonItem();
 			_informationButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
@@ -99,7 +126,7 @@ namespace Flashback.UI.Controllers
 				NavigationController.PushViewController(_informationController, false);
 			};
 
-			return new UIBarButtonItem[] { _addButton,_informationButton };
+			return new UIBarButtonItem[] { _addButton,_importButton,_exportButton,_informationButton };
 		}
 
 		#region CategoriesTableSource

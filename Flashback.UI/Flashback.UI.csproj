@@ -102,6 +102,8 @@
     <Content Include="Default.png" />
     <Content Include="Assets\Images\resetbutton.png" />
     <Content Include="Assets\Images\startbutton.png" />
+    <Content Include="Assets\Images\Toolbar\toolbar_export.png" />
+    <Content Include="Assets\Images\Toolbar\toolbar_import.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\HTML\calendar.html" />
