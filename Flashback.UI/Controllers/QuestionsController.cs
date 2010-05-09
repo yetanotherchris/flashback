@@ -86,7 +86,7 @@ namespace Flashback.UI.Controllers
 			return new UIBarButtonItem[] { _addButton };
 		}
 
-		#region QuestionsTableSource
+		#region QuestionsTableViewSource
 		private class QuestionsTableSource : UITableViewSource
 		{
 			private QuestionsData _data;
@@ -135,6 +135,7 @@ namespace Flashback.UI.Controllers
 			public override void MoveRow(UITableView tableView, NSIndexPath sourceIndexPath, NSIndexPath destinationIndexPath)
 			{
 				// Re-order using question.Order
+				Question.Move(_data.Questions[sourceIndexPath.Row], destinationIndexPath.Row);
 			}
 
 			public override bool CanMoveRow(UITableView tableView, NSIndexPath indexPath)
@@ -162,7 +163,7 @@ namespace Flashback.UI.Controllers
 			public QuestionsData(Category category)
 			{
 				Category = category;
-				Questions = Question.ForCategory(category).ToList();
+				Questions = Question.ForCategory(category).OrderBy(q => q.Order).ToList();
 			}
 			
 			public void DeleteRow(Question question)

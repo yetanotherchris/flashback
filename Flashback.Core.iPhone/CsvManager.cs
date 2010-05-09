@@ -60,7 +60,7 @@ namespace Flashback.Core.iPhone
 						if (!string.IsNullOrEmpty(categoryText) && !string.IsNullOrEmpty(questionText) && !string.IsNullOrEmpty(answer))
 						{
 							// Find the category in the list
-							Category category = categories.FirstOrDefault(c => c.Name.ToLower() == categoryText.ToLower());
+							Category category = categories.FirstOrDefault(c => c.Name.ToLower() == categoryText.ToLower() && !c.InBuilt);
 
 							// Create a new one and save it if it's not there
 							if (category == null)

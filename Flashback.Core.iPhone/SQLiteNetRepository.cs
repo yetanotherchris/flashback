@@ -2,6 +2,7 @@ using Flashback.Core.iPhone.SQLite;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 namespace Flashback.Core.iPhone
 {
@@ -77,6 +78,11 @@ namespace Flashback.Core.iPhone
 		{
 			SQLiteConnection connection = new SQLiteConnection(Settings.DatabaseFile);
 			connection.Delete<Question>(new Question { Id = id });
+		}
+
+		public void MoveQuestion(Question question, int newIndex)
+		{
+			throw new NotImplementedException();
 		}
 		#endregion
 

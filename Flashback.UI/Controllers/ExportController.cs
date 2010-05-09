@@ -47,7 +47,9 @@ namespace Flashback.UI.Controllers
 		public override void ViewDidAppear (bool animated)
 		{
 			base.ViewDidAppear (animated);
-			_textFieldExport.Text =  CsvManager.Export(Question.List());
+
+			IList<Question> questions = Question.List().Where(q => !q.Category.InBuilt).ToList();
+			_textFieldExport.Text =  CsvManager.Export(questions);
 		}
 	}
 }

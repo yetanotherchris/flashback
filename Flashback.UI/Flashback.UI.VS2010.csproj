@@ -87,17 +87,17 @@
     <Content Include="Assets\Images\Toolbar\toolbar_calendar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Images\Toolbar\toolbar_download.png" />
     <Content Include="Assets\Images\Toolbar\toolbar_edit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Images\Toolbar\toolbar_export.png" />
+    <Content Include="Assets\Images\Toolbar\toolbar_import.png" />
     <Content Include="Assets\Images\Toolbar\toolbar_information.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\Toolbar\toolbar_questions.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Images\Toolbar\toolbar_upload.png" />
     <Content Include="Default.png" />
   </ItemGroup>
   <ItemGroup>
