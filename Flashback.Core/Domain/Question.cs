@@ -124,6 +124,11 @@ namespace Flashback.Core
 			return Repository.Default.QuestionsForCategory(category);
 		}
 
+		public static void Move(Question question, int newIndex)
+		{
+			Repository.Default.MoveQuestion(question, newIndex);
+		}
+
 		public static void Delete(int id)
 		{
 			Repository.Default.DeleteQuestion(id);

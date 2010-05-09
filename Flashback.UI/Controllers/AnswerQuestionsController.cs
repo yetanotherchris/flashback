@@ -35,7 +35,7 @@ namespace Flashback.UI.Controllers
 			_questionIndex = 0;
 			_category = category;
 
-			_questions = Question.DueToday(Question.ForCategory(category)).ToList();
+			_questions = Question.DueToday(Question.ForCategory(category)).OrderBy(q => q.Order).ToList();
 
 			// Assume it's the first time of asking if there's none due today (todo:test)
 			if (_questions.Count < 1)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 
 #if MONOTOUCH
@@ -64,7 +65,7 @@ namespace Flashback.Core.iPhone
 					connection.Open();
 					using (SqliteCommand command = new SqliteCommand(connection))
 					{
-						command.CommandText = "SELECT id,name FROM categories";
+						command.CommandText = "SELECT id,name,inbuilt FROM categories";
 
 						using (SqliteDataReader reader = command.ExecuteReader())
 						{
@@ -73,6 +74,7 @@ namespace Flashback.Core.iPhone
 								Category category = new Category();
 								category.Id = reader.GetInt32(0);
 								category.Name = reader.GetString(1);
+								category.InBuilt = reader.GetBoolean(2);
 
 								list.Add(category);
 							}
@@ -109,6 +111,7 @@ namespace Flashback.Core.iPhone
 							while (reader.Read())
 							{
 								category.Id = Convert.ToInt32(reader["categoryid"]);
+								category.InBuilt = Convert.ToBoolean(reader["inbuilt"]);
 								category.Name = (string)reader["categoryName"];
 							}
 						}
@@ -215,7 +218,8 @@ namespace Flashback.Core.iPhone
 					connection.Open();
 					using (SqliteCommand command = new SqliteCommand(connection))
 					{
-						command.CommandText = "SELECT q.*,c.Name as categoryName FROM questions q, categories c WHERE c.id = q.categoryid";
+						command.CommandText = "SELECT q.*,c.Name as categoryName,c.inbuilt as inbuilt FROM "+
+												"questions q, categories c WHERE c.id = q.categoryid";
 
 						using (SqliteDataReader reader = command.ExecuteReader())
 						{
@@ -227,6 +231,7 @@ namespace Flashback.Core.iPhone
 
 								question.Category = new Category();
 								question.Category.Id = Convert.ToInt32(reader["categoryid"]);
+								question.Category.InBuilt = Convert.ToBoolean(reader["inbuilt"]);
 								question.Category.Name = (string)reader["categoryName"];
 								
 								question.Answer = (string)reader["answer"];
@@ -410,7 +415,14 @@ namespace Flashback.Core.iPhone
 						command.Parameters.Add(parameter);
 
 						parameter = new SqliteParameter("@order", DbType.Int32);
-						parameter.Value = question.Order;
+						if (updating)
+						{
+							parameter.Value = question.Order;
+						}
+						else
+						{
+							parameter.Value = MaxQuestionOrder(question.Category);
+						}
 						command.Parameters.Add(parameter);
 
 						parameter = new SqliteParameter("@previousinterval", DbType.Int32);
@@ -447,6 +459,96 @@ namespace Flashback.Core.iPhone
 
 			return 0;
 		}
+
+		public int MaxQuestionOrder(Category category)
+		{
+			int result = 0;
+
+			try
+			{
+				using (SqliteConnection connection = new SqliteConnection(Settings.DatabaseConnection))
+				{
+					connection.Open();
+					using (SqliteCommand command = new SqliteCommand(connection))
+					{
+						command.CommandText = @"SELECT MAX([order]) from questions WHERE categoryid=@categoryid";
+
+						SqliteParameter parameter = new SqliteParameter("@categoryid", DbType.Int32);
+						parameter.Value = category.Id;
+						command.Parameters.Add(parameter);
+
+						result = (int)command.ExecuteScalar();
+					}
+				}
+			}
+			catch (SqliteException ex)
+			{
+				Logger.Fatal("Unable to create the database: \n{0}", ex);
+				throw;
+			}
+
+			return result;
+		}
+
+		public void MoveQuestion(Question question, int newIndex)
+		{
+			int currentIndex = 0; // not the order, the list index.
+
+			// All questions, find the question's index
+			IList<Question> questions = ListQuestions().OrderBy(q => q.Order).ToList();
+			for (int i = 0; i < questions.Count; i++)
+			{
+				if (questions[i].Id == question.Id)
+				{
+					currentIndex = i;
+					break;
+				}
+			}
+
+			// Move all items after the new index up one
+			var after = questions.Where(q => q.Order >= newIndex).ToList();
+			for (int i = 0; i < after.Count; i++)
+			{
+				after[i].Order += 1;
+			}
+
+			questions[currentIndex].Order = newIndex;
+
+			// Re-order
+			var ordered = questions.OrderBy(q => q.Order).ToList();
+			for (int i = 0; i < ordered.Count; i++)
+			{
+				ordered[i].Order = i;
+			}
+
+			try
+			{
+				using (SqliteConnection connection = new SqliteConnection(Settings.DatabaseConnection))
+				{
+					connection.Open();
+					
+					using (SqliteCommand command = new SqliteCommand(connection))
+					{
+						// TODO: put inside a transaction (not WinSQLite friendly)
+						command.CommandText = @"UPDATE questions SET [order]=@order WHERE id=@id";
+
+						foreach (Question item in ordered)
+						{
+							SqliteParameter parameter = new SqliteParameter("@id", DbType.Int32);
+							parameter.Value = item.Id;
+							command.Parameters.Add(parameter);
+
+							command.ExecuteNonQuery();
+						}
+					}
+				}
+			}
+			catch (SqliteException ex)
+			{
+				Logger.Fatal("Unable to create the database: \n{0}", ex);
+				throw;
+			}
+		}
 		#endregion
 
 		public void CreateDatabase()
@@ -455,7 +557,11 @@ namespace Flashback.Core.iPhone
 			{
 				if (!File.Exists(Settings.DatabaseFile))
 				{
-					string categoriesSql = "CREATE TABLE \"categories\" (\"id\" INTEGER PRIMARY KEY AUTOINCREMENT,\"name\" TEXT NOT NULL)";
+					string categoriesSql = "CREATE TABLE \"categories\" ("+
+						"\"id\" INTEGER PRIMARY KEY AUTOINCREMENT," +
+						"\"name\" TEXT NOT NULL," +
+						"\"inbuilt\" INTEGER)";
+
 					string questionsSql = "CREATE TABLE questions (" +
 											"\"id\" INTEGER PRIMARY KEY AUTOINCREMENT," +
 											"\"categoryid\" INTEGER," +
