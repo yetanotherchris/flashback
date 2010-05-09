@@ -477,14 +477,15 @@ namespace Flashback.Core.iPhone
 						parameter.Value = category.Id;
 						command.Parameters.Add(parameter);
 
-						result = (int)command.ExecuteScalar();
+						object val = command.ExecuteScalar();
+						if (val != DBNull.Value)
+							result = Convert.ToInt32(val);
 					}
 				}
 			}
 			catch (SqliteException ex)
 			{
-				Logger.Fatal("Unable to create the database: \n{0}", ex);
-				throw;
+				Logger.Fatal("Unable to perform MaxQuestionOrder: \n{0}", ex);
 			}
 
 			return result;
@@ -532,10 +533,14 @@ namespace Flashback.Core.iPhone
 						// TODO: put inside a transaction (not WinSQLite friendly)
 						command.CommandText = @"UPDATE questions SET [order]=@order WHERE id=@id";
 
-						foreach (Question item in ordered)
+						foreach (Question questionItem in ordered)
 						{
 							SqliteParameter parameter = new SqliteParameter("@id", DbType.Int32);
-							parameter.Value = item.Id;
+							parameter.Value = questionItem.Id;
+							command.Parameters.Add(parameter);
+							
+							parameter = new SqliteParameter("@order", DbType.Int32);
+							parameter.Value = questionItem.Order;
 							command.Parameters.Add(parameter);
 
 							command.ExecuteNonQuery();
@@ -545,7 +550,7 @@ namespace Flashback.Core.iPhone
 			}
 			catch (SqliteException ex)
 			{
-				Logger.Fatal("Unable to create the database: \n{0}", ex);
+				Logger.Fatal("Unable to MoveQuestion: \n{0}", ex);
 				throw;
 			}
 		}
@@ -560,7 +565,7 @@ namespace Flashback.Core.iPhone
 					string categoriesSql = "CREATE TABLE \"categories\" ("+
 						"\"id\" INTEGER PRIMARY KEY AUTOINCREMENT," +
 						"\"name\" TEXT NOT NULL," +
-						"\"inbuilt\" INTEGER)";
+						"\"inbuilt\" INTEGER DEFAULT 0)";
 
 					string questionsSql = "CREATE TABLE questions (" +
 											"\"id\" INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -589,7 +594,7 @@ namespace Flashback.Core.iPhone
 							command.ExecuteNonQuery();
 
 							// Default category
-							command.CommandText = "insert into categories (name) values ('german')";
+							command.CommandText = "insert into categories (name,inbuilt) values ('german',1)";
 							command.ExecuteNonQuery();
 
 							command.CommandText = questionsSql;
