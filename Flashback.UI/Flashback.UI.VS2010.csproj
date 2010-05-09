@@ -81,8 +81,6 @@
     <Content Include="Assets\Images\icon.png" />
     <Content Include="Assets\Images\resetbutton.png" />
     <Content Include="Assets\Images\startbutton.png" />
-    <Content Include="Assets\Images\Toolbar\heart.png" />
-    <Content Include="Assets\Images\Toolbar\star.png" />
     <Content Include="Assets\Images\Toolbar\toolbar_add.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -100,7 +98,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\Toolbar\toolbar_upload.png" />
-    <Content Include="Assets\Images\Toolbar\tray.png" />
     <Content Include="Default.png" />
   </ItemGroup>
   <ItemGroup>
