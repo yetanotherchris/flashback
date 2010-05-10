@@ -26,6 +26,9 @@ namespace Flashback.UI.Controllers
 		private AddEditCategoryController _addEditCategoryController;
 		private QuestionsController _questionsController;
 		private CalendarController _calendarController;
+		
+		private UIImage _bgImage;
+		private UIImageView _bgImageView;
 
 		public CategoryHubController(Category category)
 		{
@@ -40,18 +43,26 @@ namespace Flashback.UI.Controllers
 			ToolbarItems = GetToolBar();
 			NavigationController.ToolbarHidden = false;
 			
+			// Flashcard bg image
+			_bgImage = UIImage.FromFile("Assets/Images/flashcardbg.jpg");
+			_bgImageView = new UIImageView(_bgImage);
+			_bgImageView.Frame = new RectangleF(0,0,320,480);
+			View.AddSubview(_bgImageView);
+			
+			// Questions label
 			_labelQuestionsToday = new UILabel();
 			_labelQuestionsToday.Frame = new RectangleF(17, 0, 280, 50);
 			_labelQuestionsToday.Text = "";
 			_labelQuestionsToday.Font = UIFont.SystemFontOfSize(24f);
-			_labelQuestionsToday.TextColor = UIColor.White;
+			_labelQuestionsToday.TextColor = UIColor.Blue;
 			_labelQuestionsToday.BackgroundColor = UIColor.Clear;
 			_labelQuestionsToday.Lines = 3;
 			_labelQuestionsToday.TextAlignment = UITextAlignment.Center;
 			View.AddSubview(_labelQuestionsToday);
 			
+			// Next due label
 			_labelNextDue = new UILabel();
-			_labelNextDue.Frame = new RectangleF(17, 40, 280, 100);
+			_labelNextDue.Frame = new RectangleF(17, 45, 280, 100);
 			_labelNextDue.Text = "";
 			_labelNextDue.Font = UIFont.SystemFontOfSize(16f);
 			_labelNextDue.TextColor = UIColor.Gray;
@@ -62,7 +73,7 @@ namespace Flashback.UI.Controllers
 
 			// Start button
 			UIImage startImage = UIImage.FromFile("Assets/Images/startbutton.png");			
-			_buttonStart = new UIButton(new RectangleF(15, 200, 280, 48));
+			_buttonStart = new UIButton(new RectangleF(15, 225, 280, 48));
 			_buttonStart.SetBackgroundImage(startImage,UIControlState.Normal);
 			_buttonStart.BackgroundColor = UIColor.Clear;
 			_buttonStart.Font = UIFont.BoldSystemFontOfSize(20);
@@ -76,7 +87,7 @@ namespace Flashback.UI.Controllers
 			
 			// Reset button
 			UIImage resetImage = UIImage.FromFile("Assets/Images/resetbutton.png");
-			_buttonReset = new UIButton(new RectangleF(15, 250, 280, 48));
+			_buttonReset = new UIButton(new RectangleF(15, 275, 280, 48));
 			_buttonReset.SetBackgroundImage(resetImage,UIControlState.Normal);
 			_buttonReset.BackgroundColor = UIColor.Clear;
 			_buttonReset.Font = UIFont.BoldSystemFontOfSize(20);
