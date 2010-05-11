@@ -150,9 +150,43 @@ namespace Flashback.UI.Controllers
 			_buttonScore6.TouchDown += new EventHandler(ScoreClick);
 			View.AddSubview(_buttonScore6);
 			
+			// Set the buttons to invisible to start with
+			SetButtonAlphas();
+			
 			// The first question, display it in the labels
 			_currentQuestion = _questions[_questionIndex];
 			BindQuestion(_currentQuestion);
+		}
+		
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear(animated);
+			
+			// Fade in the buttons
+			FadeIn();
+		}
+		
+		private void SetButtonAlphas()
+		{
+			_buttonScore1.Alpha = 0;
+			_buttonScore2.Alpha = 0;
+			_buttonScore3.Alpha = 0;
+			_buttonScore4.Alpha = 0;
+			_buttonScore5.Alpha = 0;
+			_buttonScore6.Alpha = 0;	
+		}
+		
+		private void FadeIn()
+		{
+			UIView.SetAnimationDelay(0.5);
+			UIView.BeginAnimations(null);
+			_buttonScore1.Alpha = 1;
+			_buttonScore2.Alpha = 1;
+			_buttonScore3.Alpha = 1;
+			_buttonScore4.Alpha = 1;
+			_buttonScore5.Alpha = 1;
+			_buttonScore6.Alpha = 1;
+			UIView.CommitAnimations();
 		}
 		
 		private void DisableScoreButtons()
