@@ -70,7 +70,7 @@ namespace Flashback.UI.Controllers
 			_labelQuestion = new UILabel();
 			_labelQuestion.Text = "";
 			_labelQuestion.Font = UIFont.SystemFontOfSize(24f);
-			_labelQuestion.TextColor = UIColor.Blue;
+			_labelQuestion.TextColor = UIColor.Black;
 			_labelQuestion.Frame = new RectangleF(15, 15, 290, 50);
 			_labelQuestion.BackgroundColor = UIColor.Clear;
 			_labelQuestion.Lines = 2;
@@ -103,43 +103,49 @@ namespace Flashback.UI.Controllers
 			int left = 12;
 			int padding = 5;
 			
-			_buttonScore1 = UIButton.FromType(UIButtonType.RoundedRect);
-			_buttonScore1.SetTitle("1", UIControlState.Normal);
+			UIImage image1 = UIImage.FromFile("Assets/Images/button_1.png");	
+			_buttonScore1 = new UIButton();
+			_buttonScore1.SetBackgroundImage(image1,UIControlState.Normal);
 			_buttonScore1.Frame = new RectangleF(left, top, width, height);
 			_buttonScore1.TouchDown += new EventHandler(ScoreClick);
 			View.AddSubview(_buttonScore1);
 			left += width + padding;
 
-			_buttonScore2 = UIButton.FromType(UIButtonType.RoundedRect);
-			_buttonScore2.SetTitle("2", UIControlState.Normal);
+			UIImage image2 = UIImage.FromFile("Assets/Images/button_2.png");	
+			_buttonScore2 = new UIButton();
+			_buttonScore2.SetBackgroundImage(image2,UIControlState.Normal);
 			_buttonScore2.Frame = new RectangleF(left, top, width, height);
 			_buttonScore2.TouchDown += new EventHandler(ScoreClick);
 			View.AddSubview(_buttonScore2);
 			left += width + padding;
 
-			_buttonScore3 = UIButton.FromType(UIButtonType.RoundedRect);
-			_buttonScore3.SetTitle("3", UIControlState.Normal);
+			UIImage image3 = UIImage.FromFile("Assets/Images/button_3.png");	
+			_buttonScore3 = new UIButton();
+			_buttonScore3.SetBackgroundImage(image3,UIControlState.Normal);
 			_buttonScore3.Frame = new RectangleF(left, top, width, height);
 			_buttonScore3.TouchDown += new EventHandler(ScoreClick);
 			View.AddSubview(_buttonScore3);
 			left += width + padding;
 
-			_buttonScore4 = UIButton.FromType(UIButtonType.RoundedRect);
-			_buttonScore4.SetTitle("4", UIControlState.Normal);
+			UIImage image4 = UIImage.FromFile("Assets/Images/button_4.png");	
+			_buttonScore4 = new UIButton();
+			_buttonScore4.SetBackgroundImage(image4,UIControlState.Normal);
 			_buttonScore4.Frame = new RectangleF(left, top, width, height);
 			_buttonScore4.TouchDown += new EventHandler(ScoreClick);
 			View.AddSubview(_buttonScore4);
 			left += width + padding;
 
-			_buttonScore5 = UIButton.FromType(UIButtonType.RoundedRect);
-			_buttonScore5.SetTitle("5", UIControlState.Normal);
+			UIImage image5 = UIImage.FromFile("Assets/Images/button_5.png");	
+			_buttonScore5 = new UIButton();
+			_buttonScore5.SetBackgroundImage(image5,UIControlState.Normal);
 			_buttonScore5.Frame = new RectangleF(left, top, width, height);
 			_buttonScore5.TouchDown += new EventHandler(ScoreClick);
 			View.AddSubview(_buttonScore5);
 			left += width + padding;
 
-			_buttonScore6 = UIButton.FromType(UIButtonType.RoundedRect);
-			_buttonScore6.SetTitle("6", UIControlState.Normal);
+			UIImage image6 = UIImage.FromFile("Assets/Images/button_6.png");	
+			_buttonScore6 = new UIButton();
+			_buttonScore6.SetBackgroundImage(image6,UIControlState.Normal);
 			_buttonScore6.Frame = new RectangleF(left, top, width, height);
 			_buttonScore6.TouchDown += new EventHandler(ScoreClick);
 			View.AddSubview(_buttonScore6);
@@ -149,20 +155,24 @@ namespace Flashback.UI.Controllers
 			BindQuestion(_currentQuestion);
 		}
 		
-		public class UnderlineButton : UIButton
+		private void DisableScoreButtons()
 		{
-			public override void Draw (RectangleF rect)
-			{
-				base.Draw (rect);
-				
-				// Red underline
-				CGContext context = UIGraphics.GetCurrentContext();
-				context.SetRGBFillColor(0xFF,0xFF,0,1);
-				context.SetLineWidth(1);
-				context.MoveTo(0,rect.Height -5);
-				context.AddLineToPoint(rect.Width,rect.Height -5);
-				context.StrokePath();	
-			}
+			_buttonScore1.Enabled = false;
+			_buttonScore2.Enabled = false;
+			_buttonScore3.Enabled = false;
+			_buttonScore4.Enabled = false;
+			_buttonScore5.Enabled = false;
+			_buttonScore6.Enabled = false;
+		}
+		
+		private void EnableScoreButtons()
+		{
+			_buttonScore1.Enabled = true;
+			_buttonScore2.Enabled = true;
+			_buttonScore3.Enabled = true;
+			_buttonScore4.Enabled = true;
+			_buttonScore5.Enabled = true;
+			_buttonScore6.Enabled = true;
 		}
 		
 		public override void ViewWillAppear (bool animated)
@@ -173,8 +183,10 @@ namespace Flashback.UI.Controllers
 
 		private void BindQuestion(Question question)
 		{
-			_labelQuestion.Text = question.Title;
+			DisableScoreButtons();
 			
+			// Question and answer text
+			_labelQuestion.Text = question.Title;	
 			_labelAnswer.Alpha = 0;
 			_labelAnswer.Text = question.Answer;
 			
@@ -193,6 +205,7 @@ namespace Flashback.UI.Controllers
 		private void ShowAnswer(object sender, EventArgs e)
 		{
 			_labelAnswer.Alpha = 1;
+			EnableScoreButtons();
 		}
 
 		private void ScoreClick(object sender, EventArgs e)
@@ -216,6 +229,22 @@ namespace Flashback.UI.Controllers
 			{
 				NavigationController.PopViewControllerAnimated(true);
 			}
+		}
+	}
+	
+	public class UnderlineButton : UIButton
+	{
+		public override void Draw (RectangleF rect)
+		{
+			base.Draw (rect);
+			
+			// Red underline
+			CGContext context = UIGraphics.GetCurrentContext();
+			context.SetRGBFillColor(0xFF,0xFF,0,1);
+			context.SetLineWidth(1);
+			context.MoveTo(0,rect.Height -5);
+			context.AddLineToPoint(rect.Width,rect.Height -5);
+			context.StrokePath();	
 		}
 	}
 }

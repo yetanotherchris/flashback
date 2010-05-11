@@ -51,10 +51,10 @@ namespace Flashback.UI.Controllers
 			
 			// Questions label
 			_labelQuestionsToday = new UILabel();
-			_labelQuestionsToday.Frame = new RectangleF(17, 0, 280, 50);
+			_labelQuestionsToday.Frame = new RectangleF(17, 15, 280, 50);
 			_labelQuestionsToday.Text = "";
 			_labelQuestionsToday.Font = UIFont.SystemFontOfSize(24f);
-			_labelQuestionsToday.TextColor = UIColor.Blue;
+			_labelQuestionsToday.TextColor = UIColor.Black;
 			_labelQuestionsToday.BackgroundColor = UIColor.Clear;
 			_labelQuestionsToday.Lines = 3;
 			_labelQuestionsToday.TextAlignment = UITextAlignment.Center;
@@ -105,6 +105,8 @@ namespace Flashback.UI.Controllers
 				alert.Message = "All questions for the category have been reset";
 				alert.AddButton("Close");
 				alert.Show();
+				
+				SetLabelTitles();
 			};
 			View.AddSubview(_buttonReset);
 		}
@@ -113,7 +115,18 @@ namespace Flashback.UI.Controllers
 		{
 			base.ViewWillAppear (animated);
 			Title = _category.Name;
+		}
+		
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear(animated);
+			NavigationController.ToolbarHidden = false;
 			
+			SetLabelTitles();
+		}
+		
+		private void SetLabelTitles()
+		{
 			// Update the questions label
 			IList<Question> questions = Question.ForCategory(_category);
 			int questionCount = questions.Count;
@@ -123,13 +136,14 @@ namespace Flashback.UI.Controllers
 			if (questionCount > 0)
 			{
 				string due = (dueTodayCount > 0) ? dueTodayCount.ToString() : "No";
-				_labelQuestionsToday.Text = string.Format("{0} questions due today.",due);
+				string plural = (dueTodayCount > 1 || dueTodayCount == 0) ? "s" : "";
+				_labelQuestionsToday.Text = string.Format("{0} question{1} due today.",due,plural);
 				
 				if (dueTodayCount == 0)
 				{
 					DateTime datetime = Question.NextDueDate(questions);
 					string dateSuffix = DateSuffix(datetime.Day);
-					_labelNextDue.Text = string.Format("Questions are next due on {0}{1} {2}.",datetime.ToString("dddd d"),dateSuffix,datetime.ToString("MMMM"));
+					_labelNextDue.Text = string.Format("Question{0} are next due on {1}{2} {3}.",plural,datetime.ToString("dddd d"),dateSuffix,datetime.ToString("MMMM"));
 				}
 			}
 			else
@@ -138,6 +152,41 @@ namespace Flashback.UI.Controllers
 				_buttonStart.Enabled = false;
 				_labelQuestionsToday.Text = "There are no questions for this category yet.";	
 			}
+		}
+		
+		private UIBarButtonItem[] GetToolBar()
+		{
+			// Edit category
+			_editCategoryButton = new UIBarButtonItem();
+			_editCategoryButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_edit.png");
+			_editCategoryButton.Title = "Edit category";
+			_editCategoryButton.Clicked += delegate
+			{
+				AddEditCategoryController controller = new AddEditCategoryController(_category);
+				NavigationController.PushViewController(controller, false);
+			};
+
+			// Manage questions
+			_editQuestionsButton = new UIBarButtonItem();
+			_editQuestionsButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_questions.png");
+			_editQuestionsButton.Title = "Manage questions";
+			_editQuestionsButton.Clicked += delegate
+			{
+				QuestionsController controller = new QuestionsController(_category);
+				NavigationController.PushViewController(controller, true);
+			};
+
+			// Calendar
+			_calendarButton = new UIBarButtonItem();
+			_calendarButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_calendar.png");
+			_calendarButton.Title = "Calendar";
+			_calendarButton.Clicked += delegate
+			{
+				CalendarController controller = new CalendarController();
+				NavigationController.PushViewController(controller, true);
+			};
+
+			return new UIBarButtonItem[] { _editCategoryButton, _editQuestionsButton, _calendarButton };
 		}
 		
 		private string DateSuffix(int day)
@@ -174,47 +223,6 @@ namespace Flashback.UI.Controllers
 			}
 			
 			return suffix;
-		}
-		
-		public override void ViewDidAppear (bool animated)
-		{
-			base.ViewDidAppear(animated);
-			NavigationController.ToolbarHidden = false;
-		}
-
-		private UIBarButtonItem[] GetToolBar()
-		{
-			// Edit category
-			_editCategoryButton = new UIBarButtonItem();
-			_editCategoryButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_edit.png");
-			_editCategoryButton.Title = "Edit category";
-			_editCategoryButton.Clicked += delegate
-			{
-				AddEditCategoryController controller = new AddEditCategoryController(_category);
-				NavigationController.PushViewController(controller, false);
-			};
-
-			// Manage questions
-			_editQuestionsButton = new UIBarButtonItem();
-			_editQuestionsButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_questions.png");
-			_editQuestionsButton.Title = "Manage questions";
-			_editQuestionsButton.Clicked += delegate
-			{
-				QuestionsController controller = new QuestionsController(_category);
-				NavigationController.PushViewController(controller, true);
-			};
-
-			// Calendar
-			_calendarButton = new UIBarButtonItem();
-			_calendarButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_calendar.png");
-			_calendarButton.Title = "Calendar";
-			_calendarButton.Clicked += delegate
-			{
-				CalendarController controller = new CalendarController();
-				NavigationController.PushViewController(controller, true);
-			};
-
-			return new UIBarButtonItem[] { _editCategoryButton, _editQuestionsButton, _calendarButton };
 		}
 	}
 }
