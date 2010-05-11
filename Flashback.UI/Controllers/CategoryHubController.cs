@@ -115,6 +115,11 @@ namespace Flashback.UI.Controllers
 		{
 			base.ViewWillAppear (animated);
 			Title = _category.Name;
+			
+			_labelQuestionsToday.Alpha = 0;
+			_labelNextDue.Alpha = 0;
+			_buttonStart.Alpha = 0;
+			_buttonReset.Alpha = 0;
 		}
 		
 		public override void ViewDidAppear (bool animated)
@@ -123,6 +128,19 @@ namespace Flashback.UI.Controllers
 			NavigationController.ToolbarHidden = false;
 			
 			SetLabelTitles();
+			FadeIn();
+		}
+		
+		private void FadeIn()
+		{
+			UIView.SetAnimationDelay(0.5);
+			UIView.BeginAnimations(null);
+			
+			_labelQuestionsToday.Alpha = 1;
+			_labelNextDue.Alpha = 1;
+			_buttonStart.Alpha = 1;
+			_buttonReset.Alpha = 1;
+			UIView.CommitAnimations();
 		}
 		
 		private void SetLabelTitles()
