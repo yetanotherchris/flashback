@@ -105,6 +105,12 @@
     <Content Include="Assets\Images\Toolbar\toolbar_export.png" />
     <Content Include="Assets\Images\Toolbar\toolbar_import.png" />
     <Content Include="Assets\Images\flashcardbg.jpg" />
+    <Content Include="Assets\Images\button_2.png" />
+    <Content Include="Assets\Images\button_3.png" />
+    <Content Include="Assets\Images\button_4.png" />
+    <Content Include="Assets\Images\button_5.png" />
+    <Content Include="Assets\Images\button_6.png" />
+    <Content Include="Assets\Images\button_1.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\HTML\calendar.html" />
