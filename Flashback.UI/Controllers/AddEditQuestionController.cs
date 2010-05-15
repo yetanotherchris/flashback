@@ -124,36 +124,40 @@ namespace Flashback.UI.Controllers
 			// Save button
 			_saveButton = new UIBarButtonItem();
 			_saveButton.Title = "Save";
-			_saveButton.Clicked += delegate(object sender, EventArgs e)
-			{
-				_textFieldAnswer.ResignFirstResponder();
-				_textFieldQuestion.ResignFirstResponder();
-				
-				if (string.IsNullOrEmpty(_textFieldQuestion.Text) || string.IsNullOrEmpty(_textFieldAnswer.Text))
-				{
-					UIAlertView alertView = new UIAlertView();
-					alertView.AddButton("Close");
-					alertView.Title = "Woops";
-					alertView.Message = "Please enter a question and its answer";
-					alertView.Show();
-
-					return;
-				}
-
-				_question.Title = _textFieldQuestion.Text;
-				_question.Answer = _textFieldAnswer.Text;
-				Question.Save(_question);
-
-				// Make sure the data is refreshed on the question table controller
-				((QuestionsController)NavigationController.ViewControllers[NavigationController.ViewControllers.Length-2]).ReloadData();
-				NavigationController.PopViewControllerAnimated(false);
-			};
+			_saveButton.Clicked += SaveClick;
 
 			// Hide the navigation bar, back button and toolbar.
 			NavigationController.SetToolbarHidden(true, false);
 			NavigationItem.HidesBackButton = true;
 			NavigationItem.SetLeftBarButtonItem(_cancelButton, false);
 			NavigationItem.SetRightBarButtonItem(_saveButton, false);
+		}
+		
+		private void SaveClick(object sender, EventArgs e)
+		{
+			_textFieldAnswer.ResignFirstResponder();
+			_textFieldQuestion.ResignFirstResponder();
+			
+			// Check for empty textboxes
+			if (string.IsNullOrEmpty(_textFieldQuestion.Text) || string.IsNullOrEmpty(_textFieldAnswer.Text))
+			{
+				UIAlertView alertView = new UIAlertView();
+				alertView.AddButton("Close");
+				alertView.Title = "Woops";
+				alertView.Message = "Please enter a question and its answer";
+				alertView.Show();
+
+				return;
+			}
+
+			// Save the question
+			_question.Title = _textFieldQuestion.Text;
+			_question.Answer = _textFieldAnswer.Text;
+			Question.Save(_question);
+
+			// Make sure the data is refreshed on the question table controller
+			((QuestionsController)NavigationController.ViewControllers[NavigationController.ViewControllers.Length-2]).ReloadData();
+			NavigationController.PopViewControllerAnimated(false);
 		}
 	}
 }

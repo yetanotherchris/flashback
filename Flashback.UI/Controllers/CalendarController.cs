@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,28 +28,40 @@ namespace Flashback.UI.Controllers
 
 			Title = _category.Name;
 
+			string html = ReplaceTokens();
 			_webView = new UIWebView();
 			_webView.Frame = new RectangleF(0, 0, 320, 480);
-			_webView.LoadHtmlString(ReplaceTokens(), new NSUrl("/"));
+			_webView.LoadHtmlString(html, new NSUrl("/"));
+			View.AddSubview(_webView);
 		}
 
+		/// <summary>
+		/// Replaces the #DATE# token in the calendar template with dates due for questions.
+		/// </summary>
 		private string ReplaceTokens()
 		{
+			ReadCalendarHtml();
+			
 			string template = _calendarHtml;
-			string dateFormat = "['{0}'] = \"{1}\";\n";
+			string dateFormat = "_eventDates['{0}'] = \"{1}\";";
 
 			StringBuilder builder = new StringBuilder();
 			Dictionary<string,int> dates = new Dictionary<string,int>();
 
+			// Turn today green if there are some due
 			// Work out how many are due for each day. This could be done with LINQ but this way is reusable in the next bit.
 			foreach (Question question in Question.ForCategory(_category))
 			{
-				string date = question.NextAskOn.ToString("dd-MM-yyyy");
+				string date = question.NextAskOn.ToString("d:M:yyyy");
+				
+				// Set past dates as today
+				if (question.NextAskOn < DateTime.Today)
+					date = DateTime.Today.ToString("d:M:yyyy");
 
 				if (dates.ContainsKey(date))
 					dates[date] += 1;
 				else
-					dates.Add(question.NextAskOn.ToString("dd-MM-yyyy"),1);
+					dates.Add(date,1);
 			}
 
 			// The Javascript
@@ -58,6 +70,7 @@ namespace Flashback.UI.Controllers
 				builder.AppendLine(string.Format(dateFormat, dueDate, dates[dueDate]));
 			}
 
+			string s = builder.ToString();
 			return template.Replace("#DATES#",builder.ToString());
 		}
 
@@ -72,7 +85,7 @@ namespace Flashback.UI.Controllers
 
 			try
 			{
-				using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Flashback.UI.Assets.HTML.calendar.html"))
+				using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Flashback.Assets.HTML.calendar.html"))
 				{
 					using (StreamReader reader = new StreamReader(stream))
 					{

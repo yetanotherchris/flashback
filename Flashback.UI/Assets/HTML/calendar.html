@@ -63,7 +63,7 @@ function writeCalendar()
 		writeMonth(currentMonth,year);
 		document.write("</div>");
 		
-		if (i > 0 && (i+1) % 4 === 0)
+		if (i > 0 && (i+1) % 2 === 0)
 			document.write("<br style='clear:both'/><br/>");
 			
 		currentMonth++;
@@ -116,7 +116,7 @@ function writeMonth(month,year)
 	       	if(hasItem(day,month +1,year))
 	       	{
 	       		className += " item";
-	       		var clickScript = "document.getElementById('question-count').innerHTML = '" +item(day,month+1,year)+" questions due';";
+	       		var clickScript = "document.getElementById('question-count').innerHTML = '" +item(day,month+1,year)+" question(s) due';";
 	       		attribs = "style='cursor:pointer' onclick=\"" +clickScript+ "\"";
 	       	}
 	       	else if (day === _todayDate && month === _todayMonth)
@@ -228,18 +228,15 @@ function item(day,month,year)
 <meta name="viewport" content="width=320,user-scalable=false" />
 </head>
 <body>
-<div id="container">
-	<div id="questioncount">20</div>
-	<div id="duetoday">Questions due today</div>
-</div>
-<br style="clear:both"/>
-
-<div id="question-count">Click on a highlighted date</div>
+<div id="question-count">Click on a green highlighted date for more information.</div>
 
 <script type="text/javascript">
 initialize();
 writeCalendar();
 </script>
 
+<!-- To stop the spring -->
+<br style="clear:both"/>
+<div style="height:100px"></div>
 </body>
 </html>

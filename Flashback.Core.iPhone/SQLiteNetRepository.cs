@@ -8,6 +8,7 @@ namespace Flashback.Core.iPhone
 {
 
 	/// <summary>
+	/// Legacy SQLite-net repository.
 	/// Requires Question + Category being decorated with attributes
 	/// </summary>
 	public class SQLiteNetRepository : IRepository

@@ -35,7 +35,7 @@ namespace Flashback.UI.Controllers
 			_category = category;
 		}
 		
-		public override void ViewDidLoad ()
+		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad ();
 
@@ -80,6 +80,13 @@ namespace Flashback.UI.Controllers
 			_buttonStart.SetTitleColor(UIColor.White,UIControlState.Normal);
 			_buttonStart.TouchDown += delegate
 			{
+				// Set the category as active, if it's inactive
+				if (!_category.Active)
+				{
+					_category.Active = true;
+					Category.Save(_category);
+				}
+				
 				AnswerQuestionsController controller = new AnswerQuestionsController(_category);
 				NavigationController.PushViewController(controller, true);
 			};
@@ -111,7 +118,7 @@ namespace Flashback.UI.Controllers
 			View.AddSubview(_buttonReset);
 		}
 		
-		public override void ViewWillAppear (bool animated)
+		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear (animated);
 			Title = _category.Name;
@@ -122,7 +129,7 @@ namespace Flashback.UI.Controllers
 			_buttonReset.Alpha = 0;
 		}
 		
-		public override void ViewDidAppear (bool animated)
+		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
 			NavigationController.ToolbarHidden = false;
