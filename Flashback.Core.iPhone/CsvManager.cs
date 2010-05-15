@@ -34,9 +34,8 @@ namespace Flashback.Core.iPhone
 
 		/// <summary>
 		/// Imports CSV formatted data: category,question,answer into a list of Questions. 
+		/// This could be replaced with a transactional SQL script if needed.
 		/// </summary>
-		/// <param name="data"></param>
-		/// <returns></returns>
 		public static List<Question> Import(string data)
 		{
 			List<Question> list = new List<Question>();

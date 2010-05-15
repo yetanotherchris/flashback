@@ -88,6 +88,12 @@ namespace Flashback.Core
 			Interval = 0;
 			Order = 0;	
 		}
+		
+		public override string ToString ()
+		{
+			return Title;
+		}
+
 
 		public static int Save(Question question)
 		{

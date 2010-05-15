@@ -42,7 +42,7 @@ namespace Flashback.UI.Controllers
 			Title = "Categories";
 			ToolbarItems = GetToolBar();
 
-#if PROMODE
+#if FULLVERSION
 			// Edit and done button
 			_editButton = new UIBarButtonItem(UIBarButtonSystemItem.Edit);
 			_editButton.Clicked += delegate(object sender, EventArgs e)
@@ -92,7 +92,7 @@ namespace Flashback.UI.Controllers
 			_addButton.Title = "Add category";
 			_addButton.Clicked += delegate
 			{
-#if PROMODE
+#if FULLVERSION
 				_addEditCategoryController = new AddEditCategoryController(null);
 				NavigationController.PushViewController(_addEditCategoryController, false);
 #else
@@ -111,7 +111,7 @@ namespace Flashback.UI.Controllers
 				NavigationController.PushViewController(_informationController, false);
 			};
 
-#if PROMODE
+#if FULLVERSION
 			// Import button
 			_importButton = new UIBarButtonItem();
 			_importButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_import.png");

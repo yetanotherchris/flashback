@@ -175,7 +175,8 @@ namespace Flashback.UI.Controllers
 			{
 				_labelQuestionsToday.Frame = new RectangleF(20, 0, 280, 80);
 				_buttonStart.Enabled = false;
-				_labelQuestionsToday.Text = "There are no questions for this category yet.";	
+				_buttonReset.Enabled = false;
+				_labelQuestionsToday.Text = "There are no questions in this category yet.";	
 			}
 		}
 		
