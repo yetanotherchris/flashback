@@ -79,8 +79,21 @@ namespace Flashback.UI.Controllers
 			_addButton.Title = "Add question";
 			_addButton.Clicked += delegate
 			{
+#if PROMODE
 				_addEditQuestionController = new AddEditQuestionController(null, _data.Category);
 				NavigationController.PushViewController(_addEditQuestionController, true);
+#else
+				if (_data.Questions.Count == 10)
+				{
+					UpgradeView view = new UpgradeView();
+					view.Show("Only one category is available in the free edition.");
+				}
+				else
+				{
+					_addEditQuestionController = new AddEditQuestionController(null, _data.Category);
+					NavigationController.PushViewController(_addEditQuestionController, true);
+				}
+#endif
 			};
 
 			return new UIBarButtonItem[] { _addButton };

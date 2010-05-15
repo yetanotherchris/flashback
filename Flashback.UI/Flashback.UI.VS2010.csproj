@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="BusyView.cs" />
     <Compile Include="Controllers\AddEditCategoryController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\CategoryHubController.cs" />
     <Compile Include="Controllers\RootController.cs" />
+    <Compile Include="UpgradeView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
