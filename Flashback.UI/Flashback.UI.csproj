@@ -52,7 +52,6 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodesignKey>iPhone Developer: Chris Small (5A7BB5U9UY)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
-    <CodesignProvision>CC79B728-49ED-484A-927B-A057885A3D86</CodesignProvision>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchI18n />
   </PropertyGroup>
@@ -66,7 +65,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>False</MtouchDebug>
     <MtouchI18n />
-    <DefineConstants>MONOTOUCH</DefineConstants>
+    <DefineConstants>MONOTOUCH FULLVERSION</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -92,6 +91,7 @@
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="BusyView.cs" />
+    <Compile Include="UpgradeView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

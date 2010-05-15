@@ -7,6 +7,7 @@ using System.Linq;
 #if MONOTOUCH
 using Mono.Data.Sqlite;
 using System.Data;
+using Flashback.Core.Data;
 #endif
 
 #if WINDOWS
@@ -431,7 +432,7 @@ namespace Flashback.Core.iPhone
 						}
 						else
 						{
-							parameter.Value = MaxQuestionOrder(question.Category);
+							parameter.Value = MaxQuestionOrder(question.Category) +1;
 						}
 						command.Parameters.Add(parameter);
 
@@ -566,6 +567,9 @@ namespace Flashback.Core.iPhone
 		}
 		#endregion
 
+		/// <summary>
+		/// Is this required anymore? 
+		/// </summary>
 		public void CreateDatabase()
 		{
 			try
@@ -583,14 +587,14 @@ namespace Flashback.Core.iPhone
 											"\"categoryid\" INTEGER," +
 											"\"title\" TEXT," +
 											"\"answer\" TEXT," +
-											"\"order\" INTEGER," +
-											"\"lastasked\" INTEGER," +
-											"\"nextaskon\" INTEGER," +
-											"\"previousinterval\" INTEGER," +
-											"\"interval\" INTEGER," +
-											"\"askcount\" INTEGER," +
-											"\"responsequality\" INTEGER," +
-											"\"easinessfactor\" REAL)";
+											"\"order\" INTEGER DEFAULT 0," +
+											"\"lastasked\" INTEGER DEFAULT 0," +
+											"\"nextaskon\" INTEGER DEFAULT 0," +
+											"\"previousinterval\" INTEGER DEFAULT 0," +
+											"\"interval\" INTEGER DEFAULT 0," +
+											"\"askcount\" INTEGER DEFAULT 0," +
+											"\"responsequality\" INTEGER DEFAULT 0," +
+											"\"easinessfactor\" REAL DEFAULT 0)";
 
 					// Create the file
 					SqliteConnection.CreateFile(Settings.DatabaseFile);
@@ -603,13 +607,24 @@ namespace Flashback.Core.iPhone
 						{
 							command.CommandText = categoriesSql;
 							command.ExecuteNonQuery();
-
-							// Default category
-							command.CommandText = "insert into categories (name,inbuilt) values ('german',1)";
-							command.ExecuteNonQuery();
-
+							
 							command.CommandText = questionsSql;
 							command.ExecuteNonQuery();
+
+							// Default category
+							command.CommandText = Default.Sql();
+							command.ExecuteNonQuery();
+							
+#if GERMAN
+							command.CommandText = German.Sql();
+							command.ExecuteNonQuery();				
+#elif SPANISH
+							command.CommandText = Spanish.Sql();
+							command.ExecuteNonQuery();
+#elif FRENCH
+							command.CommandText = French.Sql();
+							command.ExecuteNonQuery();
+#endif
 						}
 					}
 				}

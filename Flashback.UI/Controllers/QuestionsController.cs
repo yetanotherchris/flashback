@@ -45,11 +45,7 @@ namespace Flashback.UI.Controllers
 			};
 
 			_doneButton = new UIBarButtonItem(UIBarButtonSystemItem.Done);
-			_doneButton.Clicked += delegate(object sender, EventArgs e)
-			{
-				TableView.Editing = false;
-				NavigationItem.SetRightBarButtonItem(_editButton, false);
-			};
+			_doneButton.Clicked += DoneClick;
 
 			NavigationItem.SetRightBarButtonItem(_editButton, false);
 
@@ -70,6 +66,19 @@ namespace Flashback.UI.Controllers
 			TableView.Source = _questionsTableSource;
 			TableView.ReloadData();
 		}
+		
+		private void DoneClick(object sender, EventArgs e)
+		{
+			TableView.Editing = false;
+			NavigationItem.SetRightBarButtonItem(_editButton, false);
+			
+			// Save the order
+			for (int i = 0; i < _data.Questions.Count; i++)
+			{
+				_data.Questions[i].Order = i;
+				Question.Save(_data.Questions[i]);
+			}	
+		}
 
 		private UIBarButtonItem[] GetToolBar()
 		{
@@ -79,14 +88,14 @@ namespace Flashback.UI.Controllers
 			_addButton.Title = "Add question";
 			_addButton.Clicked += delegate
 			{
-#if PROMODE
+#if FULLVERSION
 				_addEditQuestionController = new AddEditQuestionController(null, _data.Category);
 				NavigationController.PushViewController(_addEditQuestionController, true);
 #else
 				if (_data.Questions.Count == 10)
 				{
 					UpgradeView view = new UpgradeView();
-					view.Show("Only one category is available in the free edition.");
+					view.Show("The free edition is limited to 10 questions.");
 				}
 				else
 				{
@@ -147,8 +156,8 @@ namespace Flashback.UI.Controllers
 
 			public override void MoveRow(UITableView tableView, NSIndexPath sourceIndexPath, NSIndexPath destinationIndexPath)
 			{
-				// Re-order using question.Order
-				Question.Move(_data.Questions[sourceIndexPath.Row], destinationIndexPath.Row);
+				// Swap the two array items around
+				_data.MoveQuestion(sourceIndexPath.Row,destinationIndexPath.Row);
 			}
 
 			public override bool CanMoveRow(UITableView tableView, NSIndexPath indexPath)
@@ -160,7 +169,7 @@ namespace Flashback.UI.Controllers
 			{
 				Question question = _data.Questions[indexPath.Row];
 				_addEditQuestionsController = new AddEditQuestionController(question,question.Category);
-				_questionsController.NavigationController.PushViewController(_addEditQuestionsController, false);
+				_questionsController.NavigationController.PushViewController(_addEditQuestionsController, true);
 			}
 		}
 		#endregion
@@ -170,8 +179,8 @@ namespace Flashback.UI.Controllers
 		/// </summary>
 		public class QuestionsData
 		{
-			public List<Question> Questions { get; private set; }
-			public Category Category { get;private set;}
+			public List<Question> Questions { get; set; }
+			public Category Category { get; set;}
 
 			public QuestionsData(Category category)
 			{
@@ -182,6 +191,19 @@ namespace Flashback.UI.Controllers
 			public void DeleteRow(Question question)
 			{
 				Questions.Remove(question);	
+			}
+			
+			
+			/// <summary>
+			/// Moves the source question to the destination, removing it first.
+			/// </summary>
+			public void MoveQuestion(int sourceIndex,int destIndex)
+			{
+				Question question = Questions[sourceIndex];			
+				Questions.RemoveAt(sourceIndex);
+				Questions.Insert(destIndex,question);
+				
+				Logger.Info("Moved {0}[{1}] to {2}",question,sourceIndex,destIndex);
 			}
 		}
 	}

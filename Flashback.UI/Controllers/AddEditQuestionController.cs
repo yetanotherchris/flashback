@@ -118,7 +118,7 @@ namespace Flashback.UI.Controllers
 			_cancelButton.Title = "Cancel";
 			_cancelButton.Clicked += delegate(object sender, EventArgs e)
 			{
-				NavigationController.PopViewControllerAnimated(false);
+				NavigationController.PopViewControllerAnimated(true);
 			};
 
 			// Save button
