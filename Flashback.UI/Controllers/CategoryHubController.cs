@@ -200,7 +200,7 @@ namespace Flashback.UI.Controllers
 			_calendarButton.Title = "Calendar";
 			_calendarButton.Clicked += delegate
 			{
-				CalendarController controller = new CalendarController();
+				CalendarController controller = new CalendarController(_category);
 				NavigationController.PushViewController(controller, true);
 			};
 
@@ -216,28 +216,28 @@ namespace Flashback.UI.Controllers
 			
 			if (tens == 1)
 			{
-			        suffix = "th";
+				suffix = "th";
 			}
 			else
 			{
-			        switch (ones)
-			        {
-			                case 1:
-			                        suffix = "st";
-			                        break;
+				switch (ones)
+				{
+					case 1:
+							suffix = "st";
+							break;
 			
-			                case 2:
-			                        suffix = "nd";
-			                        break;
+					case 2:
+							suffix = "nd";
+							break;
 			
-			                case 3:
-			                        suffix = "rd";
-			                        break;
+					case 3:
+							suffix = "rd";
+							break;
 			
-			                default:
-			                        suffix = "th";
-			                        break;
-			        }
+					default:
+							suffix = "th";
+							break;
+				}
 			}
 			
 			return suffix;
