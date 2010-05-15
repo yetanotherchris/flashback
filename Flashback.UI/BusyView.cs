@@ -2,7 +2,7 @@ using System;
 using MonoTouch.UIKit;
 using System.Drawing;
 
-namespace Flashback
+namespace Flashback.UI
 {
 	public class BusyView : UIAlertView
 	{

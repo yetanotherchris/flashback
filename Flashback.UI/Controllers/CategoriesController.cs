@@ -42,10 +42,7 @@ namespace Flashback.UI.Controllers
 			Title = "Categories";
 			ToolbarItems = GetToolBar();
 
-			//	* Digg style table: 
-			//    * Lower text displays number of questions
-			//    * Inline text displays number due
-
+#if PROMODE
 			// Edit and done button
 			_editButton = new UIBarButtonItem(UIBarButtonSystemItem.Edit);
 			_editButton.Clicked += delegate(object sender, EventArgs e)
@@ -62,16 +59,18 @@ namespace Flashback.UI.Controllers
 			};
 
 			NavigationItem.SetRightBarButtonItem(_editButton, false);
+#endif
 		}
 		
-		public override void ViewWillAppear (bool animated)
+		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear (animated);
+
 			// Setup the datasource
 			ReloadData();
 		}
 		
-		public override void ViewDidAppear (bool animated)
+		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
 			NavigationController.ToolbarHidden = false;
@@ -93,10 +92,26 @@ namespace Flashback.UI.Controllers
 			_addButton.Title = "Add category";
 			_addButton.Clicked += delegate
 			{
+#if PROMODE
 				_addEditCategoryController = new AddEditCategoryController(null);
 				NavigationController.PushViewController(_addEditCategoryController, false);
+#else
+				UpgradeView view = new UpgradeView();
+				view.Show("Only one category is available in the free edition.");
+#endif
 			};
-			
+
+			// Help button
+			_helpButton = new UIBarButtonItem();
+			_helpButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
+			_helpButton.Title = "Help";
+			_helpButton.Clicked += delegate
+			{
+				_informationController = new InformationController();
+				NavigationController.PushViewController(_informationController, false);
+			};
+
+#if PROMODE
 			// Import button
 			_importButton = new UIBarButtonItem();
 			_importButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_import.png");
@@ -116,17 +131,7 @@ namespace Flashback.UI.Controllers
 				_exportController = new ExportController();
 				NavigationController.PushViewController(_exportController, true);
 			};
-			
-			// Help button
-			_helpButton = new UIBarButtonItem();
-			_helpButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
-			_helpButton.Title = "Help";
-			_helpButton.Clicked += delegate
-			{
-				_informationController = new InformationController();
-				NavigationController.PushViewController(_informationController, false);
-			};
-			
+
 			// Tips button
 			_informationButton = new UIBarButtonItem();
 			_informationButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
@@ -137,7 +142,10 @@ namespace Flashback.UI.Controllers
 				NavigationController.PushViewController(_informationController, false);
 			};
 
-			return new UIBarButtonItem[] { _addButton,_importButton,_exportButton,_informationButton };
+			return new UIBarButtonItem[] { _addButton, _importButton, _exportButton, _helpButton, _informationButton };
+#else
+			return new UIBarButtonItem[] { _addButton, _helpButton };
+#endif
 		}
 
 		#region CategoriesTableSource
