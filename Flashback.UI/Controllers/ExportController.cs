@@ -14,42 +14,49 @@ namespace Flashback.UI.Controllers
 		private UILabel _labelHelp;
 		private UITextView _textFieldExport;
 		private UIBarButtonItem _exportButton;
+		private BusyView _busyView;
 
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
 			Title = "Export";
+			View.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
+			
+			// Export textbox
+			_textFieldExport = new UITextView();
+			_textFieldExport.Frame = new RectangleF(10, 15, 300, 200);
+			View.AddSubview(_textFieldExport);
 
 			// Help label
 			_labelHelp = new UILabel();
-			_labelHelp.Text = "All questions are exported here using a comma separated format like so:" +
+			_labelHelp.Text = "The questions are exported in comma separated format (CSV), e.g.:" +
 				"\n\n" +
 				"category name,question,answer\n\n" +
-				"A tilde is used (~) as a replacement for any comma. Use the standard iPhone/iTouch copy " +
+				"A tilde is used (~) as a replacement for any comma. Use the standard iPhone/iTouch clipboard copy " +
 				"feature to save the list.";
-			_labelHelp.Font = UIFont.SystemFontOfSize(13f);
-			_labelHelp.TextColor = UIColor.Gray;
-			_labelHelp.Frame = new RectangleF(15, 245, 295, 150);
+			_labelHelp.Font = UIFont.SystemFontOfSize(14f);
+			_labelHelp.TextColor = UIColor.DarkGray;
+			_labelHelp.Frame = new RectangleF(15, 235, 295, 150);
 			_labelHelp.BackgroundColor = UIColor.Clear;
 			_labelHelp.Lines = 10;
 			View.AddSubview(_labelHelp);
 
-			// Import textbox
-			_textFieldExport = new UITextView();
-			_textFieldExport.Frame = new RectangleF(10, 35, 300, 200);
-			View.AddSubview(_textFieldExport);
-
 			// Hide the toolbar.
 			NavigationController.SetToolbarHidden(true, false);
 			NavigationItem.HidesBackButton = false;
+			
+			_busyView = new BusyView();
+			_busyView.Show("Exporting...");
 		}
 		
-		public override void ViewDidAppear (bool animated)
+		public override void ViewDidAppear(bool animated)
 		{
-			base.ViewDidAppear (animated);
+			base.ViewDidAppear(animated);
 
 			IList<Question> questions = Question.List().Where(q => !q.Category.InBuilt).ToList();
-			_textFieldExport.Text =  CsvManager.Export(questions);
+			_textFieldExport.Text = CsvManager.Export(questions);
+			
+			_busyView.Hide();
 		}
 	}
 }

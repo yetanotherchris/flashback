@@ -91,6 +91,7 @@
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="BusyView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -113,8 +114,6 @@
     <Content Include="Assets\Images\button_1.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\HTML\calendar.html" />
-    <Content Include="Assets\HTML\categoryhub.html" />
     <Content Include="Assets\Images\icon.png" />
     <Content Include="Assets\Images\Toolbar\toolbar_add.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

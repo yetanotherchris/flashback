@@ -17,6 +17,7 @@ namespace Flashback.UI.Controllers
 		private UIBarButtonItem _addButton;
 		private UIBarButtonItem _importButton;
 		private UIBarButtonItem _exportButton;
+		private UIBarButtonItem _helpButton;
 		private UIBarButtonItem _informationButton;
 		
 		private UIBarButtonItem _editButton;
@@ -103,7 +104,7 @@ namespace Flashback.UI.Controllers
 			_importButton.Clicked += delegate
 			{
 				_importController = new ImportController();
-				NavigationController.PushViewController(_importController, false);
+				NavigationController.PushViewController(_importController, true);
 			};
 			
 			// Export button
@@ -113,13 +114,23 @@ namespace Flashback.UI.Controllers
 			_exportButton.Clicked += delegate
 			{
 				_exportController = new ExportController();
-				NavigationController.PushViewController(_exportController, false);
+				NavigationController.PushViewController(_exportController, true);
 			};
 			
-			// Information button
+			// Help button
+			_helpButton = new UIBarButtonItem();
+			_helpButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
+			_helpButton.Title = "Help";
+			_helpButton.Clicked += delegate
+			{
+				_informationController = new InformationController();
+				NavigationController.PushViewController(_informationController, false);
+			};
+			
+			// Tips button
 			_informationButton = new UIBarButtonItem();
 			_informationButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
-			_informationButton.Title = "Info";
+			_informationButton.Title = "Tips";
 			_informationButton.Clicked += delegate
 			{
 				_informationController = new InformationController();
@@ -166,10 +177,6 @@ namespace Flashback.UI.Controllers
 				int questionCount = questions.Count;
 				int dueTodayCount = Question.DueToday(questions).ToList().Count;	
 				
-				// Badge count
-				_questionsDueCount += dueTodayCount;
-				UIApplication.SharedApplication.ApplicationIconBadgeNumber = _questionsDueCount;
-
 				cell.DetailTextLabel.Text = string.Format("{0} questions, {1} due today",questionCount,dueTodayCount);
 				cell.TextLabel.Text = category.Name;
 

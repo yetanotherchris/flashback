@@ -158,7 +158,7 @@ namespace Flashback.UI.Controllers
 			BindQuestion(_currentQuestion);
 		}
 		
-		public override void ViewDidAppear (bool animated)
+		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
 			
@@ -209,7 +209,7 @@ namespace Flashback.UI.Controllers
 			_buttonScore6.Enabled = true;
 		}
 		
-		public override void ViewWillAppear (bool animated)
+		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear (animated);
 			Title = _category.Name;	
@@ -268,7 +268,7 @@ namespace Flashback.UI.Controllers
 	
 	public class UnderlineButton : UIButton
 	{
-		public override void Draw (RectangleF rect)
+		public override void Draw(RectangleF rect)
 		{
 			base.Draw (rect);
 			

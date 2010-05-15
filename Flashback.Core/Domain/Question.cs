@@ -109,6 +109,11 @@ namespace Flashback.Core
 			return list.Where(q => q.NextAskOn < DateTime.Today.AddDays(1));
 		}
 		
+		public static IEnumerable<Question> ActiveDueToday(IList<Question> list)
+		{
+			return list.Where(q => q.NextAskOn < DateTime.Today.AddDays(1) && q.Category.Active);
+		}
+		
 		public static DateTime NextDueDate(IList<Question> questions)
 		{
 			Question question = questions.OrderByDescending(q => q.NextAskOn).FirstOrDefault();

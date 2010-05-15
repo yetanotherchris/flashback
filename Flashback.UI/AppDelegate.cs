@@ -19,11 +19,10 @@ namespace Flashback.UI
 
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
-			//Repository.Current.DeleteDatabase();
+			// Set the repository type
 			_sqliteRepository = new SqliteRepository();
 			Repository.SetInstance(_sqliteRepository);
 			Repository.Default.CreateDatabase();
-			//Question.Save(new Question() {Id=1});
 			
 			_rootController = new RootController();
 
@@ -37,6 +36,20 @@ namespace Flashback.UI
 		// This method is required in iPhoneOS 3.0
 		public override void OnActivated(UIApplication application)
 		{
+		}
+		
+		public override void WillTerminate (UIApplication application)
+		{
+			UpdateApplicationBadge();
+		}
+		
+		private void UpdateApplicationBadge()
+		{
+			UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;	
+			
+			IList<Question> questions = Question.List();
+			int dueTodayCount = Question.ActiveDueToday(questions).ToList().Count;	
+			UIApplication.SharedApplication.ApplicationIconBadgeNumber = dueTodayCount;
 		}
 	}
 }

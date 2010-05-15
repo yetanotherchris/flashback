@@ -18,9 +18,7 @@ namespace Flashback.UI.Controllers
 			PushViewController(_categoriesController, false);
 
 			Toolbar.BarStyle = UIBarStyle.Black;
-			NavigationBar.BarStyle = UIBarStyle.Black;
-			
-			// TODO: persist to last shown controller
+			NavigationBar.BarStyle = UIBarStyle.Black;			
 		}
 	}
 }

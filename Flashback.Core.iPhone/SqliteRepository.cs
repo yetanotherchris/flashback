@@ -65,7 +65,7 @@ namespace Flashback.Core.iPhone
 					connection.Open();
 					using (SqliteCommand command = new SqliteCommand(connection))
 					{
-						command.CommandText = "SELECT id,name,inbuilt FROM categories";
+						command.CommandText = "SELECT id,name,inbuilt,active FROM categories";
 
 						using (SqliteDataReader reader = command.ExecuteReader())
 						{
@@ -75,6 +75,7 @@ namespace Flashback.Core.iPhone
 								category.Id = reader.GetInt32(0);
 								category.Name = reader.GetString(1);
 								category.InBuilt = reader.GetBoolean(2);
+								category.Active = reader.GetBoolean(3);
 
 								list.Add(category);
 							}
@@ -113,6 +114,7 @@ namespace Flashback.Core.iPhone
 								category.Id = Convert.ToInt32(reader["categoryid"]);
 								category.InBuilt = Convert.ToBoolean(reader["inbuilt"]);
 								category.Name = (string)reader["categoryName"];
+								category.Active = Convert.ToBoolean(reader["active"]);
 							}
 						}
 					}
@@ -138,11 +140,11 @@ namespace Flashback.Core.iPhone
 					using (SqliteCommand command = new SqliteCommand(connection))
 					{
 						SqliteParameter parameter;
-						string sql = @"INSERT INTO categories (name) VALUES (@name);SELECT last_insert_rowid();";
+						string sql = @"INSERT INTO categories (name,active) VALUES (@name,@active);SELECT last_insert_rowid();";
 
 						if (updating)
 						{
-							sql = @"UPDATE categories SET name=@name WHERE id=@id";
+							sql = @"UPDATE categories SET name=@name,active=@active WHERE id=@id";
 
 							parameter = new SqliteParameter("@id", DbType.Int32);
 							parameter.Value = category.Id;
@@ -151,6 +153,10 @@ namespace Flashback.Core.iPhone
 
 						parameter = new SqliteParameter("@name", DbType.String);
 						parameter.Value = category.Name;
+						command.Parameters.Add(parameter);
+						
+						parameter = new SqliteParameter("@active", DbType.Boolean);
+						parameter.Value = category.Active;
 						command.Parameters.Add(parameter);
 
 						command.CommandText = sql;
@@ -218,7 +224,7 @@ namespace Flashback.Core.iPhone
 					connection.Open();
 					using (SqliteCommand command = new SqliteCommand(connection))
 					{
-						command.CommandText = "SELECT q.*,c.Name as categoryName,c.inbuilt as inbuilt FROM "+
+						command.CommandText = "SELECT q.*,c.Name as categoryName,c.inbuilt as inbuilt,c.active as active FROM "+
 												"questions q, categories c WHERE c.id = q.categoryid";
 
 						using (SqliteDataReader reader = command.ExecuteReader())
@@ -232,6 +238,7 @@ namespace Flashback.Core.iPhone
 								question.Category = new Category();
 								question.Category.Id = Convert.ToInt32(reader["categoryid"]);
 								question.Category.InBuilt = Convert.ToBoolean(reader["inbuilt"]);
+								question.Category.Active = Convert.ToBoolean(reader["active"]);
 								question.Category.Name = (string)reader["categoryName"];
 								
 								question.Answer = (string)reader["answer"];
@@ -319,7 +326,8 @@ namespace Flashback.Core.iPhone
 					connection.Open();
 					using (SqliteCommand command = new SqliteCommand(connection))
 					{
-						command.CommandText = "SELECT q.*,c.Name as categoryName FROM questions q, categories c WHERE c.id = q.categoryid AND id=@id";
+						command.CommandText = "SELECT q.*,c.Name as categoryName,c.inbuilt as inbuilt,c.active as active"+
+											  "FROM questions q, categories c WHERE c.id = q.categoryid AND id=@id";
 						SqliteParameter parameter = new SqliteParameter("@id", DbType.Int32);
 						parameter.Value = id;
 						command.Parameters.Add(parameter);
@@ -333,6 +341,8 @@ namespace Flashback.Core.iPhone
 
 								question.Category = new Category();
 								question.Category.Id = Convert.ToInt32(reader["categoryid"]);
+								question.Category.InBuilt = Convert.ToBoolean(reader["inbuilt"]);
+								question.Category.Active = Convert.ToBoolean(reader["active"]);
 								question.Category.Name = (string)reader["categoryName"];
 
 								question.Answer = (string)reader["answer"];
@@ -565,6 +575,7 @@ namespace Flashback.Core.iPhone
 					string categoriesSql = "CREATE TABLE \"categories\" ("+
 						"\"id\" INTEGER PRIMARY KEY AUTOINCREMENT," +
 						"\"name\" TEXT NOT NULL," +
+						"\"active\" INTEGER DEFAULT 0,"+
 						"\"inbuilt\" INTEGER DEFAULT 0)";
 
 					string questionsSql = "CREATE TABLE questions (" +

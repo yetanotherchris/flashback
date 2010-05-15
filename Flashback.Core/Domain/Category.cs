@@ -24,6 +24,11 @@ namespace Flashback.Core
 		/// Whether the category comes with the Flashback application.
 		/// </summary>
 		public bool InBuilt { get; set; }
+		
+		/// <summary>
+		/// Whether the category is active. Inactive categories don't appear on the iPhone badge count. 
+		/// </summary>
+		public bool Active { get; set; }
 
 		/// <summary>
 		/// Shortcut helper for saving a category.
