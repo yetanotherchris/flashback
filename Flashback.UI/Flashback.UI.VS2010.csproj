@@ -76,7 +76,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Assets\HTML\calendar.html" />
+    <EmbeddedResource Include="Assets\HTML\calendar.html" />
     <Content Include="Assets\HTML\categoryhub.html" />
     <Content Include="Assets\Images\icon.png" />
     <Content Include="Assets\Images\resetbutton.png" />
