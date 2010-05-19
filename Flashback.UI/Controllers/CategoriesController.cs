@@ -29,7 +29,7 @@ namespace Flashback.UI.Controllers
 		private AddEditCategoryController _addEditCategoryController;
 		private ImportController _importController;
 		private ExportController _exportController;
-		private InformationController _informationController;
+		private TipsController _tipsController;
 		
 		private CategoriesTableSource _categoriesTableSource;
 
@@ -92,13 +92,16 @@ namespace Flashback.UI.Controllers
 			_addButton.Title = "Add category";
 			_addButton.Clicked += delegate
 			{
-#if FULLVERSION
-				_addEditCategoryController = new AddEditCategoryController(null);
-				NavigationController.PushViewController(_addEditCategoryController, false);
-#else
-				UpgradeView view = new UpgradeView();
-				view.Show("Only one category is available in the free edition.");
-#endif
+				if (Settings.IsFullVersion)
+				{
+					_addEditCategoryController = new AddEditCategoryController(null);
+					NavigationController.PushViewController(_addEditCategoryController, true);
+				}
+				else
+				{
+					UpgradeView view = new UpgradeView();
+					view.Show("Only one category is available in the free edition.");
+				}
 			};
 
 			// Help button
@@ -107,45 +110,48 @@ namespace Flashback.UI.Controllers
 			_helpButton.Title = "Help";
 			_helpButton.Clicked += delegate
 			{
-				_informationController = new InformationController();
-				NavigationController.PushViewController(_informationController, false);
+				_tipsController = new TipsController();
+				NavigationController.PushViewController(_tipsController, true);
 			};
 
-#if FULLVERSION
-			// Import button
-			_importButton = new UIBarButtonItem();
-			_importButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_import.png");
-			_importButton.Title = "Import";
-			_importButton.Clicked += delegate
+			if (Settings.IsFullVersion)
 			{
-				_importController = new ImportController();
-				NavigationController.PushViewController(_importController, true);
-			};
-			
-			// Export button
-			_exportButton = new UIBarButtonItem();
-			_exportButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_export.png");
-			_exportButton.Title = "Export";
-			_exportButton.Clicked += delegate
-			{
-				_exportController = new ExportController();
-				NavigationController.PushViewController(_exportController, true);
-			};
+				// Import button
+				_importButton = new UIBarButtonItem();
+				_importButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_import.png");
+				_importButton.Title = "Import";
+				_importButton.Clicked += delegate
+				{
+					_importController = new ImportController();
+					NavigationController.PushViewController(_importController, true);
+				};
 
-			// Tips button
-			_informationButton = new UIBarButtonItem();
-			_informationButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
-			_informationButton.Title = "Tips";
-			_informationButton.Clicked += delegate
-			{
-				_informationController = new InformationController();
-				NavigationController.PushViewController(_informationController, false);
-			};
+				// Export button
+				_exportButton = new UIBarButtonItem();
+				_exportButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_export.png");
+				_exportButton.Title = "Export";
+				_exportButton.Clicked += delegate
+				{
+					_exportController = new ExportController();
+					NavigationController.PushViewController(_exportController, true);
+				};
 
-			return new UIBarButtonItem[] { _addButton, _importButton, _exportButton, _helpButton, _informationButton };
-#else
-			return new UIBarButtonItem[] { _addButton, _helpButton };
-#endif
+				// Tips button
+				_informationButton = new UIBarButtonItem();
+				_informationButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
+				_informationButton.Title = "Tips";
+				_informationButton.Clicked += delegate
+				{
+					_tipsController = new TipsController();
+					NavigationController.PushViewController(_tipsController, true);
+				};
+
+				return new UIBarButtonItem[] { _addButton, _importButton, _exportButton, _helpButton, _informationButton };
+			}
+			else
+			{
+				return new UIBarButtonItem[] { _addButton, _helpButton };
+			}
 		}
 
 		#region CategoriesTableSource
@@ -183,9 +189,13 @@ namespace Flashback.UI.Controllers
 				Category category = _data.Categories[indexPath.Row];
 				IList<Question> questions = Question.ForCategory(category);
 				int questionCount = questions.Count;
-				int dueTodayCount = Question.DueToday(questions).ToList().Count;	
-				
-				cell.DetailTextLabel.Text = string.Format("{0} questions, {1} due today",questionCount,dueTodayCount);
+				int dueTodayCount = Question.DueToday(questions).ToList().Count;
+
+				if (category.Active)
+					cell.DetailTextLabel.Text = string.Format("{0} questions, {1} due today", questionCount, dueTodayCount);
+				else
+					cell.DetailTextLabel.Text = string.Format("{0} questions. (Inactive)", questionCount);
+
 				cell.TextLabel.Text = category.Name;
 
 				return cell;

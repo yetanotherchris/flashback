@@ -50,6 +50,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Default.cs" />
+    <Compile Include="Data\French.cs" />
+    <Compile Include="Data\German.cs" />
+    <Compile Include="Data\Spanish.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\QuestionManager.cs" />
     <Compile Include="Helpers\Logger.cs" />

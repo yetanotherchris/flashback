@@ -88,21 +88,24 @@ namespace Flashback.UI.Controllers
 			_addButton.Title = "Add question";
 			_addButton.Clicked += delegate
 			{
-#if FULLVERSION
-				_addEditQuestionController = new AddEditQuestionController(null, _data.Category);
-				NavigationController.PushViewController(_addEditQuestionController, true);
-#else
-				if (_data.Questions.Count == 10)
-				{
-					UpgradeView view = new UpgradeView();
-					view.Show("The free edition is limited to 10 questions.");
-				}
-				else
+				if (Settings.IsFullVersion)
 				{
 					_addEditQuestionController = new AddEditQuestionController(null, _data.Category);
 					NavigationController.PushViewController(_addEditQuestionController, true);
 				}
-#endif
+				else
+				{
+					if (_data.Questions.Count == 10)
+					{
+						UpgradeView view = new UpgradeView();
+						view.Show("The free edition is limited to 10 questions.");
+					}
+					else
+					{
+						_addEditQuestionController = new AddEditQuestionController(null, _data.Category);
+						NavigationController.PushViewController(_addEditQuestionController, true);
+					}
+				}
 			};
 
 			return new UIBarButtonItem[] { _addButton };
