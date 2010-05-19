@@ -23,7 +23,7 @@ namespace Flashback.UI.Controllers
 		{
 			base.ViewDidLoad();
 
-			ReadTipsHtml();
+			ReadHelpHtml();
 
 			_webView = new UIWebView();
 			_webView.Frame = new RectangleF(0, 0, 320, 480);
@@ -35,7 +35,7 @@ namespace Flashback.UI.Controllers
 		/// Retrieves the Calendar HTML from the embedded resource into a static field.
 		/// </summary>
 		/// <returns></returns>
-		private void ReadTipsHtml()
+		private void ReadHelpHtml()
 		{
 			if (!string.IsNullOrEmpty(_tipsHtml))
 				return;
