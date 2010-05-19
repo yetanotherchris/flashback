@@ -17,6 +17,7 @@ using SqliteConnection = System.Data.SQLite.SQLiteConnection;
 using SqliteParameter = System.Data.SQLite.SQLiteParameter;
 using SqliteException = System.Data.SQLite.SQLiteException;
 using System.Data;
+using Flashback.Core.Data;
 #endif
 
 

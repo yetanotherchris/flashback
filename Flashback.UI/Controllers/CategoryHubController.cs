@@ -166,6 +166,7 @@ namespace Flashback.UI.Controllers
 				
 				if (dueTodayCount == 0)
 				{
+					_buttonStart.Enabled = false;
 					DateTime datetime = Question.NextDueDate(questions);
 					string dateSuffix = DateSuffix(datetime.Day);
 					_labelNextDue.Text = string.Format("Question{0} are next due on {1}{2} {3}.",plural,datetime.ToString("dddd d"),dateSuffix,datetime.ToString("MMMM"));
@@ -189,7 +190,7 @@ namespace Flashback.UI.Controllers
 			_editCategoryButton.Clicked += delegate
 			{
 				AddEditCategoryController controller = new AddEditCategoryController(_category);
-				NavigationController.PushViewController(controller, false);
+				NavigationController.PushViewController(controller, true);
 			};
 
 			// Manage questions

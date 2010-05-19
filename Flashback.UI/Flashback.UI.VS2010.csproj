@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;FULLVERSION WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -57,12 +57,14 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\AddEditQuestionController.cs" />
     <Compile Include="Controllers\AnswerQuestionsController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
-    <Compile Include="Controllers\InformationController.cs" />
+    <Compile Include="Controllers\TipsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\CategoryHubController.cs" />
     <Compile Include="Controllers\RootController.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="UpgradeView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -79,7 +81,10 @@
   <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Assets\HTML\calendar.html" />
-    <Content Include="Assets\HTML\categoryhub.html" />
+    <EmbeddedResource Include="Assets\HTML\foreignlanguage.html" />
+    <EmbeddedResource Include="Assets\HTML\tips.html" />
+    <EmbeddedResource Include="Assets\HTML\help.html" />
+    <EmbeddedResource Include="Assets\HTML\upgrade.html" />
     <Content Include="Assets\Images\icon.png" />
     <Content Include="Assets\Images\resetbutton.png" />
     <Content Include="Assets\Images\startbutton.png" />
