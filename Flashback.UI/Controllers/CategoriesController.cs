@@ -18,7 +18,7 @@ namespace Flashback.UI.Controllers
 		private UIBarButtonItem _importButton;
 		private UIBarButtonItem _exportButton;
 		private UIBarButtonItem _helpButton;
-		private UIBarButtonItem _informationButton;
+		private UIBarButtonItem _tipsButton;
 		
 		private UIBarButtonItem _editButton;
 		private UIBarButtonItem _doneButton;
@@ -29,6 +29,7 @@ namespace Flashback.UI.Controllers
 		private AddEditCategoryController _addEditCategoryController;
 		private ImportController _importController;
 		private ExportController _exportController;
+		private HelpController _helpController;
 		private TipsController _tipsController;
 		
 		private CategoriesTableSource _categoriesTableSource;
@@ -42,24 +43,25 @@ namespace Flashback.UI.Controllers
 			Title = "Categories";
 			ToolbarItems = GetToolBar();
 
-#if FULLVERSION
-			// Edit and done button
-			_editButton = new UIBarButtonItem(UIBarButtonSystemItem.Edit);
-			_editButton.Clicked += delegate(object sender, EventArgs e)
+			if (Settings.IsFullVersion)
 			{
-				TableView.Editing = true;
-				NavigationItem.SetRightBarButtonItem(_doneButton, false);
-			};
-
-			_doneButton = new UIBarButtonItem(UIBarButtonSystemItem.Done);
-			_doneButton.Clicked += delegate(object sender, EventArgs e)
-			{
-				TableView.Editing = false;
+				// Edit and done button
+				_editButton = new UIBarButtonItem(UIBarButtonSystemItem.Edit);
+				_editButton.Clicked += delegate(object sender, EventArgs e)
+				{
+					TableView.Editing = true;
+					NavigationItem.SetRightBarButtonItem(_doneButton, false);
+				};
+	
+				_doneButton = new UIBarButtonItem(UIBarButtonSystemItem.Done);
+				_doneButton.Clicked += delegate(object sender, EventArgs e)
+				{
+					TableView.Editing = false;
+					NavigationItem.SetRightBarButtonItem(_editButton, false);
+				};
+	
 				NavigationItem.SetRightBarButtonItem(_editButton, false);
-			};
-
-			NavigationItem.SetRightBarButtonItem(_editButton, false);
-#endif
+			}
 		}
 		
 		public override void ViewWillAppear(bool animated)
@@ -110,8 +112,8 @@ namespace Flashback.UI.Controllers
 			_helpButton.Title = "Help";
 			_helpButton.Clicked += delegate
 			{
-				_tipsController = new TipsController();
-				NavigationController.PushViewController(_tipsController, true);
+				_helpController = new HelpController();
+				NavigationController.PushViewController(_helpController, true);
 			};
 
 			if (Settings.IsFullVersion)
@@ -137,16 +139,16 @@ namespace Flashback.UI.Controllers
 				};
 
 				// Tips button
-				_informationButton = new UIBarButtonItem();
-				_informationButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
-				_informationButton.Title = "Tips";
-				_informationButton.Clicked += delegate
+				_tipsButton = new UIBarButtonItem();
+				_tipsButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
+				_tipsButton.Title = "Tips";
+				_tipsButton.Clicked += delegate
 				{
 					_tipsController = new TipsController();
 					NavigationController.PushViewController(_tipsController, true);
 				};
 
-				return new UIBarButtonItem[] { _addButton, _importButton, _exportButton, _helpButton, _informationButton };
+				return new UIBarButtonItem[] { _addButton, _importButton, _exportButton, _helpButton, _tipsButton };
 			}
 			else
 			{

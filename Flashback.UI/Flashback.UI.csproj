@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
+    <DefineConstants>DEBUG FULLVERSION</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -87,11 +87,13 @@
     <Compile Include="Controllers\CategoryHubController.cs" />
     <Compile Include="Controllers\RootController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="BusyView.cs" />
     <Compile Include="UpgradeView.cs" />
+    <Compile Include="Controllers\TipsController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -139,6 +141,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\HTML\calendar.html" />
+    <EmbeddedResource Include="Assets\HTML\foreignlanguage.html" />
+    <EmbeddedResource Include="Assets\HTML\help.html" />
+    <EmbeddedResource Include="Assets\HTML\tips.html" />
+    <EmbeddedResource Include="Assets\HTML\upgrade.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Flashback.Core\Flashback.Core.csproj">

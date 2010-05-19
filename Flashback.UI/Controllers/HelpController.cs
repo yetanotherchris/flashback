@@ -37,11 +37,11 @@ namespace Flashback.UI.Controllers
 		/// </summary>
 		private string ReplaceTokens()
 		{
-			ReadTipsHtml();
+			ReadHelpHtml();
 
 			string html = _helpHtml;
-			ReplaceUpgradeLink(html);
-			ReplaceForeignLanguage(html);
+			html = ReplaceUpgradeLink(html);
+			html = ReplaceForeignLanguage(html);
 
 			return html;
 		}
@@ -82,19 +82,15 @@ namespace Flashback.UI.Controllers
 				ReadForeignLanguageHtml();
 				foreignLanguage = _foreignLanguageHtml.Replace("#LANGUAGE#", "Spanish");
 			}
-			else
-			{
-				html = html.Replace("#LANGUAGE#", "");
-			}
 
-			return html;
+			return html.Replace("#LANGUAGE#", foreignLanguage);
 		}
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		private void ReadTipsHtml()
+		private void ReadHelpHtml()
 		{
 			if (!string.IsNullOrEmpty(_helpHtml))
 				return;

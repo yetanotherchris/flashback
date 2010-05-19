@@ -96,7 +96,7 @@ namespace Flashback.UI.Controllers
 			_cancelButton.Title = "Cancel";
 			_cancelButton.Clicked += delegate(object sender, EventArgs e)
 			{
-				NavigationController.PopViewControllerAnimated(false);
+				NavigationController.PopViewControllerAnimated(true);
 			};
 
 			// Save button
@@ -133,7 +133,7 @@ namespace Flashback.UI.Controllers
 			Category.Save(_category);
 			
 			// Reload the table controller's data as it doesn't reload it.
-			NavigationController.PopViewControllerAnimated(false);
+			NavigationController.PopViewControllerAnimated(true);
 		}
 	}
 }
