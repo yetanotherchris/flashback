@@ -6,6 +6,7 @@ using MonoTouch.UIKit;
 using System.Drawing;
 using Flashback.Core.iPhone;
 using Flashback.Core;
+using System.Threading;
 
 namespace Flashback.UI.Controllers
 {
@@ -44,19 +45,29 @@ namespace Flashback.UI.Controllers
 			// Hide the toolbar.
 			NavigationController.SetToolbarHidden(true, false);
 			NavigationItem.HidesBackButton = false;
-			
-			_busyView = new BusyView();
-			_busyView.Show("Exporting...");
 		}
 		
 		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
 
-			IList<Question> questions = Question.List().Where(q => !q.Category.InBuilt).ToList();
-			_textFieldExport.Text = CsvManager.Export(questions);
+			_busyView = new BusyView();
+			_busyView.Show("Exporting...");
 			
-			_busyView.Hide();
+			Thread thread = new Thread(ThreadEntry);
+			thread.Start();
+		}
+		
+		private void ThreadEntry()
+		{
+			IList<Question> questions = Question.List().Where(q => !q.Category.InBuilt).ToList();
+			string csv = CsvManager.Export(questions);
+			
+			InvokeOnMainThread(delegate()
+			{
+				_textFieldExport.Text = csv;
+				_busyView.Hide();
+			});
 		}
 	}
 }

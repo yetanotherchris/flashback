@@ -24,11 +24,15 @@ namespace Flashback.UI.Controllers
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
+			Title = "Help";
+			View.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
 
 			string html = ReplaceTokens();
 			_webView = new UIWebView();
 			_webView.Frame = new RectangleF(0, 0, 320, 480);
 			_webView.LoadHtmlString(html, new NSUrl("/"));
+			_webView.BackgroundColor = UIColor.Clear;
+			_webView.Opaque = false;
 			View.AddSubview(_webView);
 		}
 
