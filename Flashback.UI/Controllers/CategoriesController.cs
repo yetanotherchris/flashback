@@ -76,6 +76,18 @@ namespace Flashback.UI.Controllers
 		{
 			base.ViewDidAppear(animated);
 			NavigationController.ToolbarHidden = false;
+
+			// Ask to see the help screen on first run.
+			if (Settings.IsFirstRun)
+			{
+				UIAlertView alertview = new UIAlertView();
+				alertview.Title = "Welcome to Flashback";
+				alertview.Message = "It's recommended you read the help before starting. Do you want to read the help now?";
+				alertview.Delegate = new FirstRunDelegate(this);
+				alertview.Show();
+
+				Settings.IsFirstRun = false;
+			}
 		}
 		
 		public void ReloadData()
@@ -238,6 +250,25 @@ namespace Flashback.UI.Controllers
 			public void DeleteRow(Category category)
 			{
 				Categories.Remove(category);	
+			}
+		}
+
+		private class FirstRunDelegate : UIAlertViewDelegate
+		{
+			private CategoriesController _parentController;
+
+			public FirstRunDelegate(CategoriesController parentController)
+			{
+				_parentController = parentController;
+			}
+
+			public override void Clicked(UIAlertView alertview, int buttonIndex)
+			{
+				if (buttonIndex == 0)
+				{
+					HelpController helpController = new HelpController();
+					_parentController.NavigationController.PushViewController(helpController,true);
+				}
 			}
 		}
 	}

@@ -24,6 +24,7 @@ namespace Flashback.UI.Controllers
 		private UITextField _textFieldAnswer;
 		private UILabel _labelTipsHeader;
 		private UILabel _labelTipsBody;
+		private UnderlineButton _tipsButton;
 
 		public AddEditQuestionController(Question question,Category category)
 		{
@@ -102,16 +103,25 @@ namespace Flashback.UI.Controllers
 			
 			_labelTipsBody = new UILabel();
 			_labelTipsBody.Text = "Make the question title short, make the answer short with " +
-				"only a few points blah blah blah blah blah lorem ipsum " +
-				"more text lines here about some stuff about memory " +
-				"maybe one more line who knows you never can tell " +
-				"but it would be useful to bulk it up.";
+				"only a few points. Use acronyms, rhymes and mneumonics where possible.";
 			_labelTipsBody.Font = UIFont.SystemFontOfSize(16f);
 			_labelTipsBody.TextColor = UIColor.Gray;
-			_labelTipsBody.Frame = new RectangleF(15, 245, 295, 150);
+			_labelTipsBody.Frame = new RectangleF(15, 245, 295, 100);
 			_labelTipsBody.BackgroundColor = UIColor.Clear;
 			_labelTipsBody.Lines = 10;
 			View.AddSubview(_labelTipsBody);
+
+			// Tips button
+			_tipsButton = new UnderlineButton();
+			_tipsButton.SetTitle("Read more tips...", UIControlState.Normal);
+			_tipsButton.Frame = new RectangleF(15, 260, 100, 20);
+			_tipsButton.SetTitleColor(UIColor.Black, UIControlState.Normal);
+			_tipsButton.TouchDown += delegate(object sender, EventArgs e)
+			{
+				HelpController helpController = new HelpController();
+				NavigationController.PushViewController(helpController,true);
+			};
+			View.AddSubview(_tipsButton);
 
 			// Cancel
 			_cancelButton = new UIBarButtonItem();
