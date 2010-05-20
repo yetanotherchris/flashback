@@ -37,9 +37,10 @@ namespace Flashback.UI
 		public override void OnActivated(UIApplication application)
 		{
 		}
-		
+
 		public override void WillTerminate (UIApplication application)
 		{
+			Settings.Write();
 			UpdateApplicationBadge();
 		}
 		
