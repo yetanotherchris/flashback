@@ -22,12 +22,16 @@ namespace Flashback.UI.Controllers
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
+			Title = "Tips";
+			View.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
 
 			ReadHelpHtml();
 
 			_webView = new UIWebView();
 			_webView.Frame = new RectangleF(0, 0, 320, 480);
 			_webView.LoadHtmlString(_tipsHtml, new NSUrl("/"));
+			_webView.BackgroundColor = UIColor.Clear;
+			_webView.Opaque = false;
 			View.AddSubview(_webView);
 		}
 

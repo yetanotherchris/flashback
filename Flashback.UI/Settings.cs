@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,10 +12,13 @@ namespace Flashback.UI
 	/// </summary>
 	public class Settings
 	{
+		/// <summary>
+		/// A version number for future updates to use. 
+		/// </summary>
 		public static string Version { get; set; }
 
 		/// <summary>
-		/// Todo: save to settings
+		/// Whether this is the first time the app has run.
 		/// </summary>
 		public static bool IsFirstRun { get; set; }
 		
@@ -94,7 +97,7 @@ namespace Flashback.UI
 		{
 			try
 			{
-				NSUserDefaults.StandardUserDefaults.SetBool(false, "firstrun");
+				NSUserDefaults.StandardUserDefaults.SetString("false", "firstrun");
 				NSUserDefaults.StandardUserDefaults.SetString(Version, "version");
 
 				NSUserDefaults.StandardUserDefaults.Synchronize();
@@ -110,16 +113,18 @@ namespace Flashback.UI
 		/// </summary>
 		public static void Read()
 		{
-
 			try
 			{
 				var defaults = NSUserDefaults.StandardUserDefaults;
 
 				string version = defaults.StringForKey("version");
-				if (string.IsNullOrEmpty(version))
+				if (!string.IsNullOrEmpty(version))
 					Version = version;
 
-				bool firstrun = defaults.BoolForKey("firstrun");
+				// A work around as bool fields will always be false if they don't exist
+				string firstRun = defaults.StringForKey("firstrun");
+				if (!string.IsNullOrEmpty(firstRun))
+					IsFirstRun = false;
 			}
 			catch (Exception e)
 			{

@@ -89,11 +89,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
-    <Compile Include="BusyView.cs" />
-    <Compile Include="UpgradeView.cs" />
     <Compile Include="Controllers\TipsController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Views\UpgradeView.cs" />
+    <Compile Include="Views\BusyView.cs" />
+    <Compile Include="Views\UnderlineButton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -114,6 +115,10 @@
     <Content Include="Assets\Images\button_5.png" />
     <Content Include="Assets\Images\button_6.png" />
     <Content Include="Assets\Images\button_1.png" />
+    <Content Include="Assets\Images\Toolbar\toolbar_tips.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\Toolbar\toolbar_help.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Images\icon.png" />
@@ -124,9 +129,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\Toolbar\toolbar_edit.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Images\Toolbar\toolbar_information.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\Toolbar\toolbar_questions.png">

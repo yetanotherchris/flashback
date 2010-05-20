@@ -24,6 +24,9 @@ namespace Flashback.UI
 			Repository.SetInstance(_sqliteRepository);
 			Repository.Default.CreateDatabase();
 			
+			// Get the settings
+			Settings.Read();
+			
 			_rootController = new RootController();
 
 			_window = new UIWindow(UIScreen.MainScreen.Bounds);

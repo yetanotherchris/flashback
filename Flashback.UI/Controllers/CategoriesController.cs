@@ -72,6 +72,8 @@ namespace Flashback.UI.Controllers
 			ReloadData();
 		}
 		
+		private FirstRunDelegate _firstRunDelegate;
+		
 		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
@@ -80,13 +82,19 @@ namespace Flashback.UI.Controllers
 			// Ask to see the help screen on first run.
 			if (Settings.IsFirstRun)
 			{
+				Settings.IsFirstRun = false;
+				
 				UIAlertView alertview = new UIAlertView();
 				alertview.Title = "Welcome to Flashback";
-				alertview.Message = "It's recommended you read the help before starting. Do you want to read the help now?";
-				alertview.Delegate = new FirstRunDelegate(this);
+				alertview.Message = "It's recommended you read the help before starting.\n Would you like to do this now?";
+				alertview.AddButton("Yes");
+				alertview.AddButton("Later");
+				
+				_firstRunDelegate = new FirstRunDelegate();
+				_firstRunDelegate.ParentController = this;
+				alertview.Delegate = _firstRunDelegate;
+				
 				alertview.Show();
-
-				Settings.IsFirstRun = false;
 			}
 		}
 		
@@ -120,7 +128,7 @@ namespace Flashback.UI.Controllers
 
 			// Help button
 			_helpButton = new UIBarButtonItem();
-			_helpButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
+			_helpButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_help.png");
 			_helpButton.Title = "Help";
 			_helpButton.Clicked += delegate
 			{
@@ -152,7 +160,7 @@ namespace Flashback.UI.Controllers
 
 				// Tips button
 				_tipsButton = new UIBarButtonItem();
-				_tipsButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_information.png");
+				_tipsButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_tips.png");
 				_tipsButton.Title = "Tips";
 				_tipsButton.Clicked += delegate
 				{
@@ -204,11 +212,13 @@ namespace Flashback.UI.Controllers
 				IList<Question> questions = Question.ForCategory(category);
 				int questionCount = questions.Count;
 				int dueTodayCount = Question.DueToday(questions).ToList().Count;
+				
+				string s = (questionCount > 1) ? "s" : "";
 
 				if (category.Active)
-					cell.DetailTextLabel.Text = string.Format("{0} questions, {1} due today", questionCount, dueTodayCount);
+					cell.DetailTextLabel.Text = string.Format("{0} question{1}, {2} due today", questionCount,s, dueTodayCount);
 				else
-					cell.DetailTextLabel.Text = string.Format("{0} questions. (Inactive)", questionCount);
+					cell.DetailTextLabel.Text = string.Format("{0} question{1}. (Inactive)", questionCount,s);
 
 				cell.TextLabel.Text = category.Name;
 
@@ -255,19 +265,19 @@ namespace Flashback.UI.Controllers
 
 		private class FirstRunDelegate : UIAlertViewDelegate
 		{
-			private CategoriesController _parentController;
-
-			public FirstRunDelegate(CategoriesController parentController)
-			{
-				_parentController = parentController;
-			}
+			public CategoriesController ParentController { get;set; }
+			
+			public FirstRunDelegate() : base() {}
+			public FirstRunDelegate(IntPtr handle) : base(handle) {}
+			public FirstRunDelegate(NSObjectFlag t) : base(t) {}
+			public FirstRunDelegate(NSCoder coder) : base(coder) {}
 
 			public override void Clicked(UIAlertView alertview, int buttonIndex)
 			{
 				if (buttonIndex == 0)
 				{
 					HelpController helpController = new HelpController();
-					_parentController.NavigationController.PushViewController(helpController,true);
+					ParentController.NavigationController.PushViewController(helpController,true);
 				}
 			}
 		}
