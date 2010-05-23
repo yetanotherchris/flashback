@@ -130,7 +130,9 @@ namespace Flashback.UI.Controllers
 				{
 					using (StreamReader reader = new StreamReader(stream))
 					{
-						_upgradeHtml = reader.ReadToEnd();
+						string upgrade = reader.ReadToEnd();
+						upgrade = upgrade.Replace("{LINK}", Application.UpgradeLink);
+						_upgradeHtml = upgrade;
 					}
 				}
 			}
