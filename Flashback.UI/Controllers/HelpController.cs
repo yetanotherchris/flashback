@@ -20,6 +20,7 @@ namespace Flashback.UI.Controllers
 		private static string _helpHtml;
 		private static string _upgradeHtml;
 		private static string _foreignLanguageHtml;
+		private WebViewDelegate _webViewDelegate;
 
 		public override void ViewDidLoad()
 		{
@@ -33,6 +34,9 @@ namespace Flashback.UI.Controllers
 			_webView.LoadHtmlString(html, new NSUrl("/"));
 			_webView.BackgroundColor = UIColor.Clear;
 			_webView.Opaque = false;
+			
+			_webViewDelegate = new WebViewDelegate();
+			_webView.Delegate = _webViewDelegate;
 			View.AddSubview(_webView);
 		}
 
@@ -164,6 +168,22 @@ namespace Flashback.UI.Controllers
 			catch (IOException e)
 			{
 				Logger.Warn("An error occured reading the foreignlanguage HTML: \n{0}", e);
+			}
+		}
+		
+		public class WebViewDelegate : UIWebViewDelegate
+		{
+			public override bool ShouldStartLoad (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
+			{
+				if (navigationType == UIWebViewNavigationType.LinkClicked)
+				{
+					Application.LaunchAppstoreProEdition();
+					return false;
+				}
+				else
+				{
+					return true;	
+				}
 			}
 		}
 	}
