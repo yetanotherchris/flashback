@@ -9,29 +9,39 @@ using System.Linq;
 
 namespace Flashback.UI.Controllers
 {
+	/// <summary>
+	/// Controller to add or update an existing category.
+	/// </summary>
 	public class AddEditCategoryController : UIViewController
 	{
 		private Category _category;
 
 		private UIBarButtonItem _saveButton;
 		private UIBarButtonItem _cancelButton;
-		private CategoryHubController _hubController;
-
 		private UITextField _textFieldName;
 		private UILabel _labelName;
 		private UILabel _labelActive;
 		private UISwitch _switchActive;
 		private UILabel _labelInfo;
+		
+		private CategoryHubController _hubController;
 
+		/// <summary>
+		/// Creates a new instance of <see cref="AddEditCategoryController"/>
+		/// </summary>
+		/// <param name="category">If null, a new category is created.</param>
 		public AddEditCategoryController(Category category)
 		{
-			// Null means new category
 			_category = category;
 		}
 
+		/// <summary>
+		/// Sets up all controls on the view.
+		/// </summary>
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
+			View.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
 
 			if (_category == null)
 			{
@@ -42,8 +52,6 @@ namespace Flashback.UI.Controllers
 			{
 				Title = "Edit Category";
 			}
-
-			View.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
 
 			// Name label
 			_labelName = new UILabel();
@@ -105,7 +113,7 @@ namespace Flashback.UI.Controllers
 			_saveButton.Clicked += SaveClick;
 
 			// Hide the navigation bar, back button and toolbar.
-			NavigationController.SetToolbarHidden(true, false);
+			NavigationController.SetToolbarHidden(true, true);
 			NavigationItem.HidesBackButton = true;
 			NavigationItem.SetLeftBarButtonItem(_cancelButton, false);
 			NavigationItem.SetRightBarButtonItem(_saveButton, false);
@@ -132,7 +140,6 @@ namespace Flashback.UI.Controllers
 			_category.Active = _switchActive.On;
 			Category.Save(_category);
 			
-			// Reload the table controller's data as it doesn't reload it.
 			NavigationController.PopViewControllerAnimated(true);
 		}
 	}

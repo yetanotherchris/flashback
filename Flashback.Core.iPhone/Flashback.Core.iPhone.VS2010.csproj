@@ -50,8 +50,6 @@
   <ItemGroup>
     <Compile Include="CsvManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLite.cs" />
-    <Compile Include="SQLiteNetRepository.cs" />
     <Compile Include="SqliteRepository.cs" />
   </ItemGroup>
   <ItemGroup>

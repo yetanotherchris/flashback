@@ -6,10 +6,16 @@ using MonoTouch.UIKit;
 
 namespace Flashback.UI.Controllers
 {
+	/// <summary>
+	/// The controller that is first shown when the app launches.
+	/// </summary>
 	public class RootController : UINavigationController
 	{
 		private CategoriesController _categoriesController;
 
+		/// <summary>
+		/// Pushes the <see cref="CategoriesController"/> when loaded.
+		/// </summary>
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();

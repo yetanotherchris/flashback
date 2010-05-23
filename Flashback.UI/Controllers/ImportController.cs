@@ -10,6 +10,9 @@ using System.Threading;
 
 namespace Flashback.UI.Controllers
 {
+	/// <summary>
+	/// Imports questions as CSV from a textbox.
+	/// </summary>
 	public class ImportController : UIViewController
 	{
 		private UILabel _labelHelp;
@@ -51,7 +54,7 @@ namespace Flashback.UI.Controllers
 			_importButton.Clicked += ImportClick;
 
 			// Hide the toolbar.
-			NavigationController.SetToolbarHidden(true, false);
+			NavigationController.SetToolbarHidden(true, true);
 			NavigationItem.HidesBackButton = false;
 			NavigationItem.SetRightBarButtonItem(_importButton, false);
 		}

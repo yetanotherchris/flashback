@@ -41,7 +41,7 @@ namespace Flashback.UI
 		{
 		}
 
-		public override void WillTerminate (UIApplication application)
+		public override void WillTerminate(UIApplication application)
 		{
 			Settings.Write();
 			UpdateApplicationBadge();

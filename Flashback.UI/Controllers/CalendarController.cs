@@ -11,17 +11,27 @@ using MonoTouch.Foundation;
 
 namespace Flashback.UI.Controllers
 {
+	/// <summary>
+	/// Displays a HTML calendar with the due dates of the questions highlighted.
+	/// </summary>
 	public class CalendarController : UIViewController
 	{
 		private UIWebView _webView;
 		private static string _calendarHtml;
 		private Category _category;
 
+		/// <summary>
+		/// Creates a new instance of <see cref="CalendarController"/>
+		/// </summary>
+		/// <param name="category"></param>
 		public CalendarController(Category category)
 		{
 			_category = category;
 		}
 
+		/// <summary>
+		/// Configures the UIWebView when the view loads.
+		/// </summary>
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
@@ -51,7 +61,7 @@ namespace Flashback.UI.Controllers
 			StringBuilder builder = new StringBuilder();
 			Dictionary<string,int> dates = new Dictionary<string,int>();
 
-			// Turn today green if there are some due
+			// Writes the javascript hashtable to turn today green if there are some due
 			// Work out how many are due for each day. This could be done with LINQ but this way is reusable in the next bit.
 			foreach (Question question in Question.ForCategory(_category))
 			{
@@ -73,7 +83,6 @@ namespace Flashback.UI.Controllers
 				builder.AppendLine(string.Format(dateFormat, dueDate, dates[dueDate]));
 			}
 
-			string s = builder.ToString();
 			return template.Replace("#DATES#",builder.ToString());
 		}
 
@@ -98,7 +107,7 @@ namespace Flashback.UI.Controllers
 			}
 			catch (IOException e)
 			{
-				Logger.Warn("An error occured reading the calendar HTML: \n{0}", e);
+				Logger.Fatal("An error occured reading the calendar HTML: \n{0}", e);
 			}
 		}
 	}

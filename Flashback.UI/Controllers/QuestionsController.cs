@@ -9,7 +9,7 @@ using MonoTouch.Foundation;
 namespace Flashback.UI.Controllers
 {
 	/// <summary>
-	/// Digg style table
+	/// Displays the questions as a table and enables moving and deleting.
 	/// </summary>
 	public class QuestionsController : UITableViewController
 	{
@@ -22,6 +22,10 @@ namespace Flashback.UI.Controllers
 		private AddEditQuestionController _addEditQuestionController;
 		private QuestionsTableSource _questionsTableSource;
 
+		/// <summary>
+		/// Creates a new instance of <see cref="QuestionsController"/>
+		/// </summary>
+		/// <param name="category"></param>
 		public QuestionsController(Category category) : base(UITableViewStyle.Grouped)
 		{
 			_data = new QuestionsData(category);
@@ -59,6 +63,9 @@ namespace Flashback.UI.Controllers
 			NavigationController.ToolbarHidden = false;
 		}
 		
+		/// <summary>
+		/// Recreates the datasource and binds it to the table.
+		/// </summary>
 		public void ReloadData()
 		{
 			_data = new QuestionsData(_category);
@@ -178,7 +185,7 @@ namespace Flashback.UI.Controllers
 		#endregion
 
 		/// <summary>
-		/// Keeps a single copy of the questions list, sorted by order.
+		/// Holds the categories, and questions sorted by order, to avoid roundtrips to the database.
 		/// </summary>
 		public class QuestionsData
 		{
@@ -195,7 +202,6 @@ namespace Flashback.UI.Controllers
 			{
 				Questions.Remove(question);	
 			}
-			
 			
 			/// <summary>
 			/// Moves the source question to the destination, removing it first.

@@ -12,7 +12,7 @@ using Flashback.Core;
 namespace Flashback.UI.Controllers
 {
 	/// <summary>
-	/// The help controller, available for all editions.
+	/// The HTML help controller, available for all editions.
 	/// </summary>
 	public class HelpController : UIViewController
 	{

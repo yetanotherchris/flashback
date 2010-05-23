@@ -34,8 +34,14 @@ namespace Flashback.UI.Controllers
 		private CategoriesTableSource _categoriesTableSource;
 		private FirstRunDelegate _firstRunDelegate;
 
+		/// <summary>
+		/// The table is UITableViewStyle.Grouped by default.
+		/// </summary>
 		public CategoriesController() : base(UITableViewStyle.Grouped) { }
 
+		/// <summary>
+		/// When the view loads, the toolbar is configured and the edit button shown for the full edition.
+		/// </summary>
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
@@ -64,6 +70,10 @@ namespace Flashback.UI.Controllers
 			}
 		}
 		
+		/// <summary>
+		/// Reloads the table's data just before the view appears.
+		/// </summary>
+		/// <param name="animated"></param>
 		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear (animated);
@@ -72,6 +82,10 @@ namespace Flashback.UI.Controllers
 			ReloadData();
 		}
 		
+		/// <summary>
+		/// Displays the first run modal dialog when the view appears, if it's the first run.
+		/// </summary>
+		/// <param name="animated"></param>
 		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
@@ -96,6 +110,9 @@ namespace Flashback.UI.Controllers
 			}
 		}
 		
+		/// <summary>
+		/// Configures the UITableView's datasource, and forces a reload of the data from the database.
+		/// </summary>
 		public void ReloadData()
 		{
 			_data = new CategoriesData();
@@ -104,9 +121,13 @@ namespace Flashback.UI.Controllers
 			TableView.ReloadData();
 		}
 
+		/// <summary>
+		/// Configures the bottom toolbar.
+		/// </summary>
+		/// <returns></returns>
 		private UIBarButtonItem[] GetToolBar()
 		{
-			int buttonWidth = 50;
+			int buttonWidth = 35;
 
 			// Add button
 			_addButton = new UIBarButtonItem();
@@ -268,6 +289,9 @@ namespace Flashback.UI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// The responding delegate for the first run modal dialog
+		/// </summary>
 		private class FirstRunDelegate : UIAlertViewDelegate
 		{
 			public CategoriesController ParentController { get;set; }

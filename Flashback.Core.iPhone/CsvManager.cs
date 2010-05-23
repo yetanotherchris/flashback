@@ -28,7 +28,7 @@ namespace Flashback.Core.iPhone
 					question.Category.Name.Replace(",", "~"),
 					question.Title.Replace(",", "~"),
 					question.Answer.Replace(",", "~"),
-					question.NextAskOn.ToString())
+					question.NextAskOn.ToShortDateString())
 					);
 #else
 

@@ -12,7 +12,7 @@ using Flashback.Core;
 namespace Flashback.UI.Controllers
 {
 	/// <summary>
-	/// The tips controller for the full edition.
+	/// The HTML tips controller for the full edition.
 	/// </summary>
 	public class TipsController : UIViewController
 	{

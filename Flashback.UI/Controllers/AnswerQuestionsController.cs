@@ -11,9 +11,9 @@ using MonoTouch.CoreGraphics;
 
 namespace Flashback.UI.Controllers
 {
-	// * ReallySimple style with back/forward
-	// * Final View displays how you did: number correct, next ask date
-
+	/// <summary>
+	/// Displays all questions for a category, with a score and reveal question link.
+	/// </summary>
 	public class AnswerQuestionsController : UIViewController
 	{
 		private Category _category;
@@ -35,6 +35,10 @@ namespace Flashback.UI.Controllers
 		private UIImage _bgImage;
 		private UIImageView _bgImageView;
 
+		/// <summary>
+		/// Creates a new instance of <see cref="AnswerQuestionsController"/>
+		/// </summary>
+		/// <param name="category"></param>
 		public AnswerQuestionsController(Category category)
 		{
 			_questionIndex = 0;
@@ -51,7 +55,7 @@ namespace Flashback.UI.Controllers
 		{
 			// Hide the toolbar
 			base.ViewDidLoad();
-			NavigationController.SetToolbarHidden(true,false);
+			NavigationController.SetToolbarHidden(true,true);
 			
 			// Error state
 			if (_questions.Count < 1)
@@ -97,73 +101,86 @@ namespace Flashback.UI.Controllers
 			View.AddSubview(_labelAnswer);
 
 			// The 6 score buttons
-			int width = 45;
-			int height = 40;
-			int top = 370;
-			int left = 12;
-			int padding = 5;
-			
-			UIImage image1 = UIImage.FromFile("Assets/Images/button_1.png");	
-			_buttonScore1 = new UIButton();
-			_buttonScore1.SetBackgroundImage(image1,UIControlState.Normal);
-			_buttonScore1.Frame = new RectangleF(left, top, width, height);
-			_buttonScore1.TouchDown += new EventHandler(ScoreClick);
-			View.AddSubview(_buttonScore1);
-			left += width + padding;
-
-			UIImage image2 = UIImage.FromFile("Assets/Images/button_2.png");	
-			_buttonScore2 = new UIButton();
-			_buttonScore2.SetBackgroundImage(image2,UIControlState.Normal);
-			_buttonScore2.Frame = new RectangleF(left, top, width, height);
-			_buttonScore2.TouchDown += new EventHandler(ScoreClick);
-			View.AddSubview(_buttonScore2);
-			left += width + padding;
-
-			UIImage image3 = UIImage.FromFile("Assets/Images/button_3.png");	
-			_buttonScore3 = new UIButton();
-			_buttonScore3.SetBackgroundImage(image3,UIControlState.Normal);
-			_buttonScore3.Frame = new RectangleF(left, top, width, height);
-			_buttonScore3.TouchDown += new EventHandler(ScoreClick);
-			View.AddSubview(_buttonScore3);
-			left += width + padding;
-
-			UIImage image4 = UIImage.FromFile("Assets/Images/button_4.png");	
-			_buttonScore4 = new UIButton();
-			_buttonScore4.SetBackgroundImage(image4,UIControlState.Normal);
-			_buttonScore4.Frame = new RectangleF(left, top, width, height);
-			_buttonScore4.TouchDown += new EventHandler(ScoreClick);
-			View.AddSubview(_buttonScore4);
-			left += width + padding;
-
-			UIImage image5 = UIImage.FromFile("Assets/Images/button_5.png");	
-			_buttonScore5 = new UIButton();
-			_buttonScore5.SetBackgroundImage(image5,UIControlState.Normal);
-			_buttonScore5.Frame = new RectangleF(left, top, width, height);
-			_buttonScore5.TouchDown += new EventHandler(ScoreClick);
-			View.AddSubview(_buttonScore5);
-			left += width + padding;
-
-			UIImage image6 = UIImage.FromFile("Assets/Images/button_6.png");	
-			_buttonScore6 = new UIButton();
-			_buttonScore6.SetBackgroundImage(image6,UIControlState.Normal);
-			_buttonScore6.Frame = new RectangleF(left, top, width, height);
-			_buttonScore6.TouchDown += new EventHandler(ScoreClick);
-			View.AddSubview(_buttonScore6);
-			
-			// Set the buttons to invisible to start with
-			SetButtonAlphas();
+			AddScoreButtons();
 			
 			// The first question, display it in the labels
 			_currentQuestion = _questions[_questionIndex];
 			BindQuestion(_currentQuestion);
 		}
-		
+
+		/// <summary>
+		/// Fades the buttons in when the view has appeared.
+		/// </summary>
+		/// <param name="animated"></param>
 		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
-			
-			// Fade in the buttons
 			FadeIn();
+		}
+
+		public override void ViewWillAppear(bool animated)
+		{
+			base.ViewWillAppear(animated);
+			Title = _category.Name;
+		}
+
+		private void AddScoreButtons()
+		{
+			int width = 45;
+			int height = 40;
+			int top = 370;
+			int left = 12;
+			int padding = 5;
+
+			UIImage image1 = UIImage.FromFile("Assets/Images/button_1.png");
+			_buttonScore1 = new UIButton();
+			_buttonScore1.SetBackgroundImage(image1, UIControlState.Normal);
+			_buttonScore1.Frame = new RectangleF(left, top, width, height);
+			_buttonScore1.TouchDown += new EventHandler(ScoreClick);
+			View.AddSubview(_buttonScore1);
+			left += width + padding;
+
+			UIImage image2 = UIImage.FromFile("Assets/Images/button_2.png");
+			_buttonScore2 = new UIButton();
+			_buttonScore2.SetBackgroundImage(image2, UIControlState.Normal);
+			_buttonScore2.Frame = new RectangleF(left, top, width, height);
+			_buttonScore2.TouchDown += new EventHandler(ScoreClick);
+			View.AddSubview(_buttonScore2);
+			left += width + padding;
+
+			UIImage image3 = UIImage.FromFile("Assets/Images/button_3.png");
+			_buttonScore3 = new UIButton();
+			_buttonScore3.SetBackgroundImage(image3, UIControlState.Normal);
+			_buttonScore3.Frame = new RectangleF(left, top, width, height);
+			_buttonScore3.TouchDown += new EventHandler(ScoreClick);
+			View.AddSubview(_buttonScore3);
+			left += width + padding;
+
+			UIImage image4 = UIImage.FromFile("Assets/Images/button_4.png");
+			_buttonScore4 = new UIButton();
+			_buttonScore4.SetBackgroundImage(image4, UIControlState.Normal);
+			_buttonScore4.Frame = new RectangleF(left, top, width, height);
+			_buttonScore4.TouchDown += new EventHandler(ScoreClick);
+			View.AddSubview(_buttonScore4);
+			left += width + padding;
+
+			UIImage image5 = UIImage.FromFile("Assets/Images/button_5.png");
+			_buttonScore5 = new UIButton();
+			_buttonScore5.SetBackgroundImage(image5, UIControlState.Normal);
+			_buttonScore5.Frame = new RectangleF(left, top, width, height);
+			_buttonScore5.TouchDown += new EventHandler(ScoreClick);
+			View.AddSubview(_buttonScore5);
+			left += width + padding;
+
+			UIImage image6 = UIImage.FromFile("Assets/Images/button_6.png");
+			_buttonScore6 = new UIButton();
+			_buttonScore6.SetBackgroundImage(image6, UIControlState.Normal);
+			_buttonScore6.Frame = new RectangleF(left, top, width, height);
+			_buttonScore6.TouchDown += new EventHandler(ScoreClick);
+			View.AddSubview(_buttonScore6);
+
+			// Set the buttons to invisible to start with
+			SetButtonAlphas();
 		}
 		
 		private void SetButtonAlphas()
@@ -208,13 +225,11 @@ namespace Flashback.UI.Controllers
 			_buttonScore5.Enabled = true;
 			_buttonScore6.Enabled = true;
 		}
-		
-		public override void ViewWillAppear(bool animated)
-		{
-			base.ViewWillAppear (animated);
-			Title = _category.Name;	
-		}
 
+		/// <summary>
+		/// Sets up the question/answer labels for the provided question.
+		/// </summary>
+		/// <param name="question"></param>
 		private void BindQuestion(Question question)
 		{
 			DisableScoreButtons();
@@ -251,7 +266,7 @@ namespace Flashback.UI.Controllers
 			QuestionManager.AnswerQuestion(_currentQuestion, score);
 			Question.Save(_currentQuestion);
 
-			// Pop the next question, or if there's none left Push the controller
+			// Pop the next question, or if there's none left pop the controller
 			++_questionIndex;
 
 			if (_questionIndex < _questions.Count)

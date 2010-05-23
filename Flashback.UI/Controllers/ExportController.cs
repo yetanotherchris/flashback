@@ -10,6 +10,9 @@ using System.Threading;
 
 namespace Flashback.UI.Controllers
 {
+	/// <summary>
+	/// Exports all the questions as CSV to a textbox.
+	/// </summary>
 	public class ExportController : UIViewController
 	{
 		private UILabel _labelHelp;
@@ -43,10 +46,14 @@ namespace Flashback.UI.Controllers
 			View.AddSubview(_labelHelp);
 
 			// Hide the toolbar.
-			NavigationController.SetToolbarHidden(true, false);
+			NavigationController.SetToolbarHidden(true, true);
 			NavigationItem.HidesBackButton = false;
 		}
 		
+		/// <summary>
+		/// Show the modal loading dialog once the view is loaded.
+		/// </summary>
+		/// <param name="animated"></param>
 		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
