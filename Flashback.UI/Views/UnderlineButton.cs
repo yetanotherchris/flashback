@@ -5,6 +5,9 @@ using MonoTouch.CoreGraphics;
 
 namespace Flashback.UI
 {
+	/// <summary>
+	/// A hyperlink style button, with works best with no border.
+	/// </summary>
 	public class UnderlineButton : UIButton
 	{		
 		public override void Draw(RectangleF rect)

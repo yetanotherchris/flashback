@@ -1,4 +1,3 @@
-#define LOGGING
 using System;
 using System.Reflection;
 using System.Diagnostics;
@@ -7,7 +6,7 @@ using System.IO;
 namespace Flashback.Core
 {
 	/// <summary>
-	/// A basic logging class.
+	/// Provides basic console and text file logging. Requires the #LOGGING compilation symbol.
 	/// </summary>
 	public class Logger
 	{
@@ -51,8 +50,7 @@ namespace Flashback.Core
 
 			Console.WriteLine(message);
 
-			//if (level != LoggingLevel.Info)
-				WriteToFile(message);
+			WriteToFile(message);
 #endif
 		}
 

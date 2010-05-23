@@ -5,9 +5,15 @@ using System.Text;
 
 namespace Flashback.Core
 {
+	/// <summary>
+	/// Represents a single question and its answer, and all Supermemo related metadata.
+	/// </summary>
 	public class Question
 	{
 		#region Properties
+		/// <summary>
+		/// The unique id of the question.
+		/// </summary>
 		public int Id { get; set; }
 
 		/// <summary>
@@ -80,6 +86,9 @@ namespace Flashback.Core
 			Reset();
 		}
 		
+		/// <summary>
+		/// Resets the question to its defaults.
+		/// </summary>
 		public void Reset()
 		{
 			LastAsked = DateTime.MinValue;
@@ -89,37 +98,89 @@ namespace Flashback.Core
 			Order = 0;	
 		}
 		
+		/// <summary>
+		/// Displays the <see cref="Question.Title"/>
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString ()
 		{
 			return Title;
 		}
 
-
+		/// <summary>
+		/// Saves the question to the default repository, returning its id.
+		/// </summary>
+		/// <param name="question"></param>
+		/// <returns></returns>
 		public static int Save(Question question)
 		{
 			return Repository.Default.SaveQuestion(question);
 		}
 
+		/// <summary>
+		/// Retrieves a question from the database repository based on the id provided.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public static Question Read(int id)
 		{
 			return Repository.Default.ReadQuestion(id);
 		}
 
+		/// <summary>
+		/// Moves the provided question to the new index in the list, and updates all other questions.
+		/// </summary>
+		/// <param name="question"></param>
+		/// <param name="newIndex"></param>
+		public static void Move(Question question, int newIndex)
+		{
+			Repository.Default.MoveQuestion(question, newIndex);
+		}
+
+		/// <summary>
+		/// Deletes the question using the provided id.
+		/// </summary>
+		/// <param name="id"></param>
+		public static void Delete(int id)
+		{
+			Repository.Default.DeleteQuestion(id);
+		}
+
+		/// <summary>
+		/// Retrieves all questions from the database repository.
+		/// </summary>
+		/// <returns></returns>
 		public static IList<Question> List()
 		{
 			return Repository.Default.ListQuestions();
 		}
 
+		/// <summary>
+		/// Retrieves all questions from the database repository that are over due or due today.
+		/// </summary>
+		/// <param name="list"></param>
+		/// <returns></returns>
 		public static IEnumerable<Question> DueToday(IList<Question> list)
 		{
 			return list.Where(q => q.NextAskOn < DateTime.Today.AddDays(1));
 		}
 		
+		/// <summary>
+		/// Filters the list of questions provided to ones due today, with an active category.
+		/// </summary>
+		/// <param name="list"></param>
+		/// <returns></returns>
 		public static IEnumerable<Question> ActiveDueToday(IList<Question> list)
 		{
 			return list.Where(q => q.NextAskOn < DateTime.Today.AddDays(1) && q.Category.Active);
 		}
 		
+		/// <summary>
+		/// Gets the first question from the list's <see cref="Question.NextAskOn"/> property. This is
+		/// displayed in the category hub.
+		/// </summary>
+		/// <param name="questions"></param>
+		/// <returns></returns>
 		public static DateTime NextDueDate(IList<Question> questions)
 		{
 			Question question = questions.OrderByDescending(q => q.NextAskOn).FirstOrDefault();
@@ -130,19 +191,14 @@ namespace Flashback.Core
 				return question.NextAskOn;
 		}
 
+		/// <summary>
+		/// Gets a list of all questions for a category from the database repository.
+		/// </summary>
+		/// <param name="category"></param>
+		/// <returns></returns>
 		public static IList<Question> ForCategory(Category category)
 		{
 			return Repository.Default.QuestionsForCategory(category);
-		}
-
-		public static void Move(Question question, int newIndex)
-		{
-			Repository.Default.MoveQuestion(question, newIndex);
-		}
-
-		public static void Delete(int id)
-		{
-			Repository.Default.DeleteQuestion(id);
 		}
 	}
 }

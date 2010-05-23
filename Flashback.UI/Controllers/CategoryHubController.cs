@@ -161,15 +161,15 @@ namespace Flashback.UI.Controllers
 			if (questionCount > 0)
 			{
 				string due = (dueTodayCount > 0) ? dueTodayCount.ToString() : "No";
-				string plural = (dueTodayCount > 1 || dueTodayCount == 0) ? "s" : "";
-				_labelQuestionsToday.Text = string.Format("{0} question{1} due today.",due,plural);
+				string s = (dueTodayCount > 1 || dueTodayCount == 0) ? "s" : "";
+				_labelQuestionsToday.Text = string.Format("{0} question{1} due today.",due,s);
 				
 				if (dueTodayCount == 0)
 				{
 					_buttonStart.Enabled = false;
 					DateTime datetime = Question.NextDueDate(questions);
 					string dateSuffix = DateSuffix(datetime.Day);
-					_labelNextDue.Text = string.Format("Question{0} are next due on {1}{2} {3}.",plural,datetime.ToString("dddd d"),dateSuffix,datetime.ToString("MMMM"));
+					_labelNextDue.Text = string.Format("Question{0} are next due on {1}{2} {3}.",s,datetime.ToString("dddd d"),dateSuffix,datetime.ToString("MMMM"));
 				}
 			}
 			else

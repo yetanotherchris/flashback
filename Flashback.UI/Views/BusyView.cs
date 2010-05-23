@@ -4,6 +4,9 @@ using System.Drawing;
 
 namespace Flashback.UI
 {
+	/// <summary>
+	/// Displays a modal dialog with a waiting spinner, used for import/export.
+	/// </summary>
 	public class BusyView : UIAlertView
 	{
 		private UIActivityIndicatorView _activityView;

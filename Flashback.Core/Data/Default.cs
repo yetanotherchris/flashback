@@ -2,6 +2,9 @@ using System;
 
 namespace Flashback.Core.Data
 {
+	/// <summary>
+	/// The default SQL script all versions of the app ship with.
+	/// </summary>
 	public class Default
 	{
 		public static string Sql()

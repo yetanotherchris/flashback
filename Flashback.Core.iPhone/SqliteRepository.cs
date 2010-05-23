@@ -24,6 +24,9 @@ using Flashback.Core.Data;
 
 namespace Flashback.Core.iPhone
 {
+	/// <summary>
+	/// A SQlite repository.
+	/// </summary>
 	public class SqliteRepository : IRepository
 	{
 		#region Categories
@@ -569,7 +572,7 @@ namespace Flashback.Core.iPhone
 		#endregion
 
 		/// <summary>
-		/// Is this required anymore? 
+		/// This is run each time the app runs, but won't do anything after the first run. 
 		/// </summary>
 		public void CreateDatabase()
 		{

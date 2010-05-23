@@ -8,7 +8,7 @@ using System.IO;
 namespace Flashback.Core.iPhone
 {
 	/// <summary>
-	/// Imports/exports data in CSV format.
+	/// Imports/exports data using the CSV format.
 	/// </summary>
 	public class CsvManager
 	{
@@ -23,18 +23,28 @@ namespace Flashback.Core.iPhone
 			
 			foreach (Question question in questions.OrderBy(q => q.Category.Name))
 			{
-				builder.AppendLine(string.Format("{0},{1},{2}",
+#if LOGGING
+				builder.AppendLine(string.Format("{0},{1},{2},{3}",
+					question.Category.Name.Replace(",", "~"),
+					question.Title.Replace(",", "~"),
+					question.Answer.Replace(",", "~"),
+					question.NextAskOn.ToString())
+					);
+#else
+
+				builder.AppendLine(string.Format("{0},{1},{2},{3}",
 					question.Category.Name.Replace(",","~"),
 					question.Title.Replace(",","~"),
-					question.Answer.Replace(",","~")));
+					question.Answer.Replace(",","~"))
+					);
+#endif
 			}
 
 			return builder.ToString();
 		}
 
 		/// <summary>
-		/// Imports CSV formatted data: category,question,answer into a list of Questions. 
-		/// This could be replaced with a transactional SQL script if needed.
+		/// Imports CSV formatted data: category,question,answer into a list of Questions. This doesn't bulk insert using a transaction.
 		/// </summary>
 		public static List<Question> Import(string data)
 		{
