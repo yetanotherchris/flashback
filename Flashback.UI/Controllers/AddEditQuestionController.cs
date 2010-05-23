@@ -124,7 +124,7 @@ namespace Flashback.UI.Controllers
 			_saveButton.Clicked += SaveClick;
 
 			// Hide the navigation bar, back button and toolbar.
-			NavigationController.SetToolbarHidden(true, false);
+			NavigationController.SetToolbarHidden(true, true);
 			NavigationItem.HidesBackButton = true;
 			NavigationItem.SetLeftBarButtonItem(_cancelButton, false);
 			NavigationItem.SetRightBarButtonItem(_saveButton, false);

@@ -11,6 +11,9 @@ using System.Drawing;
 
 namespace Flashback.UI.Controllers
 {
+	/// <summary>
+	/// Displays details about a category and lets the user start the test.
+	/// </summary>
 	public class CategoryHubController : UIViewController
 	{
 		private Category _category;
@@ -30,14 +33,22 @@ namespace Flashback.UI.Controllers
 		private UIImage _bgImage;
 		private UIImageView _bgImageView;
 
+		/// <summary>
+		/// Creates a new instance of <see cref="CategoryHubController"/>
+		/// </summary>
+		/// <param name="category"></param>
 		public CategoryHubController(Category category)
 		{
 			_category = category;
 		}
 		
+		/// <summary>
+		/// Configures the toolbar buttons and the controls for the view.
+		/// </summary>
 		public override void ViewDidLoad()
 		{
-			base.ViewDidLoad ();
+			base.ViewDidLoad();
+			Title = _category.Name;
 
 			// Add the toolbar
 			ToolbarItems = GetToolBar();
@@ -52,10 +63,10 @@ namespace Flashback.UI.Controllers
 			// Questions label
 			_labelQuestionsToday = new UILabel();
 			_labelQuestionsToday.Frame = new RectangleF(17, 15, 280, 50);
-			_labelQuestionsToday.Text = "";
 			_labelQuestionsToday.Font = UIFont.SystemFontOfSize(24f);
 			_labelQuestionsToday.TextColor = UIColor.Black;
 			_labelQuestionsToday.BackgroundColor = UIColor.Clear;
+			_labelQuestionsToday.Text = "";	
 			_labelQuestionsToday.Lines = 3;
 			_labelQuestionsToday.TextAlignment = UITextAlignment.Center;
 			View.AddSubview(_labelQuestionsToday);
@@ -63,10 +74,10 @@ namespace Flashback.UI.Controllers
 			// Next due label
 			_labelNextDue = new UILabel();
 			_labelNextDue.Frame = new RectangleF(17, 45, 280, 100);
-			_labelNextDue.Text = "";
 			_labelNextDue.Font = UIFont.SystemFontOfSize(16f);
 			_labelNextDue.TextColor = UIColor.Gray;
 			_labelNextDue.BackgroundColor = UIColor.Clear;
+			_labelNextDue.Text = "";
 			_labelNextDue.Lines = 3;
 			_labelNextDue.TextAlignment = UITextAlignment.Center;
 			View.AddSubview(_labelNextDue);
@@ -74,13 +85,13 @@ namespace Flashback.UI.Controllers
 			// Start button
 			UIImage startImage = UIImage.FromFile("Assets/Images/startbutton.png");			
 			_buttonStart = new UIButton(new RectangleF(15, 225, 280, 48));
+			_buttonStart.Font = UIFont.BoldSystemFontOfSize(20);
+			_buttonStart.SetTitleColor(UIColor.White, UIControlState.Normal);
 			_buttonStart.SetBackgroundImage(startImage,UIControlState.Normal);
 			_buttonStart.BackgroundColor = UIColor.Clear;
-			_buttonStart.Font = UIFont.BoldSystemFontOfSize(20);
-			_buttonStart.SetTitleColor(UIColor.White,UIControlState.Normal);
 			_buttonStart.TouchDown += delegate
 			{
-				// Set the category as active, if it's inactive
+				// Start sets the category as active
 				if (!_category.Active)
 				{
 					_category.Active = true;
@@ -95,10 +106,11 @@ namespace Flashback.UI.Controllers
 			// Reset button
 			UIImage resetImage = UIImage.FromFile("Assets/Images/resetbutton.png");
 			_buttonReset = new UIButton(new RectangleF(15, 275, 280, 48));
+			_buttonReset.Font = UIFont.BoldSystemFontOfSize(20);
+			_buttonReset.SetTitleColor(UIColor.White, UIControlState.Normal);
 			_buttonReset.SetBackgroundImage(resetImage,UIControlState.Normal);
 			_buttonReset.BackgroundColor = UIColor.Clear;
-			_buttonReset.Font = UIFont.BoldSystemFontOfSize(20);
-			_buttonReset.SetTitleColor(UIColor.White,UIControlState.Normal);
+			
 			_buttonReset.TouchDown += delegate
 			{
 				foreach (Question question in Question.ForCategory(_category))
@@ -118,22 +130,12 @@ namespace Flashback.UI.Controllers
 			View.AddSubview(_buttonReset);
 		}
 		
-		public override void ViewWillAppear(bool animated)
-		{
-			base.ViewWillAppear (animated);
-			Title = _category.Name;
-			
-			_labelQuestionsToday.Alpha = 0;
-			_labelNextDue.Alpha = 0;
-			_buttonStart.Alpha = 0;
-			_buttonReset.Alpha = 0;
-		}
-		
 		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
 			NavigationController.ToolbarHidden = false;
-			
+
+			SetNonVisible();
 			SetLabelTitles();
 			FadeIn();
 		}
@@ -147,7 +149,16 @@ namespace Flashback.UI.Controllers
 			_labelNextDue.Alpha = 1;
 			_buttonStart.Alpha = 1;
 			_buttonReset.Alpha = 1;
+
 			UIView.CommitAnimations();
+		}
+
+		private void SetNonVisible()
+		{
+			_labelQuestionsToday.Alpha = 0;
+			_labelNextDue.Alpha = 0;
+			_buttonStart.Alpha = 0;
+			_buttonReset.Alpha = 0;
 		}
 		
 		private void SetLabelTitles()
@@ -157,16 +168,20 @@ namespace Flashback.UI.Controllers
 			int questionCount = questions.Count;
 			int dueTodayCount = Question.DueToday(questions).ToList().Count;	
 			
-			// If there are questions figure out the label, otherwise disable the start button
+			// If there are questions for the category then figure out the label.
 			if (questionCount > 0)
 			{
+				_buttonStart.Enabled = true;
+				_buttonReset.Enabled = true;
+
 				string due = (dueTodayCount > 0) ? dueTodayCount.ToString() : "No";
 				string s = (dueTodayCount > 1 || dueTodayCount == 0) ? "s" : "";
 				_labelQuestionsToday.Text = string.Format("{0} question{1} due today.",due,s);
 				
 				if (dueTodayCount == 0)
 				{
-					_buttonStart.Enabled = false;
+					_buttonStart.Enabled = false; // Is this the most intuitive behaviour?
+
 					DateTime datetime = Question.NextDueDate(questions);
 					string dateSuffix = DateSuffix(datetime.Day);
 					_labelNextDue.Text = string.Format("Question{0} are next due on {1}{2} {3}.",s,datetime.ToString("dddd d"),dateSuffix,datetime.ToString("MMMM"));
@@ -174,19 +189,23 @@ namespace Flashback.UI.Controllers
 			}
 			else
 			{
-				_labelQuestionsToday.Frame = new RectangleF(20, 0, 280, 80);
 				_buttonStart.Enabled = false;
 				_buttonReset.Enabled = false;
+
+				_labelQuestionsToday.Frame = new RectangleF(20, 0, 280, 80);
 				_labelQuestionsToday.Text = "There are no questions in this category yet.";	
 			}
 		}
 		
 		private UIBarButtonItem[] GetToolBar()
 		{
+			int buttonWidth = 100;
+
 			// Edit category
 			_editCategoryButton = new UIBarButtonItem();
 			_editCategoryButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_edit.png");
 			_editCategoryButton.Title = "Edit category";
+			_editCategoryButton.Width = buttonWidth;
 			_editCategoryButton.Clicked += delegate
 			{
 				AddEditCategoryController controller = new AddEditCategoryController(_category);
@@ -197,6 +216,7 @@ namespace Flashback.UI.Controllers
 			_editQuestionsButton = new UIBarButtonItem();
 			_editQuestionsButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_questions.png");
 			_editQuestionsButton.Title = "Manage questions";
+			_editCategoryButton.Width = buttonWidth;
 			_editQuestionsButton.Clicked += delegate
 			{
 				QuestionsController controller = new QuestionsController(_category);
@@ -207,6 +227,7 @@ namespace Flashback.UI.Controllers
 			_calendarButton = new UIBarButtonItem();
 			_calendarButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_calendar.png");
 			_calendarButton.Title = "Calendar";
+			_calendarButton.Width = buttonWidth;
 			_calendarButton.Clicked += delegate
 			{
 				CalendarController controller = new CalendarController(_category);
@@ -232,20 +253,20 @@ namespace Flashback.UI.Controllers
 				switch (ones)
 				{
 					case 1:
-							suffix = "st";
-							break;
+						suffix = "st";
+						break;
 			
 					case 2:
-							suffix = "nd";
-							break;
+						suffix = "nd";
+						break;
 			
 					case 3:
-							suffix = "rd";
-							break;
+						suffix = "rd";
+						break;
 			
 					default:
-							suffix = "th";
-							break;
+						suffix = "th";
+						break;
 				}
 			}
 			

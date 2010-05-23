@@ -65,6 +65,7 @@
     <Compile Include="Controllers\CategoryHubController.cs" />
     <Compile Include="Controllers\RootController.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Views\UnderlineButton.cs" />
     <Compile Include="Views\UpgradeView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
