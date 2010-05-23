@@ -13,8 +13,11 @@ Global
 		Release|iPhoneSimulator = Release|iPhoneSimulator
 		Debug|iPhone = Debug|iPhone
 		Release|iPhone = Release|iPhone
+		Appstore-FullVersion|iPhone = Appstore-FullVersion|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7244A478-3BC2-4932-A234-66F248FFDC63}.Appstore-FullVersion|iPhone.ActiveCfg = Appstore-FullVersion|iPhone
+		{7244A478-3BC2-4932-A234-66F248FFDC63}.Appstore-FullVersion|iPhone.Build.0 = Appstore-FullVersion|iPhone
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Debug|iPhone.Build.0 = Debug|iPhone
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
@@ -23,6 +26,8 @@ Global
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Release|iPhone.Build.0 = Release|iPhone
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Appstore-FullVersion|iPhone.ActiveCfg = Appstore-FullVersion|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Appstore-FullVersion|iPhone.Build.0 = Appstore-FullVersion|iPhone
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhone.Build.0 = Debug|iPhone
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
@@ -31,6 +36,8 @@ Global
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhone.Build.0 = Release|iPhone
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Appstore-FullVersion|iPhone.ActiveCfg = Appstore-FullVersion|iPhone
+		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Appstore-FullVersion|iPhone.Build.0 = Appstore-FullVersion|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Debug|iPhone.Build.0 = Debug|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
@@ -39,14 +46,6 @@ Global
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Release|iPhone.Build.0 = Release|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
-		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhone.Build.0 = Debug|iPhone
-		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhone.ActiveCfg = Release|iPhone
-		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhone.Build.0 = Release|iPhone
-		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Flashback.UI\Flashback.UI.csproj

@@ -168,7 +168,10 @@ namespace Flashback.UI.Controllers
 			// Update the questions label
 			IList<Question> questions = Question.ForCategory(_category);
 			int questionCount = questions.Count;
-			int dueTodayCount = Question.DueToday(questions).ToList().Count;	
+			int dueTodayCount = Question.DueToday(questions).ToList().Count;
+			
+			_labelNextDue.Text = "";
+			_labelQuestionsToday.Text = "";			
 			
 			// If there are questions for the category then figure out the label.
 			if (questionCount > 0)

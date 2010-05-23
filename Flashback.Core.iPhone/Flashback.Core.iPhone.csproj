@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
     <MtouchDebug>False</MtouchDebug>
     <MtouchLink>None</MtouchLink>
-    <DefineConstants>MONOTOUCH</DefineConstants>
+    <DefineConstants>MONOTOUCH FULLVERSION</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,7 +53,17 @@
     <WarningLevel>4</WarningLevel>
     <MtouchDebug>False</MtouchDebug>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <DefineConstants>MONOTOUCH LOGGING</DefineConstants>
+    <DefineConstants>MONOTOUCH FULLVERSION</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Appstore-FullVersion|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <DefineConstants>MONOTOUCH FULLVERSION</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>False</MtouchDebug>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

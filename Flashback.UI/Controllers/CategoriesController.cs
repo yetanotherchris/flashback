@@ -130,9 +130,6 @@ namespace Flashback.UI.Controllers
 		{
 			int buttonWidth = 45;
 			
-			_spacer = new UIBarButtonItem(UIBarButtonSystemItem.FixedSpace);
-			_spacer.Width = buttonWidth;
-
 			// Add button
 			_addButton = new UIBarButtonItem();
 			_addButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_add.png");
@@ -165,6 +162,9 @@ namespace Flashback.UI.Controllers
 
 			if (Settings.IsFullVersion)
 			{
+				_spacer = new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace);
+				//_spacer.Width = buttonWidth;
+				
 				// Import button
 				_importButton = new UIBarButtonItem();
 				_importButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_import.png");
@@ -198,11 +198,16 @@ namespace Flashback.UI.Controllers
 					NavigationController.PushViewController(_tipsController, true);
 				};
 
-				return new UIBarButtonItem[] { _addButton, _importButton, _exportButton, _helpButton, _tipsButton, _spacer };
+				return new UIBarButtonItem[] { _addButton, _spacer,
+					_importButton, _spacer,
+					_exportButton, _spacer,
+					_helpButton, _spacer,
+					_tipsButton 
+				};
 			}
 			else
 			{
-				return new UIBarButtonItem[] { _addButton, _helpButton, _spacer };
+				return new UIBarButtonItem[] { _addButton, _helpButton };
 			}
 		}
 

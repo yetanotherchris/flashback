@@ -57,6 +57,17 @@
     <MtouchLink>None</MtouchLink>
     <DefineConstants>MONOTOUCH LOGGING</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Appstore-FullVersion|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <DefineConstants>MONOTOUCH</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>False</MtouchDebug>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -79,6 +90,10 @@
     <Compile Include="Data\Spanish.cs" />
     <Compile Include="Data\French.cs" />
     <Compile Include="Data\Default.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\Repository.cs" />
   </ItemGroup>
