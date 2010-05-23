@@ -56,6 +56,7 @@ namespace Flashback.Core
 		/// The number of days until the question is next asked.
 		/// </summary>
 		public int Interval { get; set; }
+		
 		/// <summary>
 		/// Number of times the question has been asked
 		/// </summary>
@@ -95,7 +96,9 @@ namespace Flashback.Core
 			NextAskOn = DateTime.MinValue;
 			AskCount = 0;
 			Interval = 0;
-			Order = 0;	
+			PreviousInterval = 0;
+			ResponseQuality = 0;
+			EasinessFactor = 0;
 		}
 		
 		/// <summary>

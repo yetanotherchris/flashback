@@ -124,10 +124,13 @@ namespace Flashback.UI.Controllers
 				alert.Message = "All questions for the category have been reset";
 				alert.AddButton("Close");
 				alert.Show();
-				
-				SetLabelTitles();
+				alert.Dismissed += delegate {
+					SetLabelTitles();
+				};
 			};
 			View.AddSubview(_buttonReset);
+			
+			SetNonVisible();
 		}
 		
 		public override void ViewDidAppear(bool animated)
@@ -135,7 +138,6 @@ namespace Flashback.UI.Controllers
 			base.ViewDidAppear(animated);
 			NavigationController.ToolbarHidden = false;
 
-			SetNonVisible();
 			SetLabelTitles();
 			FadeIn();
 		}
@@ -195,11 +197,13 @@ namespace Flashback.UI.Controllers
 				_labelQuestionsToday.Frame = new RectangleF(20, 0, 280, 80);
 				_labelQuestionsToday.Text = "There are no questions in this category yet.";	
 			}
+			
+			//_buttonStart.Enabled = true; // For testing
 		}
 		
 		private UIBarButtonItem[] GetToolBar()
 		{
-			int buttonWidth = 100;
+			int buttonWidth = 80;
 
 			// Edit category
 			_editCategoryButton = new UIBarButtonItem();

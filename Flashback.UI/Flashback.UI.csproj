@@ -95,6 +95,7 @@
     <Compile Include="Views\UpgradeView.cs" />
     <Compile Include="Views\BusyView.cs" />
     <Compile Include="Views\UnderlineButton.cs" />
+    <Compile Include="Views\ScoreButton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
