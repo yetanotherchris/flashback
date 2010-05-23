@@ -8,7 +8,7 @@ using Flashback.Core;
 namespace Flashback.UI
 {
 	/// <summary>
-	/// Application settings.
+	/// Application wide settings.
 	/// </summary>
 	public class Settings
 	{
@@ -22,9 +22,9 @@ namespace Flashback.UI
 		/// </summary>
 		public static bool IsFirstRun { get; set; }
 		
-		#region Edition specific settings
+		#region Edition specific settings, for the help files
 		/// <summary>
-		/// 
+		/// Whether this is the lite or full edition.
 		/// </summary>
 		public static bool IsFullVersion
 		{
@@ -39,7 +39,7 @@ namespace Flashback.UI
 		}
 
 		/// <summary>
-		/// 
+		/// The German edition of the app.
 		/// </summary>
 		public static bool IsGerman
 		{
@@ -54,7 +54,7 @@ namespace Flashback.UI
 		}
 
 		/// <summary>
-		/// 
+		/// The Spanish edition of the app.
 		/// </summary>
 		public static bool IsSpanish
 		{
@@ -69,7 +69,7 @@ namespace Flashback.UI
 		}
 
 		/// <summary>
-		/// 
+		/// The French edition of the app.
 		/// </summary>
 		public static bool IsFrench
 		{

@@ -47,6 +47,9 @@ namespace Flashback.UI
 			UpdateApplicationBadge();
 		}
 		
+		/// <summary>
+		/// Updates the application's homescreen badge to number of questions due today.
+		/// </summary>
 		private void UpdateApplicationBadge()
 		{
 			UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;	

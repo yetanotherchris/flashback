@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Flashback.Core.Domain
 {
+	/// <summary>
+	/// Handles the logic for updating an answer using the Supermemo algorithm.
+	/// </summary>
 	public class QuestionManager
 	{
 		/// <summary>
@@ -29,6 +32,7 @@ namespace Flashback.Core.Domain
 
 			// This is used for testing so we don't have to fake dates
 			//question.LastAsked = question.NextAskOn;
+			question.LastAsked = DateTime.Today;
 
 			// If it's the first ask use Today. Otherwise use the LastAsked, which may not necessarily be today.
 			if (question.LastAsked == DateTime.MinValue)

@@ -10,7 +10,7 @@ using System.Drawing;
 namespace Flashback.UI.Controllers
 {
 	/// <summary>
-	/// 
+	/// The table controller (and first shown controller) for the list of categories.
 	/// </summary>
 	public class CategoriesController : UITableViewController
 	{
@@ -22,7 +22,6 @@ namespace Flashback.UI.Controllers
 		
 		private UIBarButtonItem _editButton;
 		private UIBarButtonItem _doneButton;
-		private bool _isEditing;
 
 		private CategoriesData _data;
 		
@@ -33,6 +32,7 @@ namespace Flashback.UI.Controllers
 		private TipsController _tipsController;
 		
 		private CategoriesTableSource _categoriesTableSource;
+		private FirstRunDelegate _firstRunDelegate;
 
 		public CategoriesController() : base(UITableViewStyle.Grouped) { }
 
@@ -72,8 +72,6 @@ namespace Flashback.UI.Controllers
 			ReloadData();
 		}
 		
-		private FirstRunDelegate _firstRunDelegate;
-		
 		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
@@ -108,10 +106,13 @@ namespace Flashback.UI.Controllers
 
 		private UIBarButtonItem[] GetToolBar()
 		{
+			int buttonWidth = 50;
+
 			// Add button
 			_addButton = new UIBarButtonItem();
 			_addButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_add.png");
 			_addButton.Title = "Add category";
+			_addButton.Width = buttonWidth;
 			_addButton.Clicked += delegate
 			{
 				if (Settings.IsFullVersion)
@@ -130,6 +131,7 @@ namespace Flashback.UI.Controllers
 			_helpButton = new UIBarButtonItem();
 			_helpButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_help.png");
 			_helpButton.Title = "Help";
+			_helpButton.Width = buttonWidth;
 			_helpButton.Clicked += delegate
 			{
 				_helpController = new HelpController();
@@ -142,6 +144,7 @@ namespace Flashback.UI.Controllers
 				_importButton = new UIBarButtonItem();
 				_importButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_import.png");
 				_importButton.Title = "Import";
+				_importButton.Width = buttonWidth;
 				_importButton.Clicked += delegate
 				{
 					_importController = new ImportController();
@@ -152,6 +155,7 @@ namespace Flashback.UI.Controllers
 				_exportButton = new UIBarButtonItem();
 				_exportButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_export.png");
 				_exportButton.Title = "Export";
+				_importButton.Width = buttonWidth;
 				_exportButton.Clicked += delegate
 				{
 					_exportController = new ExportController();
@@ -162,6 +166,7 @@ namespace Flashback.UI.Controllers
 				_tipsButton = new UIBarButtonItem();
 				_tipsButton.Image = UIImage.FromFile("Assets/Images/Toolbar/toolbar_tips.png");
 				_tipsButton.Title = "Tips";
+				_tipsButton.Width = buttonWidth;
 				_tipsButton.Clicked += delegate
 				{
 					_tipsController = new TipsController();
@@ -267,6 +272,7 @@ namespace Flashback.UI.Controllers
 		{
 			public CategoriesController ParentController { get;set; }
 			
+			// These are here to correct an object rooting problem monotouch seems to have with the delegate.
 			public FirstRunDelegate() : base() {}
 			public FirstRunDelegate(IntPtr handle) : base(handle) {}
 			public FirstRunDelegate(NSObjectFlag t) : base(t) {}

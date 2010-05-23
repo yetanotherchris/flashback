@@ -6,7 +6,7 @@ using System.Text;
 namespace Flashback.Core
 {
 	/// <summary>
-	/// The category for a question.
+	/// A category for a set of questions.
 	/// </summary>
 	public class Category
 	{
@@ -31,19 +31,17 @@ namespace Flashback.Core
 		public bool Active { get; set; }
 
 		/// <summary>
-		/// Shortcut helper for saving a category.
+		/// Saves the category to the default repository, returning its id.
 		/// </summary>
-		/// <param name="category"></param>
-		/// <returns></returns>
 		public static int Save(Category category)
 		{
 			return Repository.Default.SaveCategory(category);
 		}
 
 		/// <summary>
-		/// Shortcut helper for getting a single category.
+		/// Retrieves a category from the database repository based on the id provided.
 		/// </summary>
-		/// <param name="category"></param>
+		/// <param name="id"></param>
 		/// <returns></returns>
 		public static Category Read(int id)
 		{
@@ -51,9 +49,8 @@ namespace Flashback.Core
 		}
 
 		/// <summary>
-		/// Shortcut helper for listing all categories.
+		/// Retrieves all categories from the database repository.
 		/// </summary>
-		/// <param name="category"></param>
 		/// <returns></returns>
 		public static IList<Category> List()
 		{
@@ -61,10 +58,9 @@ namespace Flashback.Core
 		}
 
 		/// <summary>
-		/// Shortcut helper for deleting a category.
+		/// Deletes the category and all its questions using the provided id.
 		/// </summary>
-		/// <param name="category"></param>
-		/// <returns></returns>
+		/// <param name="id"></param>
 		public static void Delete(int id)
 		{
 			Repository.Default.DeleteCategory(id);

@@ -2,8 +2,14 @@ using System;
 using System.IO;
 namespace Flashback.Core
 {
+	/// <summary>
+	/// Contains all settings for the Core namespace.
+	/// </summary>
 	public class Settings
 	{
+		/// <summary>
+		/// The path and filename of the database file.
+		/// </summary>
 		public static string DatabaseFile
 		{
 			get
@@ -12,6 +18,9 @@ namespace Flashback.Core
 			}
 		}
 
+		/// <summary>
+		/// The full connection string for the database file.
+		/// </summary>
 		public static string DatabaseConnection
 		{
 			get
@@ -20,6 +29,9 @@ namespace Flashback.Core
 			}
 		}
 
+		/// <summary>
+		/// The log file to write to, which is disabled for release mode.
+		/// </summary>
 		public static string LogFile
 		{
 			get
@@ -27,6 +39,5 @@ namespace Flashback.Core
 				return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "flashback.log");
 			}
 		}
-
 	}
 }
