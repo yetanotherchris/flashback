@@ -25,12 +25,12 @@ namespace Flashback.UI.Controllers
 		private UILabel _labelAnswer;
 
 		private UnderlineButton _buttonShow;
-		private UIButton _buttonScore1;
-		private UIButton _buttonScore2;
-		private UIButton _buttonScore3;
-		private UIButton _buttonScore4;
-		private UIButton _buttonScore5;
-		private UIButton _buttonScore6;
+		private ScoreButton _buttonScore1;
+		private ScoreButton _buttonScore2;
+		private ScoreButton _buttonScore3;
+		private ScoreButton _buttonScore4;
+		private ScoreButton _buttonScore5;
+		private ScoreButton _buttonScore6;
 		
 		private UIImage _bgImage;
 		private UIImageView _bgImageView;
@@ -133,50 +133,56 @@ namespace Flashback.UI.Controllers
 			int padding = 5;
 
 			UIImage image1 = UIImage.FromFile("Assets/Images/button_1.png");
-			_buttonScore1 = new UIButton();
+			_buttonScore1 = new ScoreButton();
+			_buttonScore1.Score = 0;
 			_buttonScore1.SetBackgroundImage(image1, UIControlState.Normal);
 			_buttonScore1.Frame = new RectangleF(left, top, width, height);
-			_buttonScore1.TouchDown += new EventHandler(ScoreClick);
+			_buttonScore1.TouchDown += ScoreClick;
 			View.AddSubview(_buttonScore1);
 			left += width + padding;
 
 			UIImage image2 = UIImage.FromFile("Assets/Images/button_2.png");
-			_buttonScore2 = new UIButton();
+			_buttonScore2 = new ScoreButton();
+			_buttonScore2.Score = 1;
 			_buttonScore2.SetBackgroundImage(image2, UIControlState.Normal);
 			_buttonScore2.Frame = new RectangleF(left, top, width, height);
-			_buttonScore2.TouchDown += new EventHandler(ScoreClick);
+			_buttonScore2.TouchDown += ScoreClick;
 			View.AddSubview(_buttonScore2);
 			left += width + padding;
 
 			UIImage image3 = UIImage.FromFile("Assets/Images/button_3.png");
-			_buttonScore3 = new UIButton();
+			_buttonScore3 = new ScoreButton();
+			_buttonScore3.Score = 2;
 			_buttonScore3.SetBackgroundImage(image3, UIControlState.Normal);
 			_buttonScore3.Frame = new RectangleF(left, top, width, height);
-			_buttonScore3.TouchDown += new EventHandler(ScoreClick);
+			_buttonScore3.TouchDown += ScoreClick;
 			View.AddSubview(_buttonScore3);
 			left += width + padding;
 
 			UIImage image4 = UIImage.FromFile("Assets/Images/button_4.png");
-			_buttonScore4 = new UIButton();
+			_buttonScore4 = new ScoreButton();
+			_buttonScore4.Score = 3;
 			_buttonScore4.SetBackgroundImage(image4, UIControlState.Normal);
 			_buttonScore4.Frame = new RectangleF(left, top, width, height);
-			_buttonScore4.TouchDown += new EventHandler(ScoreClick);
+			_buttonScore4.TouchDown += ScoreClick;
 			View.AddSubview(_buttonScore4);
 			left += width + padding;
 
 			UIImage image5 = UIImage.FromFile("Assets/Images/button_5.png");
-			_buttonScore5 = new UIButton();
+			_buttonScore5 = new ScoreButton();
+			_buttonScore5.Score = 4;
 			_buttonScore5.SetBackgroundImage(image5, UIControlState.Normal);
 			_buttonScore5.Frame = new RectangleF(left, top, width, height);
-			_buttonScore5.TouchDown += new EventHandler(ScoreClick);
+			_buttonScore5.TouchDown += ScoreClick;
 			View.AddSubview(_buttonScore5);
 			left += width + padding;
 
 			UIImage image6 = UIImage.FromFile("Assets/Images/button_6.png");
-			_buttonScore6 = new UIButton();
+			_buttonScore6 = new ScoreButton();
+			_buttonScore6.Score = 5;
 			_buttonScore6.SetBackgroundImage(image6, UIControlState.Normal);
 			_buttonScore6.Frame = new RectangleF(left, top, width, height);
-			_buttonScore6.TouchDown += new EventHandler(ScoreClick);
+			_buttonScore6.TouchDown += ScoreClick;
 			View.AddSubview(_buttonScore6);
 
 			// Set the buttons to invisible to start with
@@ -259,8 +265,8 @@ namespace Flashback.UI.Controllers
 
 		private void ScoreClick(object sender, EventArgs e)
 		{
-			UIButton button = (UIButton)sender;
-			int score = Convert.ToInt32(button.Title(UIControlState.Normal)) - 1;
+			ScoreButton button = (ScoreButton)sender;
+			int score = button.Score;
 
 			// Update the Question's properties and save it
 			QuestionManager.AnswerQuestion(_currentQuestion, score);

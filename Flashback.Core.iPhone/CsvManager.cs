@@ -32,7 +32,7 @@ namespace Flashback.Core.iPhone
 					);
 #else
 
-				builder.AppendLine(string.Format("{0},{1},{2},{3}",
+				builder.AppendLine(string.Format("{0},{1},{2}",
 					question.Category.Name.Replace(",","~"),
 					question.Title.Replace(",","~"),
 					question.Answer.Replace(",","~"))

@@ -30,15 +30,14 @@ namespace Flashback.Core.Domain
 				question.Interval = 1;
 			}
 
-			// This is used for testing so we don't have to fake dates
-			//question.LastAsked = question.NextAskOn;
-			question.LastAsked = DateTime.Today;
-
 			// If it's the first ask use Today. Otherwise use the LastAsked, which may not necessarily be today.
 			if (question.LastAsked == DateTime.MinValue)
 				question.NextAskOn = DateTime.Today.AddDays(question.Interval);
 			else
 				question.NextAskOn = question.LastAsked.AddDays(question.Interval);
+			
+			question.LastAsked = DateTime.Today;
+			//question.LastAsked = question.NextAskOn; // for debugging
 
 			string format = "[{0}][{1}]\tScore:{2}\tEF:{3}\tNext ask: {4}\tLast ask:{5}\tPrevious interval: {6}\tNew interval: {7}";
 			Logger.Info(format, question.Category,

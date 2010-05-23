@@ -19,6 +19,7 @@ namespace Flashback.UI.Controllers
 		private UIBarButtonItem _exportButton;
 		private UIBarButtonItem _helpButton;
 		private UIBarButtonItem _tipsButton;
+		private UIBarButtonItem _spacer;
 		
 		private UIBarButtonItem _editButton;
 		private UIBarButtonItem _doneButton;
@@ -127,7 +128,10 @@ namespace Flashback.UI.Controllers
 		/// <returns></returns>
 		private UIBarButtonItem[] GetToolBar()
 		{
-			int buttonWidth = 35;
+			int buttonWidth = 45;
+			
+			_spacer = new UIBarButtonItem(UIBarButtonSystemItem.FixedSpace);
+			_spacer.Width = buttonWidth;
 
 			// Add button
 			_addButton = new UIBarButtonItem();
@@ -194,11 +198,11 @@ namespace Flashback.UI.Controllers
 					NavigationController.PushViewController(_tipsController, true);
 				};
 
-				return new UIBarButtonItem[] { _addButton, _importButton, _exportButton, _helpButton, _tipsButton };
+				return new UIBarButtonItem[] { _addButton, _importButton, _exportButton, _helpButton, _tipsButton, _spacer };
 			}
 			else
 			{
-				return new UIBarButtonItem[] { _addButton, _helpButton };
+				return new UIBarButtonItem[] { _addButton, _helpButton, _spacer };
 			}
 		}
 
