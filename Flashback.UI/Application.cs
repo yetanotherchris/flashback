@@ -10,13 +10,13 @@ namespace Flashback.UI
 {
 	public class Application
 	{
-		public static string UpgradeLink = "http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=366862216";
+		public static string UpgradeLink = "http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=374215558";
 
 		public static void Main(string[] args)
 		{
 			UIApplication.Main(args,null,"AppDelegate");
 		}
-
+		
 		/// <summary>
 		/// Launches the appstore when an upgrade links is clicked in the lite edition .
 		/// </summary>

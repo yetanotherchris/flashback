@@ -14,10 +14,13 @@ Global
 		Debug|iPhone = Debug|iPhone
 		Release|iPhone = Release|iPhone
 		Appstore-FullVersion|iPhone = Appstore-FullVersion|iPhone
+		Appstore-LiteVersion|iPhone = Appstore-LiteVersion|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Appstore-FullVersion|iPhone.ActiveCfg = Appstore-FullVersion|iPhone
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Appstore-FullVersion|iPhone.Build.0 = Appstore-FullVersion|iPhone
+		{7244A478-3BC2-4932-A234-66F248FFDC63}.Appstore-LiteVersion|iPhone.ActiveCfg = Appstore-LiteVersion|iPhone
+		{7244A478-3BC2-4932-A234-66F248FFDC63}.Appstore-LiteVersion|iPhone.Build.0 = Appstore-LiteVersion|iPhone
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Debug|iPhone.Build.0 = Debug|iPhone
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
@@ -28,6 +31,8 @@ Global
 		{7244A478-3BC2-4932-A234-66F248FFDC63}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Appstore-FullVersion|iPhone.ActiveCfg = Appstore-FullVersion|iPhone
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Appstore-FullVersion|iPhone.Build.0 = Appstore-FullVersion|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Appstore-LiteVersion|iPhone.ActiveCfg = Appstore-LiteVersion|iPhone
+		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Appstore-LiteVersion|iPhone.Build.0 = Appstore-LiteVersion|iPhone
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhone.Build.0 = Debug|iPhone
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
@@ -38,6 +43,8 @@ Global
 		{A54D0E91-7616-4FC0-81A1-34A9D17947E7}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Appstore-FullVersion|iPhone.ActiveCfg = Appstore-FullVersion|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Appstore-FullVersion|iPhone.Build.0 = Appstore-FullVersion|iPhone
+		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Appstore-LiteVersion|iPhone.ActiveCfg = Appstore-LiteVersion|iPhone
+		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Appstore-LiteVersion|iPhone.Build.0 = Appstore-LiteVersion|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Debug|iPhone.Build.0 = Debug|iPhone
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator

@@ -9,12 +9,10 @@
     <ProjectTypeGuids>{E613F3A2-FE9C-494F-B74E-F63BCB86FEA6};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>Flashback</RootNamespace>
-    <AssemblyName>Flashback</AssemblyName>
-    <MtouchSdkVersion>3.0</MtouchSdkVersion>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <BundleIdentifier>com.flatlandsapps.flashback</BundleIdentifier>
+    <BundleIdentifier>com.flatlandsapps.flashbacklite</BundleIdentifier>
     <BundleVersion>1.0.0</BundleVersion>
-    <BundleDisplayName>Flashback</BundleDisplayName>
+    <BundleDisplayName>Flashback Lite</BundleDisplayName>
     <BundleIcon>Assets\Images\icon.png</BundleIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
@@ -25,10 +23,12 @@
     <DefineConstants>DEBUG </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>True</MtouchDebug>
     <MtouchI18n />
+    <MtouchSdkVersion>4.0</MtouchSdkVersion>
+    <MtouchMinimumOS>3.0</MtouchMinimumOS>
+    <AssemblyName>Flashback</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -36,10 +36,12 @@
     <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>False</MtouchDebug>
     <MtouchI18n />
+    <MtouchSdkVersion>3.0</MtouchSdkVersion>
+    <MtouchMinimumOS>3.0</MtouchMinimumOS>
+    <AssemblyName>Flashback</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,11 +51,13 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodesignKey>iPhone Developer: Chris Small (5A7BB5U9UY)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchI18n />
+    <MtouchSdkVersion>3.2</MtouchSdkVersion>
+    <MtouchMinimumOS>3.2</MtouchMinimumOS>
+    <AssemblyName>Flashback</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -61,11 +65,13 @@
     <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>False</MtouchDebug>
     <MtouchI18n />
     <DefineConstants>MONOTOUCH FULLVERSION</DefineConstants>
+    <MtouchSdkVersion>3.0</MtouchSdkVersion>
+    <MtouchMinimumOS>3.0</MtouchMinimumOS>
+    <AssemblyName>Flashback</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Appstore-FullVersion|iPhone' ">
     <DebugType>none</DebugType>
@@ -74,10 +80,27 @@
     <DefineConstants>MONOTOUCH FULLVERSION</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <PlatformTarget>x86</PlatformTarget>
-    <MtouchDebug>False</MtouchDebug>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignKey>iPhone Distribution</CodesignKey>
     <MtouchI18n />
+    <MtouchDebug>False</MtouchDebug>
+    <MtouchSdkVersion>3.0</MtouchSdkVersion>
+    <MtouchMinimumOS>3.0</MtouchMinimumOS>
+    <AssemblyName>Flashback</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Appstore-LiteVersion|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Appstore-LiteVersion</OutputPath>
+    <DefineConstants>MONOTOUCH</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <MtouchI18n />
+    <MtouchDebug>False</MtouchDebug>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <AssemblyName>Flashback.UI</AssemblyName>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchMinimumOS>3.0</MtouchMinimumOS>
+    <MtouchSdkVersion>3.0</MtouchSdkVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -149,10 +172,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\PSD\Default.psd" />
     <None Include="Assets\PSD\Logo512.psd" />
     <None Include="Assets\PSD\Logo57.psd" />
     <None Include="Entitlements.plist" />
+    <None Include="Info.plist" />
+    <None Include="Assets\Images\iconlite.png" />
+    <None Include="Assets\PSD\Logo57lite.psd" />
+    <None Include="Default-lite.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\HTML\calendar.html" />
