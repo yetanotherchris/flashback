@@ -13,8 +13,6 @@ Flashback is based on the powerful and proven Supermemo system for memorising to
 
 Your weaker areas are tested more frequently, while the stronger ones less frequently.
 
-#UPGRADE# #LANGUAGE#
-
 ### Scoring
 
 When you test yourself on a category, you are presented with six buttons numbered 1-6 that you use to score yourself. This may seem complicated at first, however the accuracy with which you score yourself helps Flashback to determine how frequently you need to be re-tested.
