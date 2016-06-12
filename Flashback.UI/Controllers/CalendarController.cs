@@ -107,7 +107,7 @@ namespace Flashback.UI.Controllers
 			}
 			catch (IOException e)
 			{
-				Logger.Fatal("An error occured reading the calendar HTML: \n{0}", e);
+				Logger.Fatal("An error occurred reading the calendar HTML: \n{0}", e);
 			}
 		}
 	}

@@ -55,7 +55,7 @@ namespace Flashback.Core.iPhone
 			}
 			catch (SqliteException e)
 			{
-				Logger.Warn("SqliteException occured with DeleteCategory({0}): \n{1}", id, e);
+				Logger.Warn("SqliteException occurred with DeleteCategory({0}): \n{1}", id, e);
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace Flashback.Core.iPhone
 			}
 			catch (SqliteException e)
 			{
-				Logger.Warn("SqliteException occured while listing categories: \n{0}", e);
+				Logger.Warn("SqliteException occurred while listing categories: \n{0}", e);
 			}
 
 			return list;
@@ -127,7 +127,7 @@ namespace Flashback.Core.iPhone
 			}
 			catch (SqliteException e)
 			{
-				Logger.Warn("SqliteException occured with ReadCategory({0}): \n{1}", id, e);
+				Logger.Warn("SqliteException occurred with ReadCategory({0}): \n{1}", id, e);
 			}
 
 			return category;
@@ -187,7 +187,7 @@ namespace Flashback.Core.iPhone
 			}
 			catch (SqliteException e)
 			{
-				Logger.Warn("SqliteException occured with SaveCategory({0}): \n{1}", category.Id, e);
+				Logger.Warn("SqliteException occurred with SaveCategory({0}): \n{1}", category.Id, e);
 			}
 
 			return 0;
@@ -215,7 +215,7 @@ namespace Flashback.Core.iPhone
 			}
 			catch (SqliteException e)
 			{
-				Logger.Warn("SqliteException occured with DeleteQuestion({0}): \n{1}", id, e);
+				Logger.Warn("SqliteException occurred with DeleteQuestion({0}): \n{1}", id, e);
 			}
 		}
 		public IList<Question> ListQuestions()
@@ -264,7 +264,7 @@ namespace Flashback.Core.iPhone
 			}
 			catch (SqliteException e)
 			{
-				Logger.Warn("SqliteException occured with ListQuestions(): \n{0}", e);
+				Logger.Warn("SqliteException occurred with ListQuestions(): \n{0}", e);
 			}
 
 			return list;
@@ -314,7 +314,7 @@ namespace Flashback.Core.iPhone
 			}
 			catch (SqliteException e)
 			{
-				Logger.Warn("SqliteException occured with QuestionsForCategory({0}): \n{1}", category.Id,e);
+				Logger.Warn("SqliteException occurred with QuestionsForCategory({0}): \n{1}", category.Id,e);
 			}
 
 			return list;
@@ -366,7 +366,7 @@ namespace Flashback.Core.iPhone
 			}
 			catch (SqliteException e)
 			{
-				Logger.Warn("SqliteException occured with ReadQuestion({0}): \n{1}", id,e);
+				Logger.Warn("SqliteException occurred with ReadQuestion({0}): \n{1}", id,e);
 			}
 
 			return question;
@@ -469,7 +469,7 @@ namespace Flashback.Core.iPhone
 			}
 			catch (SqliteException e)
 			{
-				Logger.Warn("SqliteException occured with SaveQuestion({0}): \n{1}", question.Id, e);
+				Logger.Warn("SqliteException occurred with SaveQuestion({0}): \n{1}", question.Id, e);
 			}
 
 			return 0;
