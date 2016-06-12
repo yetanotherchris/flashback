@@ -104,7 +104,7 @@ namespace Flashback.UI
 			}
 			catch (Exception e)
 			{
-				Logger.Warn("An exception occured while writing the settings: \n{0}", e);
+				Logger.Warn("An exception occurred while writing the settings: \n{0}", e);
 			}
 		}
 
@@ -128,7 +128,7 @@ namespace Flashback.UI
 			}
 			catch (Exception e)
 			{
-				Logger.Warn("An exception occured while reading the settings: \n{0}", e);
+				Logger.Warn("An exception occurred while reading the settings: \n{0}", e);
 			}
 		}
 	}

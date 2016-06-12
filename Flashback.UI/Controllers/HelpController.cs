@@ -115,7 +115,7 @@ namespace Flashback.UI.Controllers
 			}
 			catch (IOException e)
 			{
-				Logger.Warn("An error occured reading the help HTML: \n{0}", e);
+				Logger.Warn("An error occurred reading the help HTML: \n{0}", e);
 			}
 		}
 
@@ -142,7 +142,7 @@ namespace Flashback.UI.Controllers
 			}
 			catch (IOException e)
 			{
-				Logger.Warn("An error occured reading the upgrade HTML: \n{0}", e);
+				Logger.Warn("An error occurred reading the upgrade HTML: \n{0}", e);
 			}
 		}
 
@@ -167,7 +167,7 @@ namespace Flashback.UI.Controllers
 			}
 			catch (IOException e)
 			{
-				Logger.Warn("An error occured reading the foreignlanguage HTML: \n{0}", e);
+				Logger.Warn("An error occurred reading the foreignlanguage HTML: \n{0}", e);
 			}
 		}
 		
