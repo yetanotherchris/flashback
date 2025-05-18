@@ -1,6 +1,8 @@
 # flashback
 Supermemo inspired iOS Monotouch app, previously in the app store
 
+[2025 update - awesome supermemo](https://github.com/supermemo/awesome-supermemo)
+
 ![](https://github.com/yetanotherchris/flashback/blob/master/Marketing/Logo512.png)
 
 The following is from the app's help screen.
