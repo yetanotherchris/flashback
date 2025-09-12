@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Flashback.UI.Pages.AddEditCategoryPage"
+             Title="{Binding Title}">
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="20">
+            <Label Text="Category name" FontSize="16" FontAttributes="Bold" />
+            <Entry x:Name="CategoryNameEntry" Placeholder="Enter category name" Text="{Binding CategoryName}" />
+            
+            <Label Text="Active" FontSize="16" FontAttributes="Bold" />
+            <Switch x:Name="ActiveSwitch" IsToggled="{Binding IsActive}" />
+            
+            <Label Text="Inactive categories aren't counted towards the number of questions due, so don't show on the application's badge on the homescreen." 
+                   FontSize="14" TextColor="Gray" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

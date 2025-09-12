@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Flashback.UI.Pages.AddEditQuestionPage"
+             Title="{Binding Title}">
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="20">
+            <Label Text="Question" FontSize="16" FontAttributes="Bold" />
+            <Entry x:Name="QuestionEntry" Placeholder="Enter question" Text="{Binding QuestionTitle}" />
+            
+            <Label Text="Answer" FontSize="16" FontAttributes="Bold" />
+            <Editor x:Name="AnswerEditor" Placeholder="Enter answer" Text="{Binding QuestionAnswer}" HeightRequest="120" />
+            
+            <Label Text="Tips" FontSize="16" FontAttributes="Bold" TextColor="Gray" />
+            <Label Text="Make the question title short, make the answer short with only a few points. Use acronyms, rhymes and mnemonics where possible. More tips can be found in the help." 
+                   FontSize="16" TextColor="Gray" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
