@@ -11,11 +11,7 @@ using Flashback.Core.Data;
 #endif
 
 #if WINDOWS
-using SqliteDataReader = System.Data.SQLite.SQLiteDataReader;
-using SqliteCommand = System.Data.SQLite.SQLiteCommand;
-using SqliteConnection = System.Data.SQLite.SQLiteConnection;
-using SqliteParameter = System.Data.SQLite.SQLiteParameter;
-using SqliteException = System.Data.SQLite.SQLiteException;
+using Microsoft.Data.Sqlite;
 using System.Data;
 using Flashback.Core.Data;
 #endif
@@ -48,6 +44,7 @@ namespace Flashback.Core.iPhone
 						command.ExecuteNonQuery();
 
 						// The questions for the category
+						command.Parameters.Clear();
 						command.CommandText = "DELETE FROM questions WHERE categoryid=@id";
 						command.ExecuteNonQuery();
 					}
@@ -116,10 +113,10 @@ namespace Flashback.Core.iPhone
 						{
 							while (reader.Read())
 							{
-								category.Id = Convert.ToInt32(reader["categoryid"]);
-								category.InBuilt = Convert.ToBoolean(reader["inbuilt"]);
-								category.Name = (string)reader["categoryName"];
-								category.Active = Convert.ToBoolean(reader["active"]);
+								category.Id = reader.GetInt32(0);
+								category.Name = reader.GetString(1);
+								category.InBuilt = reader.GetBoolean(2);
+								category.Active = reader.GetBoolean(3);
 							}
 						}
 					}
@@ -145,7 +142,7 @@ namespace Flashback.Core.iPhone
 					using (SqliteCommand command = new SqliteCommand(connection))
 					{
 						SqliteParameter parameter;
-						string sql = @"INSERT INTO categories (name,active) VALUES (@name,@active);SELECT last_insert_rowid();";
+						string sql = @"INSERT INTO categories (name,active) VALUES (@name,@active);SELECT last_insert_rowid()";
 
 						if (updating)
 						{
@@ -237,24 +234,23 @@ namespace Flashback.Core.iPhone
 							while (reader.Read())
 							{
 								Question question = new Question();
-								question.Id = Convert.ToInt32(reader["id"]);
-								question.Title = (string)reader["title"];
-
+								question.Id = reader.GetInt32(0);
+								question.Title = reader.GetString(2);
 								question.Category = new Category();
-								question.Category.Id = Convert.ToInt32(reader["categoryid"]);
-								question.Category.InBuilt = Convert.ToBoolean(reader["inbuilt"]);
-								question.Category.Active = Convert.ToBoolean(reader["active"]);
-								question.Category.Name = (string)reader["categoryName"];
+								question.Category.Id = reader.GetInt32(3);
+								question.Category.InBuilt = reader.GetBoolean(10);
+								question.Category.Active = reader.GetBoolean(11);
+								question.Category.Name = reader.GetString(12);
 								
-								question.Answer = (string)reader["answer"];
-								question.AskCount = Convert.ToInt32(reader["askcount"]);
-								question.EasinessFactor = Convert.ToDouble(reader["easinessfactor"]);
-								question.Interval = Convert.ToInt32(reader["interval"]);
-								question.LastAsked = new DateTime(Convert.ToInt64(reader["lastasked"]));
-								question.NextAskOn = new DateTime(Convert.ToInt64(reader["nextaskon"]));
-								question.Order = Convert.ToInt32(reader["order"]);
-								question.PreviousInterval = Convert.ToInt32(reader["previousinterval"]);
-								question.ResponseQuality = Convert.ToInt32(reader["responsequality"]);							
+								question.Answer = reader.GetString(4);
+								question.AskCount = reader.GetInt32(5);
+								question.EasinessFactor = reader.GetDouble(9);
+								question.Interval = reader.GetInt32(8);
+								question.LastAsked = new DateTime(reader.GetInt64(6));
+								question.NextAskOn = new DateTime(reader.GetInt64(7));
+								question.Order = reader.GetInt32(1);
+								question.PreviousInterval = reader.GetInt32(10);
+								question.ResponseQuality = reader.GetInt32(11);							
 
 								list.Add(question);
 							}
@@ -291,20 +287,20 @@ namespace Flashback.Core.iPhone
 							while (reader.Read())
 							{
 								Question question = new Question();
-								question.Id = Convert.ToInt32(reader["id"]);
-								question.Title = (string)reader["title"];
+								question.Id = reader.GetInt32(0);
+								question.Title = reader.GetString(2);
 
 								question.Category = category;
 
-								question.Answer = (string)reader["answer"];
-								question.AskCount = Convert.ToInt32(reader["askcount"]);
-								question.EasinessFactor = Convert.ToDouble(reader["easinessfactor"]);
-								question.Interval = Convert.ToInt32(reader["interval"]);
-								question.LastAsked = new DateTime(Convert.ToInt64(reader["lastasked"]));
-								question.NextAskOn = new DateTime(Convert.ToInt64(reader["nextaskon"]));
-								question.Order = Convert.ToInt32(reader["order"]);
-								question.PreviousInterval = Convert.ToInt32(reader["previousinterval"]);
-								question.ResponseQuality = Convert.ToInt32(reader["responsequality"]);
+								question.Answer = reader.GetString(3);
+								question.AskCount = reader.GetInt32(4);
+								question.EasinessFactor = reader.GetDouble(8);
+								question.Interval = reader.GetInt32(7);
+								question.LastAsked = new DateTime(reader.GetInt64(5));
+								question.NextAskOn = new DateTime(reader.GetInt64(6));
+								question.Order = reader.GetInt32(1);
+								question.PreviousInterval = reader.GetInt32(9);
+								question.ResponseQuality = reader.GetInt32(10);
 
 								list.Add(question);
 							}
@@ -341,24 +337,24 @@ namespace Flashback.Core.iPhone
 						{
 							while (reader.Read())
 							{
-								question.Id = Convert.ToInt32(reader["id"]);
-								question.Title = (string)reader["title"];
+								question.Id = reader.GetInt32(0);
+								question.Title = reader.GetString(2);
 
 								question.Category = new Category();
-								question.Category.Id = Convert.ToInt32(reader["categoryid"]);
-								question.Category.InBuilt = Convert.ToBoolean(reader["inbuilt"]);
-								question.Category.Active = Convert.ToBoolean(reader["active"]);
-								question.Category.Name = (string)reader["categoryName"];
+								question.Category.Id = reader.GetInt32(3);
+								question.Category.InBuilt = reader.GetBoolean(11);
+								question.Category.Active = reader.GetBoolean(12);
+								question.Category.Name = reader.GetString(13);
 
-								question.Answer = (string)reader["answer"];
-								question.AskCount = Convert.ToInt32(reader["askcount"]);
-								question.EasinessFactor = Convert.ToDouble(reader["easinessfactor"]);
-								question.Interval = Convert.ToInt32(reader["interval"]);
-								question.LastAsked = new DateTime(Convert.ToInt64(reader["lastasked"]));
-								question.NextAskOn = new DateTime(Convert.ToInt64(reader["nextaskon"]));
-								question.Order = Convert.ToInt32(reader["order"]);
-								question.PreviousInterval = Convert.ToInt32(reader["previousinterval"]);
-								question.ResponseQuality = Convert.ToInt32(reader["responsequality"]);
+								question.Answer = reader.GetString(4);
+								question.AskCount = reader.GetInt32(5);
+								question.EasinessFactor = reader.GetDouble(10);
+								question.Interval = reader.GetInt32(9);
+								question.LastAsked = new DateTime(reader.GetInt64(7));
+								question.NextAskOn = new DateTime(reader.GetInt64(8));
+								question.Order = reader.GetInt32(1);
+								question.PreviousInterval = reader.GetInt32(11);
+								question.ResponseQuality = reader.GetInt32(12);
 							}
 						}
 					}
@@ -384,7 +380,7 @@ namespace Flashback.Core.iPhone
 					{
 						SqliteParameter parameter;
 						string sql = @"INSERT INTO questions (answer,askcount,categoryid,easinessfactor,interval,lastasked,nextaskon,[order],previousinterval,responsequality,title) ";
-						sql += "VALUES (@answer,@askcount,@categoryid,@easinessfactor,@interval,@lastasked,@nextaskon,@order,@previousinterval,@responsequality,@title);SELECT last_insert_rowid();";
+						sql += "VALUES (@answer,@askcount,@categoryid,@easinessfactor,@interval,@lastasked,@nextaskon,@order,@previousinterval,@responsequality,@title);SELECT last_insert_rowid()";
 
 						if (updating)
 						{
@@ -493,7 +489,7 @@ namespace Flashback.Core.iPhone
 						command.Parameters.Add(parameter);
 
 						object val = command.ExecuteScalar();
-						if (val != DBNull.Value)
+						if (val != null && val != DBNull.Value)
 							result = Convert.ToInt32(val);
 					}
 				}
@@ -550,6 +546,8 @@ namespace Flashback.Core.iPhone
 
 						foreach (Question questionItem in ordered)
 						{
+							command.Parameters.Clear();
+							
 							SqliteParameter parameter = new SqliteParameter("@id", DbType.Int32);
 							parameter.Value = questionItem.Id;
 							command.Parameters.Add(parameter);

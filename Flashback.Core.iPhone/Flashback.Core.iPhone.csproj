@@ -82,6 +82,9 @@
     <Reference Include="monotouch" />
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System.Data" />
+    <Reference Include="Microsoft.Data.Sqlite">
+      <HintPath>lib\Microsoft.Data.Sqlite.dll</HintPath>
+    </Reference>
     <Reference Include="LumenworksMT, Version=3.7.0.0, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\LumenworksMT.dll</HintPath>
@@ -105,5 +108,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="lib\LumenworksMT.dll" />
+    <None Include="lib\Microsoft.Data.Sqlite.dll" />
   </ItemGroup>
 </Project>
