@@ -34,6 +34,18 @@ Steps:
 
 	Note: Successfully reorganized the project structure. Moved all source projects (Flashback.Core, Flashback.Core.iPhone, Flashback.Core.Net, Flashback.CsvConverter, Flashback.Maui, Flashback.UI) to the /src folder and test projects (Flashback.Tests.VS2010) to the /test folder. Updated solution files (Flashback.sln and Flashback.VS2010.sln) to reference the new paths, and corrected project references to maintain build compatibility.
 
+8. ✅ Fix Windows platform build errors in MAUI project:
+   - Fix Microsoft.Maui.Essentials namespace error in PlatformRepository.cs
+   - Resolve partial class base class conflict in Windows App.xaml.cs
+
+	Note: Fixed Windows platform build by removing unnecessary platform-specific using statements and replacing conflicting Windows App.xaml/App.xaml.cs files with a proper Program.cs entry point that follows MAUI conventions. All platforms (Android, iOS, macCatalyst, Windows) now build successfully.
+
+9. ✅ Address nullable reference warnings throughout the codebase:
+   - Add required modifiers or nullable annotations to Category and Question models
+   - Fix null reference warnings in repository implementations
+
+	Note: Successfully addressed all nullable reference warnings by adding required modifiers to non-nullable properties in Category and Question models, updating repository interfaces and implementations to use nullable return types where appropriate, and fixing unboxing warnings in SqliteRepository. The codebase now builds without any nullable reference warnings while maintaining backward compatibility.
+
 Notes / Assumptions:
 - If any step requires clarification, annotate the step and continue with the most conservative, low-risk implementation.
 - Keep breaking changes minimal; prefer adding new files and wiring rather than refactoring existing public APIs.

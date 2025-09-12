@@ -93,30 +93,57 @@ namespace Flashback.Core.Net.Repositories
             return list;
         }
 
-        public Category ReadCategory(int id)
+        public Category? ReadCategory(int id)
         {
-            var category = new Category();
+            var category = new Category { Name = "", InBuilt = false };
             using var conn = GetConnection();
             conn.Open();
             using var cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT id,name,inbuilt,active FROM categories WHERE id=@id";
             cmd.Parameters.AddWithValue("@id", id);
             using var reader = cmd.ExecuteReader();
-            if (reader.Read()) { category.Id = reader.GetInt32(0); category.Name = reader.IsDBNull(1) ? string.Empty : reader.GetString(1); category.InBuilt = reader.GetInt32(2) != 0; category.Active = reader.GetInt32(3) != 0; }
-            return category;
+            if (reader.Read()) 
+            { 
+                category.Id = reader.GetInt32(0); 
+                category.Name = reader.IsDBNull(1) ? string.Empty : reader.GetString(1); 
+                category.InBuilt = reader.GetInt32(2) != 0; 
+                category.Active = reader.GetInt32(3) != 0; 
+                return category;
+            }
+            return null;
         }
 
-        public Question ReadQuestion(int id)
+        public Question? ReadQuestion(int id)
         {
-            var q = new Question();
+            var q = new Question { Category = new Category { Name = "", InBuilt = false }, Title = "", Answer = "" };
             using var conn = GetConnection();
             conn.Open();
             using var cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT q.id,q.[order],q.categoryid,q.title,q.answer,q.askcount,q.lastasked,q.nextaskon,q.[interval],q.previousinterval,q.easinessfactor,q.responsequality,c.name,c.inbuilt,c.active FROM questions q JOIN categories c ON c.id = q.categoryid WHERE q.id=@id";
             cmd.Parameters.AddWithValue("@id", id);
             using var reader = cmd.ExecuteReader();
-            if (reader.Read()) { q.Id = reader.GetInt32(0); q.Order = reader.GetInt32(1); q.Category = new Category { Id = reader.GetInt32(2), Name = reader.IsDBNull(12) ? string.Empty : reader.GetString(12), InBuilt = reader.GetInt32(13) != 0, Active = reader.GetInt32(14) != 0 }; q.Title = reader.IsDBNull(3) ? string.Empty : reader.GetString(3); q.Answer = reader.IsDBNull(4) ? string.Empty : reader.GetString(4); q.AskCount = reader.GetInt32(5); q.LastAsked = new DateTime(reader.GetInt64(6)); q.NextAskOn = new DateTime(reader.GetInt64(7)); q.Interval = reader.GetInt32(8); q.PreviousInterval = reader.GetInt32(9); q.EasinessFactor = reader.GetDouble(10); q.ResponseQuality = reader.GetInt32(11); }
-            return q;
+            if (reader.Read()) 
+            { 
+                q.Id = reader.GetInt32(0); 
+                q.Order = reader.GetInt32(1); 
+                q.Category = new Category { 
+                    Id = reader.GetInt32(2), 
+                    Name = reader.IsDBNull(12) ? string.Empty : reader.GetString(12), 
+                    InBuilt = reader.GetInt32(13) != 0, 
+                    Active = reader.GetInt32(14) != 0 
+                }; 
+                q.Title = reader.IsDBNull(3) ? string.Empty : reader.GetString(3); 
+                q.Answer = reader.IsDBNull(4) ? string.Empty : reader.GetString(4); 
+                q.AskCount = reader.GetInt32(5); 
+                q.LastAsked = new DateTime(reader.GetInt64(6)); 
+                q.NextAskOn = new DateTime(reader.GetInt64(7)); 
+                q.Interval = reader.GetInt32(8); 
+                q.PreviousInterval = reader.GetInt32(9); 
+                q.EasinessFactor = reader.GetDouble(10); 
+                q.ResponseQuality = reader.GetInt32(11); 
+                return q;
+            }
+            return null;
         }
 
         public int SaveCategory(Category category)
@@ -140,7 +167,8 @@ namespace Flashback.Core.Net.Repositories
                 cmd.Parameters.AddWithValue("@name", category.Name ?? string.Empty);
                 cmd.Parameters.AddWithValue("@inbuilt", category.InBuilt ? 1 : 0);
                 cmd.Parameters.AddWithValue("@active", category.Active ? 1 : 0);
-                var id = (long)cmd.ExecuteScalar();
+                var result = cmd.ExecuteScalar();
+                var id = result != null ? (long)result : 0;
                 category.Id = (int)id;
                 return category.Id;
             }
@@ -183,7 +211,8 @@ namespace Flashback.Core.Net.Repositories
                 cmd.Parameters.AddWithValue("@order", question.Order);
                 cmd.Parameters.AddWithValue("@previousinterval", question.PreviousInterval);
                 cmd.Parameters.AddWithValue("@responsequality", question.ResponseQuality);
-                var id = (long)cmd.ExecuteScalar();
+                var result = cmd.ExecuteScalar();
+                var id = result != null ? (long)result : 0;
                 return (int)id;
             }
         }

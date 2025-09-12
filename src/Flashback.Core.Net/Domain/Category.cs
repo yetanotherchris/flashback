@@ -6,7 +6,7 @@ namespace Flashback.Core
     public class Category
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public required string Name { get; set; }
         public bool InBuilt { get; set; }
         public bool Active { get; set; }
 
@@ -15,7 +15,7 @@ namespace Flashback.Core
             return Repository.Default.SaveCategory(category);
         }
 
-        public static Category Read(int id)
+        public static Category? Read(int id)
         {
             return Repository.Default.ReadCategory(id);
         }

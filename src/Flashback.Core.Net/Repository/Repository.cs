@@ -4,7 +4,7 @@ namespace Flashback.Core
 {
     public class Repository
     {
-        private static IRepository _instance;
+        private static IRepository? _instance;
 
         public static IRepository Default
         {

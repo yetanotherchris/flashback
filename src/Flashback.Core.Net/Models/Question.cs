@@ -11,9 +11,9 @@ namespace Flashback.Core.Models
         public int CategoryId { get; set; }
         
         [Indexed]
-        public string Text { get; set; }
+        public required string Text { get; set; }
         
-        public string Answer { get; set; }
+        public required string Answer { get; set; }
         
         public int OrderIndex { get; set; } = 0;
         

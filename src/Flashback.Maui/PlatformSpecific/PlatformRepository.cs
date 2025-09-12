@@ -1,15 +1,5 @@
 using Flashback.Core.Net.Repositories;
 
-#if ANDROID
-using Android.Content;
-#elif IOS
-using Foundation;
-#elif WINDOWS
-using Microsoft.Maui.Essentials;
-#elif MACCATALYST
-using Foundation;
-#endif
-
 namespace Flashback.Maui.PlatformSpecific
 {
     public static class PlatformRepository

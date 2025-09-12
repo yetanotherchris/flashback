@@ -7,9 +7,9 @@ namespace Flashback.Core
     public class Question
     {
         public int Id { get; set; }
-        public Category Category { get; set; }
-        public string Title { get; set; }
-        public string Answer { get; set; }
+        public required Category Category { get; set; }
+        public required string Title { get; set; }
+        public required string Answer { get; set; }
         public double Order { get; set; }
         public DateTime LastAsked { get; set; }
         public DateTime NextAskOn { get; set; }
@@ -35,7 +35,7 @@ namespace Flashback.Core
             return Repository.Default.SaveQuestion(question);
         }
 
-        public static Question Read(int id)
+        public static Question? Read(int id)
         {
             return Repository.Default.ReadQuestion(id);
         }

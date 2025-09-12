@@ -12,8 +12,8 @@ namespace Flashback.Core
         IList<Category> ListCategories();
         IList<Question> ListQuestions();
         IList<Question> QuestionsForCategory(Category category);
-        Category ReadCategory(int id);
-        Question ReadQuestion(int id);
+        Category? ReadCategory(int id);
+        Question? ReadQuestion(int id);
         int SaveCategory(Category category);
         int SaveQuestion(Question question);
         void MoveQuestion(Question question, int newIndex);

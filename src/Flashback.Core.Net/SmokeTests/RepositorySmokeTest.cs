@@ -21,11 +21,33 @@ namespace Flashback.Core.Net.SmokeTests
                 Console.WriteLine($"Created category id: {catId}");
 
                 // Create a question
-                var q = new Question { Category = new Category { Id = catId }, Title = "Q1", Answer = "A1", AskCount = 0, LastAsked = DateTime.Now, NextAskOn = DateTime.Now, Order = 0, PreviousInterval = 0, Interval = 0, EasinessFactor = 0.0, ResponseQuality = 0 };
+                var q = new Question { 
+                    Category = new Category { 
+                        Id = catId, 
+                        Name = "Test Category", 
+                        InBuilt = false, 
+                        Active = true 
+                    }, 
+                    Title = "Q1", 
+                    Answer = "A1", 
+                    AskCount = 0, 
+                    LastAsked = DateTime.Now, 
+                    NextAskOn = DateTime.Now, 
+                    Order = 0, 
+                    PreviousInterval = 0, 
+                    Interval = 0, 
+                    EasinessFactor = 0.0, 
+                    ResponseQuality = 0 
+                };
                 var qId = repo.SaveQuestion(q);
                 Console.WriteLine($"Created question id: {qId}");
 
                 var read = repo.ReadQuestion(qId);
+                if (read == null)
+                {
+                    Console.Error.WriteLine("Smoke test failed: could not read question");
+                    return 2;
+                }
                 Console.WriteLine($"Read question title: {read.Title}, answer: {read.Answer}");
 
                 if (read.Title != "Q1" || read.Answer != "A1")

@@ -56,12 +56,12 @@ namespace Flashback.Core
             return _questions.Where(q => q.Category != null && q.Category.Id == category.Id).ToList();
         }
 
-        public Category ReadCategory(int id)
+        public Category? ReadCategory(int id)
         {
             return _categories.FirstOrDefault(c => c.Id == id);
         }
 
-        public Question ReadQuestion(int id)
+        public Question? ReadQuestion(int id)
         {
             return _questions.FirstOrDefault(q => q.Id == id);
         }
