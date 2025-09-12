@@ -8,11 +8,17 @@ Steps:
 
 0. ✅ Create this file in the repository so the instructions exist and can be followed.
 
-1. Implement a cross-platform SQLite repository for the MAUI app using sqlite-net-pcl (or an equivalent cross-platform SQLite library). The repository should live in the appropriate project (e.g., `Flashback.Core` or `Flashback.Maui`) and provide the same `IRepository` surface expected by the app.
+1. ✅ Implement a cross-platform SQLite repository for the MAUI app using sqlite-net (or an equivalent cross-platform SQLite library). The repository should live in the appropriate project (e.g., `Flashback.Core` or `Flashback.Maui`) and provide the same `IRepository` surface expected by the app.
 
-2. Wire the repository into dependency injection in `MauiProgram` so the MAUI app uses the cross-platform SQLite repository at runtime.
+	Note: A cross-platform implementation already exists at `Flashback.Core.Net/Repositories/SqliteRepository.cs` using `Microsoft.Data.Sqlite`.
 
-3. Add any required NuGet package references (e.g., `sqlite-net-pcl`) to the MAUI project files and update project files as necessary.
+2. ✅ Wire the repository into dependency injection in `MauiProgram` so the MAUI app uses the cross-platform SQLite repository at runtime.
+
+	Note: `Flashback.Maui/MauiProgram.cs` registers `IRepository` and sets the legacy `Repository.SetInstance(repo)` bridge.
+
+3. ✅ Add any required NuGet package references (e.g., `sqlite-net-pcl`) to the MAUI project files and update project files as necessary.
+
+	Note: `Flashback.Core.Net.csproj` contains a `PackageReference` to `Microsoft.Data.Sqlite` (already present in the repo).
 
 4. Add a small smoke test or sample usage that verifies the repository can create the DB file, insert a sample question, and read it back.
 
