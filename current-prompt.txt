@@ -20,9 +20,11 @@ Steps:
 
 	Note: `Flashback.Core.Net.csproj` contains a `PackageReference` to `Microsoft.Data.Sqlite` (already present in the repo).
 
-4. Add a small smoke test or sample usage that verifies the repository can create the DB file, insert a sample question, and read it back.
+4. ✅ Add a small smoke test or sample usage that verifies the repository can create the DB file, insert a sample question, and read it back.
 
 5. Run a build for the MAUI project (or a minimal compile) and fix any compile issues introduced by the repository changes.
+
+	Note: I ran a build of `Flashback.Maui` and it failed with platform/resource packaging errors unrelated to the repository wiring (missing Resources\Splash\splash.svg and Windows AppxManifest configuration). The repository wiring itself did not introduce compile errors. To finish this step the missing splash resource and platform packaging settings need to be addressed, or the MAUI project can be built for a single target with correct resources.
 
 6. Update repository README or developer notes describing how to run the MAUI app and any platform-specific setup for the SQLite database.
 

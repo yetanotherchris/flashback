@@ -1,0 +1,13 @@
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\obj\Release\net8.0\Flashback.Core.Net.csproj.AssemblyReference.cache
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\obj\Release\net8.0\Flashback.Core.Net.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\obj\Release\net8.0\Flashback.Core.Net.AssemblyInfoInputs.cache
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\obj\Release\net8.0\Flashback.Core.Net.AssemblyInfo.cs
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\obj\Release\net8.0\Flashback.Core.Net.csproj.CoreCompileInputs.cache
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\obj\Release\net8.0\Flashback.Core.Net.sourcelink.json
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\bin\Release\net8.0\Flashback.Core.Net.deps.json
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\bin\Release\net8.0\Flashback.Core.Net.dll
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\bin\Release\net8.0\Flashback.Core.Net.pdb
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\obj\Release\net8.0\Flashback.Core.Net.dll
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\obj\Release\net8.0\refint\Flashback.Core.Net.dll
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\obj\Release\net8.0\Flashback.Core.Net.pdb
+C:\Users\chris\Documents\GitHub\flashback\Flashback.Core.Net\obj\Release\net8.0\ref\Flashback.Core.Net.dll

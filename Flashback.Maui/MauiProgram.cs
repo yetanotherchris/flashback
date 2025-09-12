@@ -1,5 +1,8 @@
 using Flashback.Core.Net.Repositories;
 using Flashback.Maui.PlatformSpecific;
+using Flashback.Core;
+using Microsoft.Maui.Storage;
+using System.IO;
 using Microsoft.Extensions.Logging;
 
 namespace Flashback.Maui
@@ -22,10 +25,28 @@ namespace Flashback.Maui
 #endif
 
             // Register services
-            builder.Services.AddSingleton<ISqliteRepository>(provider =>
+            // Create a cross-platform database path and register a SqliteRepository that implements the legacy IRepository
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "flashback.db");
+
+            // Ensure the platform-specific initializer (if present) runs
+            try
             {
                 PlatformRepository.InitializeRepository();
-                return SqliteRepository.Instance;
+            }
+            catch
+            {
+                // ignore if platform initializer isn't present on some targets
+            }
+
+            // Register the concrete SqliteRepository for DI
+            builder.Services.AddSingleton<IRepository>(provider =>
+            {
+                var repo = new SqliteRepository(dbPath);
+                // Create DB/schema if needed
+                repo.CreateDatabase();
+                // Bridge to legacy static Repository
+                Repository.SetInstance(repo);
+                return repo;
             });
 
             return builder.Build();

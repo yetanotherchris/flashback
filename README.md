@@ -1,6 +1,32 @@
 # flashback
 Supermemo inspired iOS Monotouch app, previously in the app store
 
+MAUI migration scaffold
+----------------------
+
+This repository contains a lightweight scaffold to begin migrating the original MonoTouch app to .NET MAUI.
+
+What I added:
+- `Flashback.Core.Net/` - a small netstandard library that re-uses the existing core models and provides an InMemoryRepository so UI can run cross-platform.
+- `Flashback.Maui/` - a minimal .NET MAUI app (MainPage lists seeded questions) referencing the netstandard core library.
+
+How to try the MAUI app (Visual Studio 2022/2023 required with MAUI workloads):
+
+1. Open the solution or the folder in Visual Studio.
+2. Set `Flashback.Maui` as the startup project.
+3. Build and run for a supported platform (Windows, Android, or iOS with proper tooling).
+
+Next migration steps:
+- Replace iOS-specific controllers/views (under `Flashback.UI`) with MAUI pages and controls. Many files reference `MonoTouch.UIKit` and must be reimplemented.
+- Replace platform-specific `Flashback.Core.iPhone.SqliteRepository` with a cross-platform SQLite implementation using `Microsoft.Data.Sqlite` or `SQLite-net-pcl`, and register it in `MauiProgram` by platform.
+- Move assets (images, HTML) into the MAUI project's Resources folders and update their usage.
+- Incrementally port controllers: start with `RootController` -> `MainPage`, `CategoriesController` -> `CategoriesPage`, etc.
+
+If you'd like, I can:
+- Port a specific screen (e.g., category hub) to MAUI now.
+- Replace the SQLite repo with a cross-platform implementation and wire platform-specific file locations.
+
+
 [2025 update - awesome supermemo](https://github.com/supermemo/awesome-supermemo)
 
 ![](https://github.com/yetanotherchris/flashback/blob/master/Marketing/Logo512.png)
