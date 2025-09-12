@@ -1,4 +1,5 @@
-using Microsoft.Maui.Controls;
+using Flashback.Core.Net.Repositories;
+using Flashback.Maui.PlatformSpecific;
 
 namespace Flashback.Maui
 {
@@ -7,6 +8,11 @@ namespace Flashback.Maui
         public App()
         {
             InitializeComponent();
+            
+            // Initialize the platform repository
+            PlatformRepository.InitializeRepository();
+            
+            MainPage = new AppShell();
         }
     }
 }

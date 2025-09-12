@@ -1,0 +1,3 @@
+dotnet workload install maui
+dotnet build .\Flashback.Core.Net\Flashback.Core.Net.csproj -c Release
+dotnet build .\Flashback.Maui\Flashback.Maui.csproj -c Release

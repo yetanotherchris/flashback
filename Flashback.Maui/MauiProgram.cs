@@ -1,7 +1,6 @@
-using Microsoft.Maui;
-using Microsoft.Maui.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Flashback.Core;
+using Flashback.Core.Net.Repositories;
+using Flashback.Maui.PlatformSpecific;
+using Microsoft.Extensions.Logging;
 
 namespace Flashback.Maui
 {
@@ -12,12 +11,22 @@ namespace Flashback.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .ConfigureFonts(fonts => { });
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                });
 
-            // register the in-memory repository as the repository implementation
-            var repo = new InMemoryRepository();
-            repo.CreateDatabase();
-            Repository.SetInstance(repo);
+#if DEBUG
+            builder.Logging.AddDebug();
+#endif
+
+            // Register services
+            builder.Services.AddSingleton<ISqliteRepository>(provider =>
+            {
+                PlatformRepository.InitializeRepository();
+                return SqliteRepository.Instance;
+            });
 
             return builder.Build();
         }
