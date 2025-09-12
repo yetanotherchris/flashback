@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\chris\\Documents\\GitHub\\flashback\\Flashback.Core.Net\\Flashback.Core.Net.csproj": {}
+    "C:\\Users\\chris\\Documents\\GitHub\\flashback\\Flashback.Core.Net\\Flashback.Core.Net.csproj": {}
   },
   "projects": {
-    "c:\\Users\\chris\\Documents\\GitHub\\flashback\\Flashback.Core.Net\\Flashback.Core.Net.csproj": {
+    "C:\\Users\\chris\\Documents\\GitHub\\flashback\\Flashback.Core.Net\\Flashback.Core.Net.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\chris\\Documents\\GitHub\\flashback\\Flashback.Core.Net\\Flashback.Core.Net.csproj",
+        "projectUniqueName": "C:\\Users\\chris\\Documents\\GitHub\\flashback\\Flashback.Core.Net\\Flashback.Core.Net.csproj",
         "projectName": "Flashback.Core.Net",
-        "projectPath": "c:\\Users\\chris\\Documents\\GitHub\\flashback\\Flashback.Core.Net\\Flashback.Core.Net.csproj",
+        "projectPath": "C:\\Users\\chris\\Documents\\GitHub\\flashback\\Flashback.Core.Net\\Flashback.Core.Net.csproj",
         "packagesPath": "C:\\Users\\chris\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\chris\\Documents\\GitHub\\flashback\\Flashback.Core.Net\\obj\\",
+        "outputPath": "C:\\Users\\chris\\Documents\\GitHub\\flashback\\Flashback.Core.Net\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

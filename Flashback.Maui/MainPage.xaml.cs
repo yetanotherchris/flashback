@@ -1,14 +1,17 @@
 using Flashback.Core.Net.Repositories;
+using Flashback.Core;
 
 namespace Flashback.Maui
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
+        private readonly IRepository _repository;
 
-        public MainPage()
+        public MainPage(IRepository repository)
         {
             InitializeComponent();
+            _repository = repository;
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
@@ -25,16 +28,16 @@ namespace Flashback.Maui
             // Test repository initialization
             if (count == 1)
             {
-                _ = Task.Run(async () =>
+                _ = Task.Run(() =>
                 {
                     try
                     {
-                        var repo = SqliteRepository.Instance;
-                        await repo.InitializeAsync();
+                        // Test that we can get categories (which will initialize DB if needed)
+                        var categories = _repository.ListCategories();
                         
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
-                            CounterBtn.Text = $"Database initialized! Clicked {count} times";
+                            CounterBtn.Text = $"Database initialized! Found {categories.Count} categories. Clicked {count} times";
                         });
                     }
                     catch (Exception ex)

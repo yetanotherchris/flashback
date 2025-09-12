@@ -9,11 +9,11 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-            <Image
+            <!-- <Image
                 Source="dotnet_bot.png"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
                 HeightRequest="200"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center" /> -->
 
             <Label
                 Text="Hello, World!"
@@ -24,7 +24,7 @@
             <Label
                 Text="Welcome to .NET MAUI!"
                 SemanticProperties.HeadingLevel="Level2"
-                SubtitleFontSize="18"
+                FontSize="18"
                 HorizontalOptions="Center" />
 
             <Button

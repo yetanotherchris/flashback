@@ -17,8 +17,8 @@ namespace Flashback.Maui.PlatformSpecific
         public static void InitializeRepository()
         {
             // Platform-specific initialization if needed
-            // For now, just set the cross-platform repository instance
-            SqliteRepository.Instance = new SqliteRepository();
+            // This method is now primarily for platform-specific setup
+            // The actual repository instance is managed through DI in MauiProgram
         }
     }
 }

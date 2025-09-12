@@ -15,6 +15,28 @@ How to try the MAUI app (Visual Studio 2022/2023 required with MAUI workloads):
 1. Open the solution or the folder in Visual Studio.
 2. Set `Flashback.Maui` as the startup project.
 3. Build and run for a supported platform (Windows, Android, or iOS with proper tooling).
+   - **Android**: Fully working with cross-platform SQLite repository
+   - **iOS/macCatalyst/Windows**: Platform files created but may need additional platform-specific assets
+
+## Current Status (2025-09-12)
+
+✅ **Cross-platform SQLite Repository**: Implemented using `Microsoft.Data.Sqlite` in `Flashback.Core.Net/Repositories/SqliteRepository.cs`. This replaces the iOS-specific SQLite implementation with a cross-platform solution.
+
+✅ **Dependency Injection**: The MAUI app (`MauiProgram.cs`) properly registers the SQLite repository and maintains compatibility with the legacy static `Repository` bridge pattern.
+
+✅ **Database Integration**: The app automatically creates the SQLite database in the platform's app data directory and initializes the schema on first run.
+
+✅ **Build System**: Android target builds successfully. Other platforms have basic structure but may need additional platform-specific configuration.
+
+## Database Setup
+
+The MAUI app uses a cross-platform SQLite database that:
+- Creates the database file automatically in `FileSystem.AppDataDirectory`
+- Initializes tables for categories and questions on first run
+- Maintains compatibility with the existing `IRepository` interface
+- Supports all CRUD operations for categories and questions
+
+No manual database setup is required - the app handles initialization automatically.
 
 Next migration steps:
 - Replace iOS-specific controllers/views (under `Flashback.UI`) with MAUI pages and controls. Many files reference `MonoTouch.UIKit` and must be reimplemented.

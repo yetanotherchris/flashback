@@ -4,6 +4,7 @@ using Flashback.Core;
 using Microsoft.Maui.Storage;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 
 namespace Flashback.Maui
 {
@@ -14,6 +15,7 @@ namespace Flashback.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -48,6 +50,9 @@ namespace Flashback.Maui
                 Repository.SetInstance(repo);
                 return repo;
             });
+
+            // Register pages for DI
+            builder.Services.AddTransient<MainPage>();
 
             return builder.Build();
         }
