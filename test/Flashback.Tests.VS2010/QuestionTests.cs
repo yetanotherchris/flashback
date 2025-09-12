@@ -2,8 +2,10 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Flashback.Core;
+using Flashback.Core.Net.Repositories;
 
 namespace Flashback.Tests.VS2010
 {
@@ -44,8 +46,12 @@ namespace Flashback.Tests.VS2010
 		// public static void MyClassCleanup() { }
 		//
 		// Use TestInitialize to run code before running each test 
-		// [TestInitialize()]
-		// public void MyTestInitialize() { }
+		[TestInitialize()]
+		public void MyTestInitialize() 
+		{
+			var testDbPath = Path.Combine(Path.GetTempPath(), $"flashback_test_{Guid.NewGuid()}.db");
+			Repository.SetInstance(new SqliteRepository(testDbPath));
+		}
 		//
 		// Use TestCleanup to run code after each test has run
 		// [TestCleanup()]

@@ -84,3 +84,5 @@ dotnet build src/Flashback.Maui/ -f net8.0-android
 - `src/Flashback.Core/Domain/` - Core business logic and Supermemo algorithm
 - `src/Flashback.Maui/MauiProgram.cs` - Dependency injection and app configuration
 - `src/Flashback.Core.Net/Repositories/SqliteRepository.cs` - Modern data access implementation
+
+git add and git commit all files you've changed, with a suitable commit message when you are done. prefix the commit message with "[copilot-{modelname}]" replacing modelname with a short version of the model name, e.g. "gpt5", "claude4".
