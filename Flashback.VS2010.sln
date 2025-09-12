@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.UI.VS2010", "Flashback.UI\Flashback.UI.VS2010.csproj", "{332481CE-35AB-447E-BF6B-BA6A5DC31EA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.UI.VS2010", "src\Flashback.UI\Flashback.UI.VS2010.csproj", "{332481CE-35AB-447E-BF6B-BA6A5DC31EA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Core.VS2010", "Flashback.Core\Flashback.Core.VS2010.csproj", "{CB5391B7-34DB-4CF5-BD39-C4EFB818B508}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Core.VS2010", "src\Flashback.Core\Flashback.Core.VS2010.csproj", "{CB5391B7-34DB-4CF5-BD39-C4EFB818B508}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Tests.VS2010", "Flashback.Tests.VS2010\Flashback.Tests.VS2010.csproj", "{C5A5BF84-D9F0-4077-8F96-86938113A8A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Tests.VS2010", "test\Flashback.Tests.VS2010\Flashback.Tests.VS2010.csproj", "{C5A5BF84-D9F0-4077-8F96-86938113A8A0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99D5949E-9EA3-4771-8ED8-1A213D2CAC8D}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Core.iPhone.VS2010", "Flashback.Core.iPhone\Flashback.Core.iPhone.VS2010.csproj", "{A583EFD5-7D03-4C93-9658-53F5BC4F6389}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Core.iPhone.VS2010", "src\Flashback.Core.iPhone\Flashback.Core.iPhone.VS2010.csproj", "{A583EFD5-7D03-4C93-9658-53F5BC4F6389}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

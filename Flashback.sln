@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.UI", "Flashback.UI\Flashback.UI.csproj", "{AED712A4-2CAC-4FD9-9502-A6617E54190F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.UI", "src\Flashback.UI\Flashback.UI.csproj", "{AED712A4-2CAC-4FD9-9502-A6617E54190F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Core", "Flashback.Core\Flashback.Core.csproj", "{7244A478-3BC2-4932-A234-66F248FFDC63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Core", "src\Flashback.Core\Flashback.Core.csproj", "{7244A478-3BC2-4932-A234-66F248FFDC63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Core.iPhone", "Flashback.Core.iPhone\Flashback.Core.iPhone.csproj", "{A54D0E91-7616-4FC0-81A1-34A9D17947E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashback.Core.iPhone", "src\Flashback.Core.iPhone\Flashback.Core.iPhone.csproj", "{A54D0E91-7616-4FC0-81A1-34A9D17947E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +55,6 @@ Global
 		{AED712A4-2CAC-4FD9-9502-A6617E54190F}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Flashback.UI\Flashback.UI.csproj
+		StartupItem = src\Flashback.UI\Flashback.UI.csproj
 	EndGlobalSection
 EndGlobal
